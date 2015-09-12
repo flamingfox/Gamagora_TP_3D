@@ -37,6 +37,71 @@ Terrain::Terrain(Terrain::TYPE_TERRAIN_BASE type, int _longueur, int _largeur, i
     generationTerrainParametre(*this, parametre);
 }
 
+
+/********************Terrain Image************************/
+
+Terrain::Terrain(const QImage &img, float _longueur, float _largeur, float amplitude)
+{
+    simpleInitImage(img, _longueur, _largeur, amplitude);
+}
+
+
+Terrain::Terrain(const QImage& img, float _longueur, float _largeur, float amplitude, int _nbHeight, int _nbWidth)
+{
+    if(_nbHeight == img.height() && _nbWidth == img.width())
+        simpleInitImage(img, _longueur, _largeur, amplitude);
+    else
+    {
+        //besoin d'interpolation
+
+
+        simpleInitTopo(_nbHeight, _nbWidth);
+    }
+}
+
+//construit un terrain avec le même nombre de point que le nombre de pixel de l'image
+void Terrain::simpleInitImage(const QImage& img, float _longueur, float _largeur, float _amplitude)
+{
+    int nbHeight = img.height(),
+        nbWidth = img.width();
+    float espX = _largeur/(nbWidth-1),
+          espY = _longueur/(nbHeight-1);
+
+    this->geom.resize(nbHeight*nbWidth);
+
+    for(int j = 0;  j < nbHeight;   j++)
+        for(int i = 0;  i < nbWidth;    i++)
+        {
+            Eigen::Vector3f& p = this->geom[i+j*nbWidth];
+            p(0) = i * espX;
+            p(1) = j * espY;
+            p(2) = (qGray(img.pixel(i, j))*_amplitude)/255.0;
+        }
+
+    this->simpleInitTopo(nbHeight, nbWidth);
+}
+
+void Terrain::simpleInitTopo(int nbHeight, int nbWidth)
+{
+    this->topo.reserve((nbHeight-1)*(nbWidth-1)*6); //grille 5p x 7p = 35p => 24 carrés (4*6) = 48 triangles = 144 int = (5-1) * (7-1) * 2 * 3
+
+    for(int j = 0; j < nbHeight-1; j++){
+        for(int i = 0; i < nbWidth-1; i++)
+        {
+            //triangle 1: 0,2,1
+            topo.push_back( i + j * nbWidth);
+            topo.push_back( i + (j+1) * nbWidth);
+            topo.push_back( (i+1) + j * nbWidth);
+
+            //triangle 2: 2,3,1
+            topo.push_back( i + (j+1) * nbWidth);
+            topo.push_back( (i+1) + (j+1) * nbWidth);
+            topo.push_back( (i+1) + j * nbWidth);
+        }
+    }
+}
+
+
 Eigen::Vector2d Terrain::getDimension()
 {
     //return Eigen::Vector2d(longueur*resolution*uniteDistance, largeur*resolution*uniteDistance);
@@ -259,6 +324,8 @@ void Terrain::generationTerrainParametre(Terrain &terrainBase, std::vector<ZoneT
     this->setGeom(G);
     //Terrain(G, terrainBase.getTopo(), terrainBase.longueur, terrainBase.largeur, terrainBase.resolution);
 }
+
+
 
 float Terrain::interpolation(float a, float b, float x)
 {

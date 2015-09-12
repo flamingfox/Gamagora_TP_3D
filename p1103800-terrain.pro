@@ -1,9 +1,8 @@
 TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle
-CONFIG -= qt
 
-INCLUDEPATH += C:/lib
+INCLUDEPATH += C:/librairie/Eigen/include
 
 SOURCES += main.cpp \
     mesh.cpp \

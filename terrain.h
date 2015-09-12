@@ -2,6 +2,7 @@
 #define TERRAIN_H
 
 #include "mesh.h"
+#include <QImage>
 
 class Terrain : public Mesh
 {
@@ -16,6 +17,9 @@ public:
     Terrain();
     Terrain(TYPE_TERRAIN_BASE type, int _longueur, int _largeur, int _resolution, float _uniteDistance);
     Terrain(TYPE_TERRAIN_BASE type, int _longueur, int _largeur, int _resolution, float _uniteDistance, std::vector<ZoneTerrain> parametre);
+
+    Terrain(const QImage& img, float _longueur, float _largeur, float amplitude, int _nbHeight, int _nbWidth);
+    Terrain(const QImage& img, float _longueur, float _largeur, float amplitude);
 
     Eigen::Vector2d getDimension();
 
@@ -40,6 +44,9 @@ private :
     void generationTerrainParametre(Terrain &terrainBase, std::vector<ZoneTerrain> parametre);
 
     float interpolation(float a, float b, float x);
+
+    void simpleInitImage(const QImage& img, float _longueur, float _largeur, float _amplitude);
+    void simpleInitTopo(int nbHeight, int nbWidth);
 };
 
 #endif // TERRAIN_H

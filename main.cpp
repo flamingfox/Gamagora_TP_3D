@@ -8,9 +8,27 @@
 #include "generationvegetation.h"
 #include <string>
 
+#include <QImage>   //enlever -qt dans le fichier .pro pour faire marcher
+
+void testTotal();
+void testImage(const QImage& img);
+
 int main(int argc, char *argv[])
 {
+    testImage(QImage("image.png"));
 
+    //testTotal();
+    return 0;
+}
+
+void testImage(const QImage& img)
+{
+    Terrain m = Terrain(img, 100, 100, 10);
+    m.save("image.obj");
+}
+
+void testTotal()
+{
     srand(time(NULL));
 
     std::cout << "Hello !" << std::endl << "World generating !" << std::endl;
@@ -108,5 +126,5 @@ int main(int argc, char *argv[])
         t.save("terrainVegetation"+ss.str()+".obj");
     }*/
 
-    return 0;
+    //return 0;
 }
