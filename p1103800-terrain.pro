@@ -4,6 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 INCLUDEPATH += C:/lib
+INCLUDEPATH += C:\Users\Rudi\Desktop\eigen3
 
 SOURCES += main.cpp \
     mesh.cpp \
@@ -21,4 +22,6 @@ HEADERS += \
     generationvegetation.h \
     arbre.h \
     terrain.h
+    terrain.h \
+    parametres.h
 

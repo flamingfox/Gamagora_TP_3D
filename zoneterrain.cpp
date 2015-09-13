@@ -18,6 +18,7 @@ float ZoneTerrain::getAltitudePoint(float x, float y)
     float retour = altitude;
 
     retour += NoiseGenerator::perlinNoise(x/coefficientNoiseX, y/coefficientNoiseY, harmoniqueNoise)*amplitudeNoise;
+    retour += NoiseGenerator::perlinNoise(x/coefficientNoiseX, y/coefficientNoiseY, harmoniqueNoise, SEED)*amplitudeNoise;
 
     return retour;
 }
