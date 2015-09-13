@@ -15,7 +15,11 @@ int main(int argc, char *argv[])
 
     std::cout << "Hello !" << std::endl << "World generating !" << std::endl;
 
-    Terrain m = Terrain(Terrain::PLAT, 150, 150, 2, 0.6);
+    Terrain m = Terrain(1500, 1500, 250, 250);
+    m.save("terrain.obj");
+
+
+    /*Terrain m = Terrain(Terrain::PLAT, 150, 150, 2, 0.6);
     m.save("plan.obj");
 
     m = Terrain(Terrain::SIMPLE, 150, 150, 2, 0.6);
@@ -32,7 +36,7 @@ int main(int argc, char *argv[])
 
     m = Terrain(Terrain::CRETE_NOISE_POINTE, 150, 150, 2, 0.6);
     m.save("TerrainCreteNoisePointe.obj");
-    m.rescale(5);
+    m.rescale(5);*/
 
     /*std::vector<ZoneTerrain> listZone;
 

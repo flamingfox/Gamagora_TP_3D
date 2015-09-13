@@ -1,24 +1,23 @@
 #include "zoneterrain.h"
 
-ZoneTerrain::ZoneTerrain(Eigen::Vector2f centre, float altitude, float rayonAttenuation, float harmoniqueNoise, int coefficientNoiseX, int coefficientNoiseY, float amplitudeNoise) :
+ZoneTerrain::ZoneTerrain(Eigen::Vector2f centre, float altitude, float rayonAttenuation, int coefficientNoiseX, int coefficientNoiseY, float amplitudeNoise) :
 centre(centre), altitude(altitude), rayonAttenuation(rayonAttenuation), coefficientNoiseX(coefficientNoiseX),
-coefficientNoiseY(coefficientNoiseY), amplitudeNoise(amplitudeNoise), harmoniqueNoise(harmoniqueNoise)
+coefficientNoiseY(coefficientNoiseY), amplitudeNoise(amplitudeNoise)
 {}
 
-ZoneTerrain::ZoneTerrain(Eigen::Vector2f centre, float altitude, float rayonAttenuation, float harmoniqueNoise, int coefficientNoiseX, int coefficientNoiseY) :
-ZoneTerrain(centre, altitude, rayonAttenuation, harmoniqueNoise, 1, 1, 1)
+ZoneTerrain::ZoneTerrain(Eigen::Vector2f centre, float altitude, float rayonAttenuation, int coefficientNoiseX, int coefficientNoiseY) :
+ZoneTerrain(centre, altitude, rayonAttenuation, 1, 1, 1)
 {}
 
-ZoneTerrain::ZoneTerrain(Eigen::Vector2f centre, float altitude, float rayonAttenuation, float harmoniqueNoise) :
-    ZoneTerrain(centre, altitude, rayonAttenuation, harmoniqueNoise, 1, 1)
+ZoneTerrain::ZoneTerrain(Eigen::Vector2f centre, float altitude, float rayonAttenuation) :
+    ZoneTerrain(centre, altitude, rayonAttenuation, 1, 1)
 {}
 
 float ZoneTerrain::getAltitudePoint(float x, float y)
 {
     float retour = altitude;
 
-    retour += NoiseGenerator::perlinNoise(x/coefficientNoiseX, y/coefficientNoiseY, harmoniqueNoise)*amplitudeNoise;
-    retour += NoiseGenerator::perlinNoise(x/coefficientNoiseX, y/coefficientNoiseY, harmoniqueNoise, SEED)*amplitudeNoise;
+    retour += NoiseGenerator::perlinNoise(x/coefficientNoiseX, y/coefficientNoiseY, SEED)*amplitudeNoise;
 
     return retour;
 }

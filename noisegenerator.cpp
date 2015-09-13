@@ -4,20 +4,15 @@
 NoiseGenerator::NoiseGenerator()
 {}
 
-double NoiseGenerator::perlinNoise(double x,double y, float harmonique)
-double NoiseGenerator::perlinNoise(double x,double y, float harmonique, int seed)
+double NoiseGenerator::perlinNoise(double x,double y, int seed)
 {
     double floorx=(double)((int)x);//This is kinda a cheap way to floor a double integer.
     double floory=(double)((int)y);
     double s,t,u,v;//Integer declaration
-    s = findnoise2(floorx,floory, harmonique);
-    t = findnoise2(floorx+1,floory, harmonique);
-    u = findnoise2(floorx,floory+1, harmonique); //Get the surrounding pixels to calculate the transition.
-    v = findnoise2(floorx+1,floory+1, harmonique);
-    s = findnoise2(floorx,floory, harmonique, seed);
-    t = findnoise2(floorx+1,floory, harmonique, seed);
-    u = findnoise2(floorx,floory+1, harmonique, seed); //Get the surrounding pixels to calculate the transition.
-    v = findnoise2(floorx+1,floory+1, harmonique, seed);
+    s = findnoise2(floorx,floory, seed);
+    t = findnoise2(floorx+1,floory, seed);
+    u = findnoise2(floorx,floory+1, seed); //Get the surrounding pixels to calculate the transition.
+    v = findnoise2(floorx+1,floory+1, seed);
     double int1=interpolate(s,t,x-floorx);//Interpolate between the values.
     double int2=interpolate(u,v,x-floorx);//Here we use x-floorx, to get 1st dimension. Don't mind the x-floorx thingie, it's part of the cosine formula.
     return interpolate(int1,int2,y-floory);//Here we use y-floory, to get the 2nd dimension.
@@ -25,18 +20,17 @@ double NoiseGenerator::perlinNoise(double x,double y, float harmonique, int seed
 
 double NoiseGenerator::perlinNoise(double x, double y)
 {
-    return perlinNoise(x, y, 1);
-    return perlinNoise(x, y, 1, SEED);
+    double tmp = perlinNoise(x, y, SEED);
+    return tmp;
+    //return (tmp+1)/2;
 }
 
-double NoiseGenerator::findnoise2(double x, double y, float harmonique)
-double NoiseGenerator::findnoise2(double x, double y, float harmonique, int seed)
+double NoiseGenerator::findnoise2(double x, double y, int seed)
 {
-    int n=(int)x+(int)y*(57/harmonique);
+    int n=(int)x+(int)y*57;
     n=(n<<13)^n;
-    int nn=(n*(n*n*(60493+19990303)+1376312589)&0x7fffffff) / harmonique;
-    int nn=(n*(n*n*(60493+19990303-seed)+1376312589)&0x7fffffff) / harmonique;
-    return 1.0-((double)nn/ (1073741824.0 / harmonique) );
+    int nn= (n * (n * n * seed + 789221) + 1376312589)&0x7fffffff;
+    return 1.0-((double)nn/ 1073741824.0 );
 }
 
 double NoiseGenerator::interpolate(double a, double b, double x)

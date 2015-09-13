@@ -10,8 +10,6 @@ SOURCES += main.cpp \
     mesh.cpp \
     noisegenerator.cpp \
     zoneterrain.cpp \
-    generationvegetation.cpp \
-    arbre.cpp \
     terrain.cpp
 
 HEADERS += \
@@ -19,9 +17,5 @@ HEADERS += \
     mesh.h \
     noisegenerator.h \
     zoneterrain.h \
-    generationvegetation.h \
-    arbre.h \
-    terrain.h
     terrain.h \
     parametres.h
-
