@@ -36,15 +36,11 @@ public :
     void Rotation(const Eigen::Vector3f T);
     void Rotation(const float rX, const float rY, const float rZ);
 
-
-    static Mesh cylindre(const Eigen::Vector3f& centreCercleA, const Eigen::Vector3f& centreCercleB, const float rayon);
-    static Mesh cylindre(const Eigen::Vector3f& centreCercleA, const Eigen::Vector3f& centreCercleB, const float rayon, const int resolution);
-    static Mesh cone(const Eigen::Vector3f &centreCercle, const Eigen::Vector3f &pointe, const float rayon);
-    static Mesh cone(const Eigen::Vector3f &centreCercle, const Eigen::Vector3f &pointe, const float rayon, const int resolution);
-    static Mesh sphere(const Eigen::Vector3f& centre, const float rayon);
-    static Mesh sphere(const Eigen::Vector3f& centre, const float rayon, const int resolution);
-    static Mesh galette(const Eigen::Vector3f& centre, const float rayon);
-    static Mesh galette(const Eigen::Vector3f& centre, const float rayon, const int resolution);
+    #define DEFAULT_RESOLUTION 32
+    static Mesh cylindre(const Eigen::Vector3f& centreCercleA, const Eigen::Vector3f& centreCercleB, const float rayon, int resolution = DEFAULT_RESOLUTION);
+    static Mesh cone(const Eigen::Vector3f &centreCercle, const Eigen::Vector3f &pointe, const float rayon, int resolution = DEFAULT_RESOLUTION);
+    static Mesh sphere(const Eigen::Vector3f& centre, const float rayon, int resolution = DEFAULT_RESOLUTION);
+    static Mesh galette(const Eigen::Vector3f& centre, const float rayon, int resolution = DEFAULT_RESOLUTION);
 
     static Mesh arbreGalette(const Eigen::Vector3f &centreCercleA, const Eigen::Vector3f &centreCercleB, const float rayon1, const Eigen::Vector3f &centreCercleC, const float rayon2);
     static Mesh arbreSpherique(const Eigen::Vector3f &centreCercleA, const Eigen::Vector3f &centreCercleB, const float rayon1, const Eigen::Vector3f &centreCercleC, const float rayon2);
@@ -58,15 +54,18 @@ public :
 
     void rescale(float scale);
 
-    std::vector<Eigen::Vector3f> getGeom();
-    std::vector<int> getTopo();
+    std::vector<Eigen::Vector3f> getGeom() const;
+    std::vector<int> getTopo() const;
     void setGeom(std::vector<Eigen::Vector3f> geom);
     void setTopo(std::vector<int> topo);
+    size_t nbGeom() const;
+    size_t nbTopo() const;
+
+    //std::pair<Eigen::Vector3f,Eigen::Vector3f> calculBoite();
 
 private :
 
-    static Mesh generationSphere(const Eigen::Vector3f& centre, const float rayon);
-    static Mesh generationSphere(const Eigen::Vector3f& centre, const float rayon, const int resolution);
+    static Mesh generationSphere(const Eigen::Vector3f& centre, const float rayon, const int resolution = DEFAULT_RESOLUTION);
 
 };
 

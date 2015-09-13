@@ -10,15 +10,25 @@
 
 #include <QImage>   //enlever -qt dans le fichier .pro pour faire marcher
 
+using namespace Eigen;
 void testTotal();
 void testImage(const QImage& img);
+void testSphere();
+
 
 int main(int argc, char *argv[])
 {
-    testImage(QImage("image.png"));
+    testSphere();
+    //testImage(QImage("image.png"));
 
     //testTotal();
     return 0;
+}
+
+void testSphere()
+{
+    Mesh m = Mesh::sphere(Vector3f(0,0,0),2);
+    m.save("sphere.obj");
 }
 
 void testImage(const QImage& img)

@@ -29,6 +29,8 @@ void Mesh::Rotation(const float rX, const float rY, const float rZ){
     for(int i=0; i<geom.size(); i++){
         geom[i] = matriceRotation*geom[i];
     }
+    /*for(std::vector<Eigen::Vector3f>::iterator it = geom.begin();   it != geom.end();   ++it)
+        *it *= matriceRotation;*/
 }
 
 /* -------------------------------------------- */
@@ -39,12 +41,7 @@ void Mesh::Rotation(const float rX, const float rY, const float rZ){
 /* -------------------------------------------- */
 /* -------------------------------------------- */
 
-Mesh Mesh::cylindre(const Eigen::Vector3f &centreCercleA, const Eigen::Vector3f &centreCercleB, const float rayon)
-{
-    return cylindre(centreCercleA, centreCercleB, rayon, 32);
-}
-
-Mesh Mesh::cylindre(const Eigen::Vector3f& centreCercleA, const Eigen::Vector3f& centreCercleB, const float rayon, const int resolution)
+Mesh Mesh::cylindre(const Eigen::Vector3f& centreCercleA, const Eigen::Vector3f& centreCercleB, const float rayon, int resolution)
 {
     std::vector<Eigen::Vector3f> v;
     std::vector<int> t;
@@ -126,10 +123,6 @@ Mesh Mesh::cylindre(const Eigen::Vector3f& centreCercleA, const Eigen::Vector3f&
     return retour;
 }
 
-Mesh Mesh::cone(const Eigen::Vector3f &centreCercle, const Eigen::Vector3f &pointe, const float rayon)
-{
-    return cone(centreCercle, pointe, rayon, 32);
-}
 
 Mesh Mesh::cone(const Eigen::Vector3f &centreCercle, const Eigen::Vector3f &pointe, const float rayon, const int resolution)
 {
@@ -202,21 +195,11 @@ Mesh Mesh::cone(const Eigen::Vector3f &centreCercle, const Eigen::Vector3f &poin
     return retour;
 }
 
-Mesh Mesh::sphere(const Eigen::Vector3f &centre, const float rayon)
-{
-    return sphere(centre, rayon, 32);
-}
-
 Mesh Mesh::sphere(const Eigen::Vector3f &centre, const float rayon, const int resolution)
 {
     Mesh m = generationSphere(Eigen::Vector3f(0,0,0), rayon, resolution);
     m.Translation(centre);
     return m;
-}
-
-Mesh Mesh::galette(const Eigen::Vector3f &centre, const float rayon)
-{
-    return galette(centre, rayon, 32);
 }
 
 Mesh Mesh::galette(const Eigen::Vector3f &centre, const float rayon, const int resolution)
@@ -279,7 +262,6 @@ void Mesh::save(const std::string name){
 
     for(int i = 0 ; i < topo.size(); i += 3){
         obj << "f " << std::setprecision(4) << topo[i] + 1 << " " << topo[i+1] + 1 << " "<< topo[i+2] + 1 << "\n";
-
     }
 
     obj << "\n";
@@ -293,11 +275,13 @@ void Mesh::merge(const Mesh &delta)
 {
     if(&delta != this){
         int taille = geom.size();
+        geom.reserve(taille+delta.nbGeom());
 
         for(int i=0; i< delta.geom.size(); i++){
             geom.push_back(delta.geom[i]);
         }
 
+        topo.reserve(this->nbTopo()+delta.nbTopo());
         for(int i=0; i< delta.topo.size(); i++){
             topo.push_back(delta.topo[i] + taille );
         }
@@ -306,9 +290,11 @@ void Mesh::merge(const Mesh &delta)
 
 void Mesh::rescale(float scale)
 {
-    for(int i=0; i < geom.size(); i++){
+    for(std::vector<Eigen::Vector3f>::iterator it = geom.begin();   it != geom.end();   ++it)
+        *it *= scale;
+    /*for(int i=0; i < geom.size(); i++){
         geom[i] *= scale;
-    }
+    }*/
 }
 
 /* -------------------------------------------- */
@@ -319,12 +305,12 @@ void Mesh::rescale(float scale)
 /* -------------------------------------------- */
 /* -------------------------------------------- */
 
-std::vector<Eigen::Vector3f> Mesh::getGeom()
+std::vector<Eigen::Vector3f> Mesh::getGeom() const
 {
     return geom;
 }
 
-std::vector<int> Mesh::getTopo()
+std::vector<int> Mesh::getTopo() const
 {
     return topo;
 }
@@ -339,9 +325,14 @@ void Mesh::setTopo(std::vector<int> topo)
     this->topo = topo;
 }
 
-Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon)
+size_t Mesh::nbGeom() const
 {
-    return generationSphere(centre, rayon, 32);
+    return this->geom.size();
+}
+
+size_t Mesh::nbTopo() const
+{
+    return this->topo.size();
 }
 
 Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, const int resolution)
@@ -371,10 +362,9 @@ Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, co
 
     float ecartRadiant = (2*M_PI)/resolution;
 
+    tmp[0].reserve(resolution/2);
     for(int i=0; i<= (resolution/2); i++){
-
         p = cos(i*ecartRadiant)*vecteurPoint1+ sin(i*ecartRadiant)*normalCercleOrigine  + centre;
-
 
         //std::cout << p << std::endl;
 
@@ -382,6 +372,8 @@ Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, co
     }
 
     Eigen::Matrix3f matriceRotation;
+    //Eigen::Matrix3f matriceRotation(3,3);
+
 
     //rotation Z
     /*matriceRotation(0) = 0; matriceRotation(1) = 0; matriceRotation(2) = 0;
@@ -397,6 +389,9 @@ Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, co
     matriceRotation(0) = 1; matriceRotation(1) = 0; matriceRotation(2) = 0;
     matriceRotation(3) = 0; matriceRotation(4) = 0; matriceRotation(5) = 0;
     matriceRotation(6) = 0; matriceRotation(7) = 0; matriceRotation(8) = 0;
+    /*matriceRotation(0,0) = 1; matriceRotation(0,1) = 0; matriceRotation(0,2) = 0;
+    matriceRotation(1,0) = 0; matriceRotation(1,1) = 0; matriceRotation(1,2) = 0;
+    matriceRotation(2,0) = 0; matriceRotation(2,1) = 0; matriceRotation(2,2) = 0;*/
 
     for(int i=1; i< resolution; i++){
 
@@ -417,9 +412,13 @@ Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, co
         matriceRotation(7) = sin(i*ecartRadiant);
         matriceRotation(5) = -sin(i*ecartRadiant);
         matriceRotation(8) = cos(i*ecartRadiant);
+        /*matriceRotation(1,1) = cos(i*ecartRadiant);
+        matriceRotation(2,1) = sin(i*ecartRadiant);
+        matriceRotation(1,2) = -sin(i*ecartRadiant);
+        matriceRotation(2,2) = cos(i*ecartRadiant);*/
 
+        tmp[i].reserve((resolution/2));
         for(int j=0; j<= (resolution/2); j++){
-
             p = matriceRotation * tmp[0].at(j);
 
             //std::cout << p << std::endl;
@@ -432,7 +431,6 @@ Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, co
 
     for (int i=1; i< resolution/2 ; i++){
         for(int j=0; j< resolution ; j++){
-
             p = tmp[j].at(i);
 
             v.push_back(p);
@@ -493,3 +491,20 @@ Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, co
 
     return retour;
 }
+
+/*******************InOut********************/
+
+
+//std::pair<Eigen::Vector3f,Eigen::Vector3f> Mesh::calculBoite()
+//{
+    /*if(this->nbGeom() == 0)
+        return 0;*/
+    /*Eigen::Vector3f min(geom[0]), max(geom[0]);
+
+    std::vector<Eigen::Vector3f>::const_iterator it = geom.begin();
+    ++it;
+    for(    ;  it != geom.end();  ++it)
+    {
+        //pas fini.
+    }*/
+//}
