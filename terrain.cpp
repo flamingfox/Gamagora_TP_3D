@@ -50,11 +50,25 @@ void Terrain::generationTerrain(int width, int lenght, int nbPointLongueur, int 
 {
     plan(lenght, width, nbPointLongueur, nbPointLargeur);
     applicationNoise(200, 250);
-    this->save("terrainNoise.obj");
+    this->save("terrainNoise1.obj");
     applicationRidge(150, 50, 500);
-    this->save("terrainRidge.obj");
-    applicationWarp(25, 100);
-    this->save("terrainWarp.obj");
+    this->save("terrainRidge1.obj");
+    applicationWarp(30, 100);
+    this->save("terrainWarp1.obj");
+
+
+    applicationNoise(20, 100);
+    this->save("terrainNoise2.obj");
+    applicationRidge(150, 50, 400);
+    this->save("terrainRidge2.obj");
+    applicationWarp(10, 75);
+    this->save("terrainWarp2.obj");
+
+
+    applicationNoise(5, 50);
+    this->save("terrainNoise3.obj");
+    applicationWarp(5, 25);
+    this->save("terrainWarp3.obj");
 }
 
 void Terrain::plan(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur)
@@ -106,7 +120,7 @@ void Terrain::applicationNoise(int amplitude, int periode)
         float h = NoiseGenerator::perlinNoise( point(0)*(1.0/periode), point(1)*(1.0/periode) );
         h = (h+1)/2;
         h *= amplitude;
-        point(2) = h;
+        point(2) += h;
 
         listRetour.push_back(point);
     }
