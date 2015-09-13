@@ -14,12 +14,11 @@ protected :
     float coefficientNoiseX;
     float coefficientNoiseY;
     float amplitudeNoise;
-    float harmoniqueNoise;
 
 public:
-    ZoneTerrain(Eigen::Vector2f centre, float altitude, float rayonAttenuation, float harmoniqueNoise, int coefficientNoiseX, int coefficientNoiseY, float amplitudeNoise);
-    ZoneTerrain(Eigen::Vector2f centre, float altitude, float rayonAttenuation, float harmoniqueNoise, int coefficientNoiseX, int coefficientNoiseY);
-    ZoneTerrain(Eigen::Vector2f centre, float altitude, float rayonAttenuation, float harmoniqueNoise);
+    ZoneTerrain(Eigen::Vector2f centre, float altitude, float rayonAttenuation, int coefficientNoiseX, int coefficientNoiseY, float amplitudeNoise);
+    ZoneTerrain(Eigen::Vector2f centre, float altitude, float rayonAttenuation, int coefficientNoiseX, int coefficientNoiseY);
+    ZoneTerrain(Eigen::Vector2f centre, float altitude, float rayonAttenuation);
 
     float getAltitudePoint(float x, float y);
     float getPonderationPoint(float x, float y);
