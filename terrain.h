@@ -22,6 +22,8 @@ public:
 
     void generationTerrain(int width, int lenght, int nbPointLongueur, int nbPointLargeur);
 
+    bool inOut(Eigen::Vector3f pointXYZ);
+
 private :
 
     /***** fonction de génération de terrain ******/

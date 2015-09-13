@@ -71,6 +71,15 @@ void Terrain::generationTerrain(int width, int lenght, int nbPointLongueur, int 
     this->save("terrainWarp3.obj");
 }
 
+bool Terrain::inOut(Eigen::Vector3f pointXYZ)
+{
+    if(pointXYZ(2) > getHauteur(pointXYZ(0), pointXYZ(1))){
+        return false;
+    }
+
+    return true;
+}
+
 void Terrain::plan(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur)
 {
     std::vector<Eigen::Vector3f> g;
