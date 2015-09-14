@@ -1,7 +1,9 @@
 #ifndef RAYON_H
 #define RAYON_H
+
 #include <Eigen/Core>
-#include "mesh.h"
+#include <Eigen/Geometry>
+#include <math.h>
 
 class Rayon
 {
@@ -11,10 +13,10 @@ protected:
 public:
     Rayon();
 
-    void Reflect();
-    Eigen::Vector3f getOrigine();
-    Eigen::Vector3f getDirection();
+    Eigen::Vector3f Reflect(Eigen::Vector3f normal);
 
+    inline Eigen::Vector3f getOrigine()const{return _origine;}
+    inline Eigen::Vector3f getDirection()const{return _direction;}
 
 };
 

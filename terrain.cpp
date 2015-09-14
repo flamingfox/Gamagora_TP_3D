@@ -140,18 +140,18 @@ void Terrain::calculNormals()
 
 
 
-Eigen::Vector2d Terrain::getDimension()
+Eigen::Vector2d Terrain::getDimension() const
 {
     return Eigen::Vector2d( ( longueur-(longueur/nbPointLongueur) ),
                             ( largeur-(longueur/nbPointLargeur) ));
 }
 
-float Terrain::getHauteur(Eigen::Vector2f pointXY)
+float Terrain::getHauteur(Eigen::Vector2f pointXY) const
 {
     return getHauteur(pointXY(0), pointXY(1));
 }
 
-float Terrain::getHauteur(float pointX, float pointY)
+float Terrain::getHauteur(float pointX, float pointY) const
 {
     Eigen::Vector2d dim = getDimension();
 
@@ -205,37 +205,33 @@ bool Terrain::inOut(Eigen::Vector3f pointXYZ)
     return true;
 }
 
-/*bool Terrain::interesct(const Rayon& rayon, float alpha) const{
-    float tmin = 0.0;
-    float tmax = 1000.0;
-    float t = tmin;
+bool Terrain::interesct(const Rayon& rayon, float coeffDistance) const{
+
+    float dmin = 0.0;
+    float dmax = 1000.0;
+    coeffDistance = dmin;
+
     for( int i=0; i<256; i++ )
     {
-        vec3 pos = ro + t*rd;
-        float h = pos.y - terrainM( pos.xz );
-        if( h<(0.002*t) || t>tmax ) break;
-        t += 0.5*h;
+        Eigen::Vector3f pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
+        float h = pos(2) - getHauteur( pos(0), pos(1) );
+
+        if( h <(0.002 * coeffDistance) ) {
+                return true;
+        }else if(coeffDistance > dmax )
+                break;
+
+        coeffDistance += 0.5*h;
     }
 
-    return t;
     return false;
-}*/
+}
 
 void Terrain::plan(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur)
 {
     std::vector<Eigen::Vector3f> g;
     g.reserve(_nbPointLongueur*_nbPointLargeur);
 
-    //float progressionLongueur = _longueur/(_nbPointLongueur-1.0f);      //2 points, 10m => point n2 = (10,0) => (10*(2-1),(
-    //float progressionLargeur = _largeur/(_nbPointLargeur-1.0f);
-
-    /*for(float i = 0; i < _longueur; i+= progressionLongueur )
-    {
-        for(float j = 0; j < _largeur; j+= progressionLargeur )
-        {
-            g.push_back(Eigen::Vector3f(i, j, 0));
-        }
-    }*/
     for(int j = 0;  j < _nbPointLongueur;   j++)
         for(int i = 0;  i < _nbPointLargeur;    i++)
             g.push_back(Eigen::Vector3f(((float)i/(_nbPointLargeur-1))*_largeur, ((float)j/(_nbPointLongueur-1))*_longueur, 0));
@@ -331,154 +327,6 @@ void Terrain::applicationWarp(int amplitude, int periode)
     this->setGeom(listRetour);
 
 }
-
-/*void Terrain::generationTerrainSimple(int width, int lenght, int _resolution)
-{
-
-    /*************************************/
-    /* Modification points */
-    /*************************************/
-
-    /*std::vector<Eigen::Vector3f> listRetour;
-    Eigen::Vector3f point;
-
-    for(long i = 0; i < geom.size(); i++)
-    {
-        point = geom.at(i);
-
-        float h = NoiseGenerator::perlinNoise(point(0)*0.1 ,point(1)*0.1) + 0.5;
-        h *= 10;
-        point(2) = h;
-
-        listRetour.push_back(point);
-    }
-
-    //retour.setGeom(listRetour);
-
-    this->setGeom(listRetour);
-}
-
-void Terrain::generationTerrain3noise(int width, int lenght, float _uniteDistance, int _resolution, bool sauvegardeRecursive)
-{
-    Terrain::generationTerrainSimple(width, lenght, _uniteDistance, _resolution, sauvegardeRecursive);
-
-    /*************************************/
-    /* Génération points */
-    /*************************************/
-
-    /*std::vector<Eigen::Vector3f> listRetour;
-    Eigen::Vector3f point;
-
-    for(long i = 0; i < geom.size(); i++)
-    {
-        point = geom.at(i);
-
-        float x = point(0);
-        float y = point(1);
-        float h = point(2);
-        h += 2*NoiseGenerator::perlinNoise(x/10 ,y/10);
-        h += NoiseGenerator::perlinNoise(x/2 ,y/2);
-
-        point(2) = h;
-
-        listRetour.push_back(point);
-
-    }
-
-    this->setGeom(listRetour);
-}
-
-void Terrain::generationTerrainCrete(int width, int lenght, float _uniteDistance, int _resolution, bool sauvegardeRecursive)
-{
-    generationTerrain3noise(width, lenght, _uniteDistance, _resolution, sauvegardeRecursive);
-
-    float ZMax = 0.0;
-    int NBPoints = geom.size();
-
-    for(int i = 0; i < NBPoints; i++)
-    {
-
-        geom.at(i)(2) *= ( geom.at(i)(2) /  10 );
-
-    }
-}
-
-void Terrain::generationTerrainCreteNoise(int width, int lenght, float _uniteDistance, int _resolution, bool sauvegardeRecursive)
-{
-    generationTerrainCrete(width, lenght, _uniteDistance, _resolution, sauvegardeRecursive);
-    int NBPoints = geom.size();
-
-    for(int i = 0; i < NBPoints; i++)
-    {
-        float x = geom.at(i)(0);
-        float y = geom.at(i)(1);
-
-        //double noise = NoiseGenerator::perlinNoise(x/5 ,y/8);
-
-        double noiseAmplitude = ( NoiseGenerator::perlinNoise(x/50 ,y/15)+0.75 ) /2;
-        noiseAmplitude -= 0.2*( NoiseGenerator::perlinNoise(x/10 ,y/5)+0.75 ) /2;
-
-        geom.at(i)(2) *= noiseAmplitude;
-    }
-}
-
-void Terrain::generationTerrainCreteNoisePointe(int width, int lenght, float _uniteDistance, int _resolution, bool sauvegardeRecursive)
-{
-    generationTerrain3noise(width, lenght, _uniteDistance, _resolution, sauvegardeRecursive);
-
-    int NBPoints = geom.size();
-
-    for(int i = 0; i < NBPoints; i++)
-    {
-        float x = geom.at(i)(0);
-        float y = geom.at(i)(1);
-
-        double noise = NoiseGenerator::perlinNoise(x ,y);
-
-        double noiseAmplitude = ( NoiseGenerator::perlinNoise(x/10 ,y/5)+0.5 ) /4;
-
-        if(noiseAmplitude <=0)
-            noiseAmplitude = 0;
-
-        geom.at(i)(2) *=  geom.at(i)(2)/( 5 + noise ) * noiseAmplitude;
-    }
-}*/
-
-/*void Terrain::generationTerrainParametre(Terrain &terrainBase, std::vector<ZoneTerrain> parametre)
-{
-    std::vector<Eigen::Vector3f> G = terrainBase.getGeom();
-    int NBPoints = G.size();
-
-    for(int i = 0; i < NBPoints; i++)
-    {
-        float x = G.at(i)(0);
-        float y = G.at(i)(1);
-        float h = 0;
-        float sommePonderation = 0;
-
-        for(int pi=0; pi < parametre.size(); pi++){
-            sommePonderation += parametre.at(pi).getPonderationPoint(x, y);
-        }
-
-        if(sommePonderation > 1){
-            for(int pi=0; pi < parametre.size(); pi++){
-                h+= (parametre.at(pi).getPonderationPoint(x, y)/sommePonderation) * parametre.at(pi).getAltitudePoint(x,y);
-            }
-            sommePonderation = 1;
-        }
-        else if(sommePonderation > 0){
-            for(int pi=0; pi < parametre.size(); pi++){
-                h+= parametre.at(pi).getPonderationPoint(x, y) * parametre.at(pi).getAltitudePoint(x,y);
-            }
-
-            h+= G.at(i)(2) * (1-sommePonderation);
-            G.at(i)(2) = h;
-        }
-    }
-
-    this->setGeom(G);
-    //Terrain(G, terrainBase.getTopo(), terrainBase.longueur, terrainBase.largeur, terrainBase.resolution);
-}*/
 
 float Terrain::maxElevation()
 {
