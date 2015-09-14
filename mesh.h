@@ -21,7 +21,7 @@ class Mesh{
 
 protected:
     std::vector<Eigen::Vector3f> geom;
-    //std::vector<Eigen::Vector3f> normal; //!!!! a ajouté !!!!
+    std::vector<Eigen::Vector3f> normals; //!!!! a ajouté !!!!
     std::vector<int> topo;
 
 public :
@@ -60,6 +60,10 @@ public :
     void setTopo(std::vector<int> topo);
     size_t nbGeom() const;
     size_t nbTopo() const;
+
+
+    void normalsTriangles();
+    Eigen::Vector3f normalTriangle(int i) const;
 
     //std::pair<Eigen::Vector3f,Eigen::Vector3f> calculBoite();
 
