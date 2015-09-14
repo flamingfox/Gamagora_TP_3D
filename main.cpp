@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     //testImage(QImage("image.png"));
 
     testTotal();
-    testNormals();
+    //testNormals();
 
     return 0;
 }

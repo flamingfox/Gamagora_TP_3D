@@ -1,5 +1,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
+
+#include <iostream>
+
 #include <Eigen/Core>
 
 class Camera
@@ -14,7 +17,10 @@ protected:
     // une distance lu et lv
 public:
     Camera();
-    Camera(Eigen::Vector3f pos, Eigen::Vector3f at);
+    Camera(Eigen::Vector3f pOr, Eigen::Vector3f pAt, int l, int h);
+
+    Eigen::Vector3f vecScreen(int &i, int &j) const;
+    Eigen::Vector3f pointScreen(int &i, int &j) const;
 
 };
 

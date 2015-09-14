@@ -13,16 +13,10 @@ protected:
 public:
     Rayon();
 
-    Reflect(Eigen::Vector3f normal);
+    inline Eigen::Vector3f getOrigine()const{return _origine;}
+    inline Eigen::Vector3f getDirection()const{return _direction;}
 
-    inline Eigen::Vector3f Rayon::getOrigine()const{return _origine;}
-    inline Eigen::Vector3f Rayon::getDirection()const{return _direction;}
-
-signals:
-
-    Reflect();
-    Eigen::Vector3f getOrigine() const;
-    Eigen::Vector3f getDirection() const;
+    Eigen::Vector3f Reflect(Eigen::Vector3f normal);
 
 };
 
