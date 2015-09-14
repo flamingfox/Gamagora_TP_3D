@@ -8,9 +8,10 @@
 class Terrain : public Mesh
 {
 protected :
-    float uniteDistance;
+    //float uniteDistance;
     int longueur, largeur;
     int nbPointLongueur, nbPointLargeur;
+    std::vector<Eigen::Vector3f> normalsPoints;
 
 public:
     Terrain();
@@ -28,6 +29,8 @@ public:
     void generationTerrain(int width, int lenght, int nbPointLongueur, int nbPointLargeur);
 
     bool inOut(Eigen::Vector3f pointXYZ);
+
+    void calculNormals();
 
 private :
 
