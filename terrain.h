@@ -4,6 +4,7 @@
 #include "mesh.h"
 #include <QImage>
 #include "interpolation.h"
+#include "rayon.h"
 
 class Terrain : public Mesh
 {
@@ -31,7 +32,7 @@ public:
     bool inOut(Eigen::Vector3f pointXYZ);
 
     void calculNormals();
-    bool Terrain::interesct(const Rayon&, float alpha)const;
+    bool interesct(const Rayon& rayon, float alpha)const;
 
 private :
 

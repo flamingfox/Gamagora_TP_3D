@@ -11,13 +11,11 @@ protected:
 public:
     Rayon();
 
-    Reflect();
+    void Reflect();
     Eigen::Vector3f getOrigine();
     Eigen::Vector3f getDirection();
 
-signals:
 
-public slots:
 };
 
 #endif // RAYON_H

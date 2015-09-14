@@ -2,5 +2,6 @@ debug/
 release/
 Makefile*
 *.obj
-*.pro
 *.pro.*
+*.autosave
+p1103800-terrain.pro.user

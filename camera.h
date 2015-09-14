@@ -16,9 +16,6 @@ public:
     Camera();
     Camera(Eigen::Vector3f pos, Eigen::Vector3f at);
 
-signals:
-
-public slots:
 };
 
 #endif // CAMERA_H

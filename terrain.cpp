@@ -205,7 +205,7 @@ bool Terrain::inOut(Eigen::Vector3f pointXYZ)
     return true;
 }
 
-bool Terrain::interesct(const Rayon&, float alpha){
+/*bool Terrain::interesct(const Rayon& rayon, float alpha) const{
     float tmin = 0.0;
     float tmax = 1000.0;
     float t = tmin;
@@ -219,7 +219,7 @@ bool Terrain::interesct(const Rayon&, float alpha){
 
     return t;
     return false;
-}
+}*/
 
 void Terrain::plan(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur)
 {
