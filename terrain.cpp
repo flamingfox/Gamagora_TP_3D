@@ -99,6 +99,35 @@ void Terrain::simpleInitTopo(int nbHeight, int nbWidth)
     }
 }
 
+/*void Terrain::calculNormal()
+{
+    this->normalsTriangles();   //reconstruit toutes les nornales des triangles du terrain.
+    //maintenant, on calcul les normales des points
+    std::vector<Eigen::Vector3f> normalsPoints;
+
+    for(int j = 0;  j < nbPointLongueur;    j++)
+        for(int i = 0;  i < nbPointLargeur; i++)
+        {
+            Eigen::Vector3f n(0,0,0);
+            if(j > 0)
+            {
+                int haut = i-nbPointLargeur;
+                if(i>0)
+                    n += normals[haut-1];
+                n+= normals[haut];
+                if(i<nbPointLargeur)
+                    n+= normals[haut+1];
+            }
+            if(i>0)
+                n += normals[i-1];
+            n+= normals[i];
+            if(i<nbPointLargeur)
+                n+= normals[i+1];
+        }
+}*/
+
+
+
 
 Eigen::Vector2d Terrain::getDimension()
 {

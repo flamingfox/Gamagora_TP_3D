@@ -508,3 +508,26 @@ Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, co
         //pas fini.
     }*/
 //}
+
+/*******************Normal******************/
+
+void Mesh::normalsTriangles()
+{
+    if(!normals.empty())
+        normals.clear();
+
+    normals.reserve(nbTopo()/3);
+    for(int i = 0;  i < nbTopo()/3; i++)
+        normals.push_back(this->normalTriangle(i));
+}
+
+Eigen::Vector3f Mesh::normalTriangle(int i) const
+{
+    int i1 = topo[i*3];
+    int i2 = topo[i1+1],  i3 = topo[i1+2];
+    Eigen::Vector3f s1(geom[i2]-geom[i1]),
+                    s2(geom[i3]-geom[i1]);
+
+    Eigen::Vector3f c(s1.cross(s2));
+    return c.normalized();
+}
