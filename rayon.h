@@ -10,8 +10,8 @@ protected:
     Eigen::Vector3f _direction; //direction du rayon
 public:
     Rayon();
-    Rayon(Eigen::Vector3f or,Eigen::Vector3f dr);
 
+    Reflect();
 signals:
 
 public slots:

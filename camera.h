@@ -14,6 +14,7 @@ protected:
     // une distance lu et lv
 public:
     Camera();
+    Camera(Eigen::Vector3f pos, Eigen::Vector3f at);
 
 signals:
 

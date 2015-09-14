@@ -29,6 +29,8 @@ public:
 
     bool inOut(Eigen::Vector3f pointXYZ);
 
+    bool Terrain::interesct(const Rayon&, float alpha)const;
+
 private :
 
     /***** fonction de génération de terrain ******/
