@@ -5,8 +5,9 @@
 //#include "arbre.h"
 #include "terrain.h"
 //#include "generationvegetation.h" //inclue la librairie pour "srand" et "time"
-#include <string>
+#include "box.h"
 
+#include <string>
 #include <QImage>   //enlever -qt dans le fichier .pro pour faire marcher
 
 using namespace Eigen;
@@ -14,6 +15,7 @@ void testTotal();
 void testImage(const QImage& img);
 void testSphere();
 void testNormals();
+void testBox();
 
 int main(int argc, char *argv[])
 {
@@ -21,6 +23,7 @@ int main(int argc, char *argv[])
     //testImage(QImage("image.png"));
 
     testTotal();
+    //testBox();
     //testNormals();
 
     return 0;
@@ -28,11 +31,19 @@ int main(int argc, char *argv[])
 
 void testNormals()
 {
-    Terrain m = Terrain(150, 150, 250, 250);
+    Terrain m = Terrain(150, 150, 5, 5);
     m.normalsTriangles();
     m.calculNormals();
     m.save("terrain.obj");
 
+}
+
+void testBox()
+{
+    Terrain m = Terrain(150, 150, 150, 150);
+    Box box(m);
+    std::cout << "min = " << std::endl << box.min << std::endl <<
+                 "max = " << std::endl << box.max << std::endl;
 }
 
 void testSphere()

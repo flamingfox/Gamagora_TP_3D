@@ -13,7 +13,8 @@ SOURCES += main.cpp \
     terrain.cpp \
     interpolation.cpp \
     camera.cpp \
-    rayon.cpp
+    rayon.cpp \
+    box.cpp
 
 HEADERS +=  mesh.h \
     noisegenerator.h \
@@ -22,4 +23,5 @@ HEADERS +=  mesh.h \
     parametres.h \
     interpolation.h \
     camera.h \
-    rayon.h
+    rayon.h \
+    box.h
