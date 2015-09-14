@@ -12,7 +12,7 @@ protected:
     Eigen::Vector3f _direction; //direction du rayon
 public:
     Rayon();
-
+    Rayon(Eigen::Vector3f origine, Eigen::Vector3f direction);
     Eigen::Vector3f Reflect(Eigen::Vector3f normal);
 
     inline Eigen::Vector3f getOrigine()const{return _origine;}
