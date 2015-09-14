@@ -18,20 +18,40 @@ Terrain::Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPoint
 
 /********************Terrain Image************************/
 
-Terrain::Terrain(const QImage &img, float _longueur, float _largeur, float amplitude)
+Terrain::Terrain(const QImage &img, float _longueur, float _largeur, float amplitude):
+    nbPointLongueur(img.height()), nbPointLargeur(img.width())
 {
     simpleInitImage(img, _longueur, _largeur, amplitude);
 }
 
 
-Terrain::Terrain(const QImage& img, float _longueur, float _largeur, float amplitude, int _nbHeight, int _nbWidth)
+Terrain::Terrain(const QImage& img, float _longueur, float _largeur, float _amplitude, int _nbHeight, int _nbWidth):
+    nbPointLongueur(_nbHeight), nbPointLargeur(_nbWidth)
 {
     if(_nbHeight == img.height() && _nbWidth == img.width())
-        simpleInitImage(img, _longueur, _largeur, amplitude);
+        simpleInitImage(img, _longueur, _largeur, _amplitude);
     else
     {
-        //besoin d'interpolation
+        geom.reserve(_nbHeight*_nbWidth);
 
+        for(int j = 0;  j < _nbHeight;   j++)
+        {
+            float y = j*(float)(img.height()-1)/(_nbHeight-1);
+            int y1 = floorf(y), y2 = ceilf(y);
+            for(int i = 0;  i < _nbWidth;    i++)
+            {
+                float x = i*(float)(img.width()-1)/(_nbWidth-1);
+                int x1 = floorf(x), x2 = ceilf(x);
+                float z = interp::interp_hermite2D(x,y,
+                                                  x1,y1,x2,y2,
+                                                  (qGray(img.pixel(x1, y1))*_amplitude)/255.0,
+                                                  (qGray(img.pixel(x1, y2))*_amplitude)/255.0,
+                                                  (qGray(img.pixel(x2, y1))*_amplitude)/255.0,
+                                                  (qGray(img.pixel(x2, y2))*_amplitude)/255.0
+                                                  );
+                this->geom.push_back(Eigen::Vector3f(((float)i/(_nbWidth-1))*_largeur, ((float)j/(_nbHeight-1))*_longueur, z));
+            }
+        }
 
         simpleInitTopo(_nbHeight, _nbWidth);
     }
@@ -148,21 +168,27 @@ bool Terrain::inOut(Eigen::Vector3f pointXYZ)
 void Terrain::plan(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur)
 {
     std::vector<Eigen::Vector3f> g;
-    std::vector<int> t;
+    g.reserve(_nbPointLongueur*_nbPointLargeur);
 
-    float progressionLongueur = _longueur/_nbPointLongueur;
-    float progressionLargeur = _largeur/_nbPointLargeur;
+    //float progressionLongueur = _longueur/(_nbPointLongueur-1.0f);      //2 points, 10m => point n2 = (10,0) => (10*(2-1),(
+    //float progressionLargeur = _largeur/(_nbPointLargeur-1.0f);
 
-    for(float i = 0; i < _longueur; i+= progressionLongueur )
+    /*for(float i = 0; i < _longueur; i+= progressionLongueur )
     {
         for(float j = 0; j < _largeur; j+= progressionLargeur )
         {
             g.push_back(Eigen::Vector3f(i, j, 0));
         }
-    }
+    }*/
+    for(int j = 0;  j < _nbPointLongueur;   j++)
+        for(int i = 0;  i < _nbPointLargeur;    i++)
+            g.push_back(Eigen::Vector3f(((float)i/(_nbPointLargeur-1))*_largeur, ((float)j/(_nbPointLongueur-1))*_longueur, 0));
 
-    for(long i = 0; i < _nbPointLongueur-1; i++){
-        for(long j = 0; j < _nbPointLargeur-1; j++){
+
+    std::vector<int> t;
+    t.reserve((_nbPointLongueur-1)*(_nbPointLargeur-1)*6);
+    for(int i = 0; i < _nbPointLongueur-1; i++){
+        for(int j = 0; j < _nbPointLargeur-1; j++){
 
             t.push_back( i + j * _nbPointLargeur);
             t.push_back( i + (j+1) * _nbPointLargeur);

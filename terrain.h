@@ -3,6 +3,7 @@
 
 #include "mesh.h"
 #include <QImage>
+#include "interpolation.h"
 
 class Terrain : public Mesh
 {

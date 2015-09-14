@@ -10,10 +10,12 @@ SOURCES += main.cpp \
     mesh.cpp \
     noisegenerator.cpp \
     zoneterrain.cpp \
-    terrain.cpp
+    terrain.cpp \
+    interpolation.cpp
 
 HEADERS +=  mesh.h \
     noisegenerator.h \
     zoneterrain.h \
     terrain.h \
-    parametres.h
+    parametres.h \
+    interpolation.h

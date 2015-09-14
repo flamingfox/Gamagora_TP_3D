@@ -18,8 +18,8 @@ void testSphere();
 
 int main(int argc, char *argv[])
 {
-    testSphere();
-    //testImage(QImage("image.png"));
+    //testSphere();
+    testImage(QImage("image.png"));
 
     //testTotal();
     return 0;
@@ -33,7 +33,7 @@ void testSphere()
 
 void testImage(const QImage& img)
 {
-    Terrain m = Terrain(img, 100, 100, 10);
+    Terrain m = Terrain(img, 100, 100, 10, 253, 253);
     m.save("image.obj");
 }
 
