@@ -1,5 +1,6 @@
 #ifndef RAYON_H
 #define RAYON_H
+
 #include <Eigen/Core>
 #include "mesh.h"
 
@@ -12,12 +13,9 @@ public:
     Rayon();
 
     Reflect();
-    Eigen::Vector3f getOrigine();
-    Eigen::Vector3f getDirection();
+    Eigen::Vector3f getOrigine() const;
+    Eigen::Vector3f getDirection() const;
 
-signals:
-
-public slots:
 };
 
 #endif // RAYON_H

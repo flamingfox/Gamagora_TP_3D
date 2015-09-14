@@ -4,6 +4,7 @@
 #include "mesh.h"
 #include <QImage>
 #include "interpolation.h"
+#include "rayon.h"
 
 class Terrain : public Mesh
 {
@@ -20,16 +21,16 @@ public:
     Terrain(const QImage& img, float _longueur, float _largeur, float amplitude, int _nbHeight, int _nbWidth);
     Terrain(const QImage& img, float _longueur, float _largeur, float amplitude);
 
-    Eigen::Vector2d getDimension();
+    Eigen::Vector2d getDimension() const;
 
-    float getHauteur(Eigen::Vector2f pointXY);
-    float getHauteur(float pointX, float pointY);
+    float getHauteur(Eigen::Vector2f pointXY) const;
+    float getHauteur(float pointX, float pointY) const;
 
     void generationTerrain(int width, int lenght, int nbPointLongueur, int nbPointLargeur);
 
     bool inOut(Eigen::Vector3f pointXYZ);
 
-    bool Terrain::interesct(const Rayon&, float alpha)const;
+    bool interesct(const Rayon& rayon, float coeffDistance) const;
 
 private :
 

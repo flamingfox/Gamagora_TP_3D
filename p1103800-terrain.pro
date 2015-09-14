@@ -3,7 +3,7 @@ CONFIG += console
 CONFIG -= app_bundle
 
 INCLUDEPATH += C:/librairie/Eigen/include
-INCLUDEPATH += C:/lib
+INCLUDEPATH += C:\lib
 INCLUDEPATH += C:\Users\Rudi\Desktop\eigen3
 
 SOURCES += main.cpp \

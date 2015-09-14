@@ -5,13 +5,11 @@ Rayon::Rayon()
 
 }
 
-Eigen::Vector3f Rayon::getOrigine(){
+Eigen::Vector3f Rayon::getOrigine() const{
     return _origine;
-
 }
 
-Eigen::Vector3f Rayon::getDirection(){
-
+Eigen::Vector3f Rayon::getDirection() const{
    return _direction;
 }
 
