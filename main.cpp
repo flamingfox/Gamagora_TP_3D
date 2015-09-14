@@ -2,10 +2,9 @@
 #include <sstream>
 
 #include "mesh.h"
-#include <Eigen/Core>
-#include "arbre.h"
+//#include "arbre.h"
 #include "terrain.h"
-#include "generationvegetation.h"
+//#include "generationvegetation.h" //inclue la librairie pour "srand" et "time"
 #include <string>
 
 #include <QImage>   //enlever -qt dans le fichier .pro pour faire marcher
@@ -14,7 +13,7 @@ using namespace Eigen;
 void testTotal();
 void testImage(const QImage& img);
 void testSphere();
-
+void testNormals();
 
 int main(int argc, char *argv[])
 {
@@ -22,7 +21,18 @@ int main(int argc, char *argv[])
     //testImage(QImage("image.png"));
 
     testTotal();
+    testNormals();
+
     return 0;
+}
+
+void testNormals()
+{
+    Terrain m = Terrain(150, 150, 250, 250);
+    m.normalsTriangles();
+    m.calculNormals();
+    m.save("terrain.obj");
+
 }
 
 void testSphere()
@@ -39,7 +49,7 @@ void testImage(const QImage& img)
 
 void testTotal()
 {
-    srand(time(NULL));
+    //srand(time(NULL));
 
     std::cout << "Hello !" << std::endl << "World generating !" << std::endl;
 

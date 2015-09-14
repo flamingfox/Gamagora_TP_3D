@@ -6,6 +6,7 @@ Terrain::Terrain() : longueur(0), largeur(0), nbPointLargeur(0), nbPointLongueur
 Terrain::Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur) : longueur(_longueur),
     largeur(_largeur), nbPointLongueur(_nbPointLongueur), nbPointLargeur(_nbPointLargeur)
 {
+    //plan(_longueur,_largeur,_nbPointLongueur,_nbPointLargeur);
     generationTerrain(largeur, longueur, nbPointLongueur, nbPointLargeur);
 }
 
@@ -86,45 +87,55 @@ void Terrain::simpleInitTopo(int nbHeight, int nbWidth)
     for(int j = 0; j < nbHeight-1; j++){
         for(int i = 0; i < nbWidth-1; i++)
         {
-            //triangle 1: 0,2,1
+            //triangle 1: 0,1,2
             topo.push_back( i + j * nbWidth);
-            topo.push_back( i + (j+1) * nbWidth);
             topo.push_back( (i+1) + j * nbWidth);
+            topo.push_back( i + (j+1) * nbWidth);
 
-            //triangle 2: 2,3,1
-            topo.push_back( i + (j+1) * nbWidth);
-            topo.push_back( (i+1) + (j+1) * nbWidth);
+            //triangle 2: 1,3,2
             topo.push_back( (i+1) + j * nbWidth);
+            topo.push_back( (i+1) + (j+1) * nbWidth);
+            topo.push_back( i + (j+1) * nbWidth);
         }
     }
 }
 
-/*void Terrain::calculNormal()
+void Terrain::calculNormals()
 {
-    this->normalsTriangles();   //reconstruit toutes les nornales des triangles du terrain.
+    //this->normalsTriangles();   //reconstruit toutes les nornales des triangles du terrain.
     //maintenant, on calcul les normales des points
-    std::vector<Eigen::Vector3f> normalsPoints;
+    this->normalsPoints.reserve(nbGeom());
 
-    for(int j = 0;  j < nbPointLongueur;    j++)
+    for(int j = 0;  j < nbPointLongueur;    j++)    {
         for(int i = 0;  i < nbPointLargeur; i++)
         {
             Eigen::Vector3f n(0,0,0);
+
+            int t6 = ((i+ j*nbPointLargeur)-j)*2;   //pour 5x5, p12: 12 = ligne 2:  t6 = (12-2)*2 = 20
+
+            if(j < nbPointLongueur-1)            {
+                if(i < nbPointLargeur-1)
+                    n += normals[t6];
+                if(i > 0)                {
+                    n += normals[t6-1];
+                    n += normals[t6-2];
+                }
+            }
             if(j > 0)
             {
-                int haut = i-nbPointLargeur;
-                if(i>0)
-                    n += normals[haut-1];
-                n+= normals[haut];
-                if(i<nbPointLargeur)
-                    n+= normals[haut+1];
+                int t3 = t6-(nbPointLargeur-1)*2;   //p12:  t3 = 20 - 4*2 = 12;
+                if(i < nbPointLargeur-1)
+                    n += normals[t3];
+                if(i > 0)                {
+                    n += normals[t3-1];
+                    n += normals[t3-2];
+                }
             }
-            if(i>0)
-                n += normals[i-1];
-            n+= normals[i];
-            if(i<nbPointLargeur)
-                n+= normals[i+1];
+
+            normalsPoints.push_back(n.normalized());
         }
-}*/
+    }
+}
 
 
 
@@ -228,16 +239,16 @@ void Terrain::plan(int _longueur, int _largeur, int _nbPointLongueur, int _nbPoi
 
     std::vector<int> t;
     t.reserve((_nbPointLongueur-1)*(_nbPointLargeur-1)*6);
-    for(int i = 0; i < _nbPointLongueur-1; i++){
-        for(int j = 0; j < _nbPointLargeur-1; j++){
 
+    for(int j = 0; j < _nbPointLongueur-1; j++){
+        for(int i = 0; i < _nbPointLargeur-1; i++)  {
             t.push_back( i + j * _nbPointLargeur);
-            t.push_back( i + (j+1) * _nbPointLargeur);
             t.push_back( (i+1) + j * _nbPointLargeur);
+            t.push_back( i + (j+1) * _nbPointLargeur);
 
-            t.push_back( i + (j+1) * _nbPointLargeur);
-            t.push_back( (i+1) + (j+1) * _nbPointLargeur);
             t.push_back( (i+1) + j * _nbPointLargeur);
+            t.push_back( (i+1) + (j+1) * _nbPointLargeur);
+            t.push_back( i + (j+1) * _nbPointLargeur);
         }
     }
 

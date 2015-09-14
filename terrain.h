@@ -9,9 +9,10 @@
 class Terrain : public Mesh
 {
 protected :
-    float uniteDistance;
+    //float uniteDistance;
     int longueur, largeur;
     int nbPointLongueur, nbPointLargeur;
+    std::vector<Eigen::Vector3f> normalsPoints;
 
 public:
     Terrain();
@@ -30,7 +31,12 @@ public:
 
     bool inOut(Eigen::Vector3f pointXYZ);
 
+<<<<<<< HEAD
     bool interesct(const Rayon& rayon, float coeffDistance) const;
+=======
+    void calculNormals();
+    bool Terrain::interesct(const Rayon&, float alpha)const;
+>>>>>>> 06539e21a015968038534aefffff4e7be08be829
 
 private :
 

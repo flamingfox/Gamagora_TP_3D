@@ -524,7 +524,7 @@ void Mesh::normalsTriangles()
 Eigen::Vector3f Mesh::normalTriangle(int i) const
 {
     int i1 = topo[i*3];
-    int i2 = topo[i1+1],  i3 = topo[i1+2];
+    int i2 = topo[i*3+1],  i3 = topo[i*3+2];
     Eigen::Vector3f s1(geom[i2]-geom[i1]),
                     s2(geom[i3]-geom[i1]);
 
