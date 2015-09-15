@@ -4,6 +4,7 @@
 #include "mesh.h"
 //#include "arbre.h"
 #include "terrain.h"
+#include "camera.h"
 //#include "generationvegetation.h" //inclue la librairie pour "srand" et "time"
 #include "box.h"
 
@@ -11,18 +12,22 @@
 #include <QImage>   //enlever -qt dans le fichier .pro pour faire marcher
 
 using namespace Eigen;
+
 void testTotal();
 void testImage(const QImage& img);
 void testSphere();
 void testNormals();
 void testBox();
+void testCamera();
+
 
 int main(int argc, char *argv[])
 {
     //testSphere();
     //testImage(QImage("image.png"));
 
-    testTotal();
+    //testTotal();
+    testCamera();
     //testBox();
     //testNormals();
 
@@ -56,6 +61,14 @@ void testImage(const QImage& img)
 {
     Terrain m = Terrain(img, 100, 100, 10);
     m.save("image.obj");
+}
+
+void testCamera(){
+
+    Camera cam(Vector3f(0,0,0),Vector3f(0,0,1),500,500);
+    //cam.generateImage(500,500).save("test2.png");
+    cam.rendu();
+
 }
 
 void testTotal()

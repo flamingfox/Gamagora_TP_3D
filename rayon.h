@@ -5,6 +5,8 @@
 #include <Eigen/Geometry>
 #include <math.h>
 
+
+
 class Rayon
 {
 protected:
@@ -17,7 +19,7 @@ public:
 
     inline Eigen::Vector3f getOrigine()const{return _origine;}
     inline Eigen::Vector3f getDirection()const{return _direction;}
-    inline Eigen::Vector3f setDirection(Eigen::Vector3f dir){_direction = dir;}
+    inline void setDirection(Eigen::Vector3f dir){_direction = dir;}
 
 };
 
