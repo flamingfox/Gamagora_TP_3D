@@ -42,7 +42,7 @@ Vector3f Camera::pointScreen(int &i, int &j) const
 
 bool Camera::SetPixel(QImage *img, int x, int y, QColor color){
     //qDebug()<<color;
-    img->setPixel(x,y,color.rgb());
+    img->setPixel(x,y,color.rgba());
     return true;
 }
 
@@ -68,7 +68,9 @@ bool Camera::rendu(){
             }
             //RENDU::rendu(x,y,zonetouchee,objleplusproche,r);
             //qDebug()<<x;
-            SetPixel(img, x, y,QColor(rand()%255,rand()%255,rand()%255));
+            uint gris = rand()%255;
+            QColor toto(gris,gris,gris);
+            SetPixel(img, x, y,toto);
         }
     }
     img->save("test.png");
