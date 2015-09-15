@@ -1,17 +1,16 @@
 #include "mesh.h"
 
 void Mesh::Translation(const Eigen::Vector3f T){
-    for(int i=0; i<geom.size(); i++){
-        geom.at(i)+=T;
-    }
+    for(Eigen::Vector3f& p : geom)
+        p +=T;
 }
 
 void Mesh::Translation(const float x, const float y, const float z)
 {
-    for(int i=0; i<geom.size(); i++){
-        geom.at(i)(0)+=x;
-        geom.at(i)(1)+=y;
-        geom.at(i)(2)+=z;
+    for(Eigen::Vector3f& p: geom){
+        p(0)+=x;
+        p(1)+=y;
+        p(2)+=z;
     }
 }
 
@@ -26,11 +25,9 @@ void Mesh::Rotation(const float rX, const float rY, const float rZ){
             Eigen::AngleAxisf(rY/360*2*M_PI, Eigen::Vector3f::UnitY()) *
             Eigen::AngleAxisf(rZ/360*2*M_PI, Eigen::Vector3f::UnitZ());
 
-    for(int i=0; i<geom.size(); i++){
+    for(size_t i=0; i<geom.size(); i++){
         geom[i] = matriceRotation*geom[i];
     }
-    /*for(std::vector<Eigen::Vector3f>::iterator it = geom.begin();   it != geom.end();   ++it)
-        *it *= matriceRotation;*/
 }
 
 /* -------------------------------------------- */
@@ -43,27 +40,17 @@ void Mesh::Rotation(const float rX, const float rY, const float rZ){
 
 Mesh Mesh::cylindre(const Eigen::Vector3f& centreCercleA, const Eigen::Vector3f& centreCercleB, const float rayon, int resolution)
 {
-    std::vector<Eigen::Vector3f> v;
-    std::vector<int> t;
+    Mesh m;
+    m.geom.reserve((resolution+1)*2);
+    m.topo.reserve(4*resolution);
 
     Eigen::Vector3f normal = centreCercleB - centreCercleA;
 
-    Eigen::Vector3f p, axe1, axe2;
+    Eigen::Vector3f axe1(normal(1),-normal(0),0),
+                    axe2(axe1.cross(normal));
 
-    axe1(0) = normal(1);
-    axe1(1) = -normal(0);
-    axe1(2) = 0;
-
-    /*std::cout << "normal :" << normal << std::endl;
-
-    std::cout << "axe1 :" << axe1 << std::endl;
-
-    std::cout << "n.axe1 :" << normal.dot(axe1) << std::endl;*/
-
-    axe2 = axe1.cross(normal);
     axe1.normalize();
     axe1*=rayon;
-
     axe2.normalize();
     axe2*=rayon;
 
@@ -77,20 +64,21 @@ Mesh Mesh::cylindre(const Eigen::Vector3f& centreCercleA, const Eigen::Vector3f&
     float ecartRadiant = (2*M_PI)/resolution;
 
     for(int i=0; i<resolution; i++){
-
-        p = cos(i*ecartRadiant)*axe1 + sin(i*ecartRadiant)*axe2 + centreCercleA;
-
+        Eigen::Vector3f p = cos(i*ecartRadiant)*axe1 + sin(i*ecartRadiant)*axe2 + centreCercleA;
         //std::cout << p << std::endl;
-
-        v.push_back( p );
+        m.geom.push_back( p );
+        m.addTopo(resolution*2, i, (i+1)%resolution);
     }
 
     for(int i=0; i<resolution; i++){
-        v.push_back( v[i]+normal );
+        m.geom.push_back( m.geom[i]+normal );
+        m.addTopo(resolution*2+1, resolution+(i+1)%resolution, resolution+i);
+        m.addTopo(i,i+resolution, (i+1)%resolution);
+        m.addTopo(i+resolution, resolution+(i+1)%resolution, (i+1)%resolution);
     }
 
-    v.push_back(centreCercleA); // 2 resolution
-    v.push_back(centreCercleB); // 2 resolution+1
+    m.geom.push_back(centreCercleA); // 2 resolution
+    m.geom.push_back(centreCercleB); // 2 resolution+1
 
 
     /*************************************/
@@ -98,7 +86,7 @@ Mesh Mesh::cylindre(const Eigen::Vector3f& centreCercleA, const Eigen::Vector3f&
     /*************************************/
 
     /***** Poles ****/
-    for(int i=0; i<= resolution-1; i++){
+    /*for(int i=0; i<= resolution-1; i++){
         t.push_back(i); t.push_back(i+1); t.push_back(2*resolution);
     }
     t.push_back(resolution-1); t.push_back(0); t.push_back(2*resolution);
@@ -106,10 +94,10 @@ Mesh Mesh::cylindre(const Eigen::Vector3f& centreCercleA, const Eigen::Vector3f&
     for(int i=resolution ; i<= 2*resolution-1; i++){
         t.push_back(i); t.push_back(i+1); t.push_back(2*resolution+1);
     }
-    t.push_back(2*resolution-1); t.push_back(resolution); t.push_back(2*resolution+1);
+    t.push_back(2*resolution-1); t.push_back(resolution); t.push_back(2*resolution+1);*/
 
     /***** faces cylindre *****/
-    for(int i=0; i< resolution-1; i++){
+    /*for(int i=0; i< resolution-1; i++){
 
         t.push_back(i); t.push_back(i+1); t.push_back(resolution+i);
         t.push_back(resolution+i+1); t.push_back(resolution+i); t.push_back(i+1);
@@ -118,35 +106,26 @@ Mesh Mesh::cylindre(const Eigen::Vector3f& centreCercleA, const Eigen::Vector3f&
     t.push_back(resolution); t.push_back(2*resolution-1); t.push_back(resolution-1);
 
 
-    Mesh retour(v,t);
+    Mesh retour(v,t);*/
 
-    return retour;
+    m.normalsTriangles();
+    return m;
 }
 
 
 Mesh Mesh::cone(const Eigen::Vector3f &centreCercle, const Eigen::Vector3f &pointe, const float rayon, const int resolution)
 {
-    std::vector<Eigen::Vector3f> v;
-    std::vector<int> t;
+    Mesh m;
+    m.geom.reserve(resolution+2);
+    m.topo.reserve(2*resolution);
 
     Eigen::Vector3f normal = pointe - centreCercle;
 
-    Eigen::Vector3f p, axe1, axe2;
+    Eigen::Vector3f axe1(normal(1), -normal(0), 0),
+                    axe2(axe1.cross(normal));
 
-    axe1(0) = normal(1);
-    axe1(1) = -normal(0);
-    axe1(2) = 0;
-
-    /*std::cout << "normal :" << normal << std::endl;
-
-    std::cout << "axe1 :" << axe1 << std::endl;
-
-    std::cout << "n.axe1 :" << normal.dot(axe1) << std::endl;*/
-
-    axe2 = axe1.cross(normal);
     axe1.normalize();
     axe1*=rayon;
-
     axe2.normalize();
     axe2*=rayon;
 
@@ -160,16 +139,15 @@ Mesh Mesh::cone(const Eigen::Vector3f &centreCercle, const Eigen::Vector3f &poin
     float ecartRadiant = (2*M_PI)/resolution;
 
     for(int i=0; i<resolution; i++){
-
-        p = cos(i*ecartRadiant)*axe1 + sin(i*ecartRadiant)*axe2 + centreCercle;
-
+        Eigen::Vector3f p = cos(i*ecartRadiant)*axe1 + sin(i*ecartRadiant)*axe2 + centreCercle;
         //std::cout << p << std::endl;
-
-        v.push_back( p );
+        m.geom.push_back( p );
+        m.addTopo(resolution,i,(i+1)%resolution);
+        m.addTopo(resolution+1, i, (i+1)%resolution);
     }
 
-    v.push_back(centreCercle); // resolution
-    v.push_back(pointe); // resolution+1
+    m.geom.push_back(centreCercle); // resolution
+    m.geom.push_back(pointe); // resolution+1
 
 
     /*************************************/
@@ -177,22 +155,23 @@ Mesh Mesh::cone(const Eigen::Vector3f &centreCercle, const Eigen::Vector3f &poin
     /*************************************/
 
     /***** Poles ****/
-    for(int i=0; i< resolution-1; i++){
+    /*for(int i=0; i< resolution-1; i++){
         t.push_back(i); t.push_back(i+1); t.push_back(resolution);
     }
-    t.push_back(resolution-1); t.push_back(0); t.push_back(resolution);
+    t.push_back(resolution-1); t.push_back(0); t.push_back(resolution);*/
 
     /***** faces cylindre *****/
-    for(int i=0; i< resolution-1; i++){
+    /*for(int i=0; i< resolution-1; i++){
 
         t.push_back(i); t.push_back(i+1); t.push_back(resolution+1);
     }
     t.push_back(resolution-1); t.push_back(0); t.push_back(resolution+1);
 
 
-    Mesh retour(v,t);
+    Mesh retour(v,t);*/
 
-    return retour;
+    m.normalsTriangles();
+    return m;
 }
 
 Mesh Mesh::sphere(const Eigen::Vector3f &centre, const float rayon, const int resolution)
@@ -254,13 +233,13 @@ void Mesh::save(const std::string name){
 
     obj << "#vertices:\n";
 
-    for(int i = 0 ; i < geom.size(); i++) {
+    for(size_t i = 0 ; i < geom.size(); i++) {
         obj << "v " << std::setprecision(4) << geom[i].format(objFormat) << "\n";
     }
 
     obj << "#faces:\n";
 
-    for(int i = 0 ; i < topo.size(); i += 3){
+    for(size_t i = 0 ; i < topo.size(); i += 3){
         obj << "f " << std::setprecision(4) << topo[i] + 1 << " " << topo[i+1] + 1 << " "<< topo[i+2] + 1 << "\n";
     }
 
@@ -277,12 +256,12 @@ void Mesh::merge(const Mesh &delta)
         int taille = geom.size();
         geom.reserve(taille+delta.nbGeom());
 
-        for(int i=0; i< delta.geom.size(); i++){
+        for(size_t i=0; i< delta.geom.size(); i++){
             geom.push_back(delta.geom[i]);
         }
 
         topo.reserve(this->nbTopo()+delta.nbTopo());
-        for(int i=0; i< delta.topo.size(); i++){
+        for(size_t i=0; i< delta.topo.size(); i++){
             topo.push_back(delta.topo[i] + taille );
         }
     }
@@ -335,13 +314,22 @@ size_t Mesh::nbTopo() const
     return this->topo.size();
 }
 
+inline void Mesh::addTopo(int i0, int i1, int i2)
+{
+    this->topo.push_back(i0);
+    this->topo.push_back(i1);
+    this->topo.push_back(i2);
+}
+
 Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, const int resolution)
 {
-    std::vector<Eigen::Vector3f> v;
-    std::vector<int> t;
+    Mesh m;
+    m.geom.reserve(2+resolution*(resolution/2));
+    m.topo.reserve(resolution*resolution/2);
+    //std::vector<Eigen::Vector3f> v;
+    //std::vector<int> t;
 
-    Eigen::Vector3f normalCercleOrigine(0,1,0), vecteurPoint1(1,0,0);
-    normalCercleOrigine *= rayon; vecteurPoint1 *= rayon;
+    Eigen::Vector3f normalCercleOrigine(0,rayon,0), vecteurPoint1(rayon,0,0);
 
     Eigen::Vector3f p;
 
@@ -362,12 +350,10 @@ Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, co
 
     float ecartRadiant = (2*M_PI)/resolution;
 
-    tmp[0].reserve(resolution/2);
+    tmp[0].reserve(resolution/2 +1);
     for(int i=0; i<= (resolution/2); i++){
         p = cos(i*ecartRadiant)*vecteurPoint1+ sin(i*ecartRadiant)*normalCercleOrigine  + centre;
-
-        //std::cout << p << std::endl;
-
+        std::cout << p << std::endl;
         tmp[0].push_back(p);
     }
 
@@ -417,26 +403,23 @@ Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, co
         matriceRotation(1,2) = -sin(i*ecartRadiant);
         matriceRotation(2,2) = cos(i*ecartRadiant);*/
 
-        tmp[i].reserve((resolution/2));
+        tmp[i].reserve((resolution/2)+1);
         for(int j=0; j<= (resolution/2); j++){
             p = matriceRotation * tmp[0].at(j);
-
             //std::cout << p << std::endl;
-
             tmp[i].push_back( p );
         }
     }
 
-    v.push_back((tmp[0]).at(0));
+    m.geom.push_back((tmp[0]).at(0));
 
     for (int i=1; i< resolution/2 ; i++){
         for(int j=0; j< resolution ; j++){
             p = tmp[j].at(i);
-
-            v.push_back(p);
+            m.geom.push_back(p);
         }
     }
-    v.push_back(tmp[0].back()) ;
+    m.geom.push_back(tmp[0].back()) ;
 
 
     //v.push_back(b); // 2n+1
@@ -449,47 +432,53 @@ Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, co
     /***** Poles ****/
 
     for(int i=1; i< resolution; i++){
-        t.push_back(0); t.push_back( i ); t.push_back( i+1 );
+        m.addTopo(0,i,i+1);
+        //t.push_back(0); t.push_back( i ); t.push_back( i+1 );
     }
-    t.push_back(0); t.push_back(resolution); t.push_back( 1 );
+    //t.push_back(0); t.push_back(resolution); t.push_back( 1 );
+    m.addTopo(0,resolution,1);
 
     for(int i= ( (resolution/2)-2 )*resolution + 1 ; i< ( (resolution/2)-1 )*resolution; i++){
-        t.push_back( i );
+        /*t.push_back( i );
         t.push_back( ( (resolution/2)-1 )*resolution +1 );
-        t.push_back( i+1 );
+        t.push_back( i+1 );*/
+        m.addTopo(i, ( (resolution/2)-1 )*resolution +1, i+1);
     }
-    t.push_back( ( (resolution/2)-1 ) * resolution + 1 );
+    /*t.push_back( ( (resolution/2)-1 ) * resolution + 1 );
     t.push_back( ( (resolution/2)-2 ) * resolution + 1 );
-    t.push_back( ( (resolution/2)-1 ) * resolution );
-
+    t.push_back( ( (resolution/2)-1 ) * resolution );*/
+    m.addTopo(((resolution/2)-1 ) * resolution + 1,
+              ((resolution/2)-2 ) * resolution + 1,
+              ((resolution/2)-1 ) * resolution);
 
     /****** Faces *****/
 
     for (int i=0; i< (resolution/2)-2 ; i++){
         for(int j=1; j < resolution ; j++){
-
-            t.push_back( i*resolution + j );
+            m.addTopo(i*resolution + j, (i+1)*resolution +j, (i+1)*resolution +j+1);
+            /*t.push_back( i*resolution + j );
             t.push_back( (i+1)*resolution +j );
-            t.push_back( (i+1)*resolution + j + 1  ) ;
+            t.push_back( (i+1)*resolution + j + 1  ) ;*/
 
-            t.push_back( (i+1)*resolution + j + 1 );
+            m.addTopo((i+1)*resolution + j+1, i*resolution + j+1, i*resolution + j);
+            /*t.push_back( (i+1)*resolution + j + 1 );
             t.push_back( (i)*resolution +j+1  );
-            t.push_back( i*resolution + j ) ;
+            t.push_back( i*resolution + j ) ;*/
         }
 
-        t.push_back( i*resolution + resolution );
+        m.addTopo(i*resolution + resolution, (i+1)*resolution + resolution, (i+1)*resolution +1);
+        /*t.push_back( i*resolution + resolution );
         t.push_back( (i+1)*resolution + resolution );
-        t.push_back( (i+1)*resolution + 1  ) ;
+        t.push_back( (i+1)*resolution + 1  ) ;*/
 
-        t.push_back( (i+1)*resolution + 1 );
+        m.addTopo((i+1)*resolution + 1, i*resolution +1, i*resolution + resolution);
+        /*t.push_back( (i+1)*resolution + 1 );
         t.push_back( (i)*resolution + 1  );
-        t.push_back( i*resolution + resolution ) ;
+        t.push_back( i*resolution + resolution ) ;*/
     }
 
-
-    Mesh retour(v,t);
-
-    return retour;
+    m.normalsTriangles();
+    return m;
 }
 
 /*******************InOut********************/
@@ -517,7 +506,7 @@ void Mesh::normalsTriangles()
         normals.clear();
 
     normals.reserve(nbTopo()/3);
-    for(int i = 0;  i < nbTopo()/3; i++)
+    for(size_t i = 0;  i < nbTopo()/3; i++)
         normals.push_back(this->normalTriangle(i));
 }
 
@@ -529,5 +518,6 @@ Eigen::Vector3f Mesh::normalTriangle(int i) const
                     s2(geom[i3]-geom[i1]);
 
     Eigen::Vector3f c(s1.cross(s2));
-    return c.normalized();
+    c.normalize();
+    return c;
 }

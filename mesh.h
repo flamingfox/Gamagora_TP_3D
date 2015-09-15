@@ -12,10 +12,12 @@
 #include <fstream>
 
 #include <math.h>
+#include "float.h"
 
 #include "noisegenerator.h"
 
 #include "zoneterrain.h"
+
 
 class Mesh{
 
@@ -71,6 +73,9 @@ private :
 
     static Mesh generationSphere(const Eigen::Vector3f& centre, const float rayon, const int resolution = DEFAULT_RESOLUTION);
 
+protected:
+
+    inline void addTopo(int i0, int i1, int i2);
 };
 
 

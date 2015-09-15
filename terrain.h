@@ -52,7 +52,7 @@ private :
     float interpolation(float a, float b, float x);
 
     void simpleInitImage(const QImage& img, float _longueur, float _largeur, float _amplitude);
-    void simpleInitTopo(int nbHeight, int nbWidth);
+    void simpleInitTopo();
 };
 
 #endif // TERRAIN_H

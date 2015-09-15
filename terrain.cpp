@@ -20,14 +20,14 @@ Terrain::Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPoint
 /********************Terrain Image************************/
 
 Terrain::Terrain(const QImage &img, float _longueur, float _largeur, float amplitude):
-    nbPointLongueur(img.height()), nbPointLargeur(img.width())
+    nbPointLongueur(img.height()), nbPointLargeur(img.width()), longueur(_longueur), largeur(_largeur)
 {
     simpleInitImage(img, _longueur, _largeur, amplitude);
 }
 
 
 Terrain::Terrain(const QImage& img, float _longueur, float _largeur, float _amplitude, int _nbHeight, int _nbWidth):
-    nbPointLongueur(_nbHeight), nbPointLargeur(_nbWidth)
+    nbPointLongueur(_nbHeight), nbPointLargeur(_nbWidth), longueur(_longueur), largeur(_largeur)
 {
     if(_nbHeight == img.height() && _nbWidth == img.width())
         simpleInitImage(img, _longueur, _largeur, _amplitude);
@@ -54,11 +54,11 @@ Terrain::Terrain(const QImage& img, float _longueur, float _largeur, float _ampl
             }
         }
 
-        simpleInitTopo(_nbHeight, _nbWidth);
+        simpleInitTopo();
     }
 }
 
-//construit un terrain avec le même nombre de point que le nombre de pixel de l'image
+/**construit un terrain avec le même nombre de point que le nombre de pixel de l'image*/
 void Terrain::simpleInitImage(const QImage& img, float _longueur, float _largeur, float _amplitude)
 {
     int nbHeight = img.height(),
@@ -77,25 +77,25 @@ void Terrain::simpleInitImage(const QImage& img, float _longueur, float _largeur
             p(2) = (qGray(img.pixel(i, j))*_amplitude)/255.0;
         }
 
-    this->simpleInitTopo(nbHeight, nbWidth);
+    this->simpleInitTopo();
 }
 
-void Terrain::simpleInitTopo(int nbHeight, int nbWidth)
+void Terrain::simpleInitTopo()
 {
-    this->topo.reserve((nbHeight-1)*(nbWidth-1)*6); //grille 5p x 7p = 35p => 24 carrés (4*6) = 48 triangles = 144 int = (5-1) * (7-1) * 2 * 3
+    this->topo.reserve((nbPointLongueur-1)*(nbPointLargeur-1)*6); //grille 5p x 7p = 35p => 24 carrés (4*6) = 48 triangles = 144 int = (5-1) * (7-1) * 2 * 3
 
-    for(int j = 0; j < nbHeight-1; j++){
-        for(int i = 0; i < nbWidth-1; i++)
+    for(int j = 0; j < nbPointLongueur-1; j++){
+        for(int i = 0; i < nbPointLargeur-1; i++)
         {
             //triangle 1: 0,1,2
-            topo.push_back( i + j * nbWidth);
-            topo.push_back( (i+1) + j * nbWidth);
-            topo.push_back( i + (j+1) * nbWidth);
+            addTopo(i + j * nbPointLargeur,
+                    (i+1) + j * nbPointLargeur,
+                    i + (j+1) * nbPointLargeur);
 
             //triangle 2: 1,3,2
-            topo.push_back( (i+1) + j * nbWidth);
-            topo.push_back( (i+1) + (j+1) * nbWidth);
-            topo.push_back( i + (j+1) * nbWidth);
+            addTopo((i+1) + j * nbPointLargeur,
+                    (i+1) + (j+1) * nbPointLargeur,
+                    i + (j+1) * nbPointLargeur);
         }
     }
 }
@@ -142,8 +142,8 @@ void Terrain::calculNormals()
 
 Eigen::Vector2d Terrain::getDimension() const
 {
-    return Eigen::Vector2d( ( longueur-(longueur/nbPointLongueur) ),
-                            ( largeur-(longueur/nbPointLargeur) ));
+    return Eigen::Vector2d( ( longueur-(longueur/(double)nbPointLongueur) ),
+                            ( largeur-(longueur/(double)nbPointLargeur) )); //problème largeur longueur
 }
 
 float Terrain::getHauteur(Eigen::Vector2f pointXY) const
@@ -155,7 +155,7 @@ float Terrain::getHauteur(float pointX, float pointY) const
 {
     Eigen::Vector2d dim = getDimension();
 
-    int indiceX = (pointX) * ( nbPointLargeur/dim(0) );
+    int indiceX = (pointX) * ( nbPointLargeur/dim(0) );     //problème possible: dans getDimension(), pointsXY(0) -> longueur
     int indiceY = pointY * ( nbPointLongueur/dim(1) );
     indiceX *= nbPointLargeur;
 
@@ -229,31 +229,13 @@ bool Terrain::interesct(const Rayon& rayon, float coeffDistance) const{
 
 void Terrain::plan(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur)
 {
-    std::vector<Eigen::Vector3f> g;
-    g.reserve(_nbPointLongueur*_nbPointLargeur);
+    geom.reserve(_nbPointLongueur*_nbPointLargeur);
 
     for(int j = 0;  j < _nbPointLongueur;   j++)
         for(int i = 0;  i < _nbPointLargeur;    i++)
-            g.push_back(Eigen::Vector3f(((float)i/(_nbPointLargeur-1))*_largeur, ((float)j/(_nbPointLongueur-1))*_longueur, 0));
+            geom.push_back(Eigen::Vector3f(((float)i/(_nbPointLargeur-1))*_largeur, ((float)j/(_nbPointLongueur-1))*_longueur, 0));
 
-
-    std::vector<int> t;
-    t.reserve((_nbPointLongueur-1)*(_nbPointLargeur-1)*6);
-
-    for(int j = 0; j < _nbPointLongueur-1; j++){
-        for(int i = 0; i < _nbPointLargeur-1; i++)  {
-            t.push_back( i + j * _nbPointLargeur);
-            t.push_back( (i+1) + j * _nbPointLargeur);
-            t.push_back( i + (j+1) * _nbPointLargeur);
-
-            t.push_back( (i+1) + j * _nbPointLargeur);
-            t.push_back( (i+1) + (j+1) * _nbPointLargeur);
-            t.push_back( i + (j+1) * _nbPointLargeur);
-        }
-    }
-
-    this->setGeom(g);
-    this->setTopo(t);
+    this->simpleInitTopo();
 }
 
 void Terrain::applicationNoise(int amplitude, int periode)
@@ -262,83 +244,51 @@ void Terrain::applicationNoise(int amplitude, int periode)
     /* Modification points */
     /*************************************/
 
-    std::vector<Eigen::Vector3f> listRetour;
-    Eigen::Vector3f point;
-
-    for(long i = 0; i < geom.size(); i++)
+    //for(size_t i = 0; i < geom.size(); i++)
+    for(Eigen::Vector3f& p: geom)
     {
-        point = geom.at(i);
-
-        float h = NoiseGenerator::perlinNoise( point(0)*(1.0/periode), point(1)*(1.0/periode) );
+        float h = NoiseGenerator::perlinNoise( p(0)*(1.0/periode), p(1)*(1.0/periode) );
         h = (h+1)/2;
         h *= amplitude;
-        point(2) += h;
-
-        listRetour.push_back(point);
+        p(2) += h;
     }
-
-    this->setGeom(listRetour);
 }
 
 void Terrain::applicationRidge(float seuil, float amplitude, int periode)
 {
-    std::vector<Eigen::Vector3f> listRetour;
-    Eigen::Vector3f point;
-
-    for(long i = 0; i < geom.size(); i++)
+    //for(size_t i = 0; i < geom.size(); i++)
+    for(Eigen::Vector3f& p: geom)
     {
-        point = geom.at(i);
-
-        float hRidge = amplitude * NoiseGenerator::perlinNoise( point(0)*(1.0/periode), point(2)*(1.0/periode) );
+        float hRidge = amplitude * NoiseGenerator::perlinNoise( p(0)*(1.0/periode), p(2)*(1.0/periode) );
         hRidge += seuil;
 
         //std::cout << hRidge << std::endl;
 
-        if(point(2) > hRidge){
-            point(2) = 2*hRidge - point(2);
-        }
-
-        listRetour.push_back(point);
+        if(p(2) > hRidge)
+            p(2) = 2*hRidge - p(2);
     }
-
-    this->setGeom(listRetour);
-
 }
 
 void Terrain::applicationWarp(int amplitude, int periode)
 {
-
-    std::vector<Eigen::Vector3f> listRetour;
-
-    Eigen::Vector3f point;
-
-    for(long i = 0; i < geom.size(); i++)
+    //for(size_t i = 0; i < geom.size(); i++)
+    for(Eigen::Vector3f& p: geom)
     {
-        point = geom.at(i);
+        float warp = amplitude * NoiseGenerator::perlinNoise( p(0)*(1.0/periode)+2.78, p(1)*(1.0/periode)+8.72);
 
-        float warp = amplitude * NoiseGenerator::perlinNoise( point(0)*(1.0/periode)+2.78, point(1)*(1.0/periode)+8.72);
-
-        point(0) += warp;
-        point(1) += warp;
-
-        listRetour.push_back(point);
+        p(0) += warp;
+        p(1) += warp;
     }
-
-    this->setGeom(listRetour);
-
 }
 
 float Terrain::maxElevation()
 {
-    Eigen::Vector3f point;
-    float hMax = 0;
+    float hMax = FLT_MIN;
 
-    for(long i = 0; i < geom.size(); i++)
+    for(const Eigen::Vector3f& p: geom)
     {
-        point = geom.at(i);
-
-        if(point(2)>hMax)
-            hMax = point(2);
+        if(p(2)>hMax)
+            hMax = p(2);
     }
 
     return hMax;

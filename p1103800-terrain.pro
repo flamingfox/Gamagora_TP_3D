@@ -1,8 +1,9 @@
 TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle
+CONFIG += c++11
 
-INCLUDEPATH += C:/librairie/Eigen/include
+INCLUDEPATH += C:/librairie
 INCLUDEPATH += C:\lib
 INCLUDEPATH += C:\Users\Rudi\Desktop\eigen3
 

@@ -99,6 +99,7 @@ bool Camera::rendu(){
     }
     antialiasing(img)->save("testaliasing.png");
     img->save("test.png");
+    delete img;
     return true;
 }
 

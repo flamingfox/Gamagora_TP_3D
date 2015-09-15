@@ -26,8 +26,8 @@ int main(int argc, char *argv[])
     //testSphere();
     //testImage(QImage("image.png"));
 
-    //testTotal();
-    testCamera();
+    testTotal();
+    //testCamera();
     //testBox();
     //testNormals();
 
@@ -53,7 +53,7 @@ void testBox()
 
 void testSphere()
 {
-    Mesh m = Mesh::sphere(Vector3f(0,0,0),2);
+    Mesh m = Mesh::sphere(Vector3f(0.5,1,-1),2,10);
     m.save("sphere.obj");
 }
 
