@@ -43,7 +43,30 @@ Vector3f Camera::pointScreen(int &i, int &j) const
 bool Camera::SetPixel(QImage *img, int x, int y, QColor color){
     //qDebug()<<color;
     img->setPixel(x,y,color.rgba());
+
     return true;
+}
+
+int Camera::getrouge(QRgb couleur){
+    QColor tmp(QColor::fromRgb(couleur));
+    return tmp.red();
+}
+
+QImage* Camera::antialiasing(QImage *img){
+    QImage *img2 = new QImage(_lu, _lv, QImage::Format_RGB888);
+    img2->fill(QColor(Qt::white).rgb());
+    for(int i=1;i<img->width()-1;i++){
+        for(int y=1;y<img->height()-1;y++){
+            int newcolor;
+            newcolor = getrouge(img->pixel(i,y))-getrouge(img->pixel(i-1,y-1))/100-getrouge(img->pixel(i,y-1)/100)-getrouge(img->pixel(i+1,y-1))/100
+                                           -getrouge(img->pixel(i-1,y))/100-getrouge(img->pixel(i+1,y))/100
+                                           -getrouge(img->pixel(i-1,y+1))/100-getrouge(img->pixel(i,y+1))/100-getrouge(img->pixel(i+1,y+1))/100;
+            if(newcolor<0)newcolor = 0;
+            QColor tutu(newcolor,newcolor,newcolor);
+            img2->setPixel(i,y,tutu.rgba());
+        }
+    }
+    return img2;
 }
 
 bool Camera::rendu(){
@@ -69,10 +92,12 @@ bool Camera::rendu(){
             //RENDU::rendu(x,y,zonetouchee,objleplusproche,r);
             //qDebug()<<x;
             uint gris = rand()%255;
-            QColor toto(gris,gris,gris);
+            uint alpha = rand()%255;
+            QColor toto(gris,gris,gris,alpha);
             SetPixel(img, x, y,toto);
         }
     }
+    antialiasing(img)->save("testaliasing.png");
     img->save("test.png");
     return true;
 }

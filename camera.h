@@ -34,7 +34,9 @@ public:
 
     bool SetPixel(QImage *img, int x, int y, QColor color);//permet de mettre une couleur au pixel de coordonnées x,y
 
+    int getrouge(QRgb couleur);
     bool rendu();
+    QImage* antialiasing(QImage *img);
     QImage generateImage(int largeur, int hauteur);//fonction de test à ne pas utiliser
 
 
