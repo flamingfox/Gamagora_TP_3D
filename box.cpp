@@ -11,24 +11,12 @@ Box::Box(const Vector3f& _min, const Vector3f& _max)    :   min(_min),  max(_max
 
 Box::Box(const Mesh& mesh)
 {
-    const std::vector<Vector3f> points = mesh.getGeom();
-    if(points.empty())
-        setDefaultBox();
-    else if(points.size() == 1)
-    {
-        min = points[0];
-        max = points[0];
-    }
-    else
-    {
-        std::vector<Vector3f>::const_iterator it = points.begin();
-        min = *it;
-        max = points[points.size()-1];
+    parcourtPoints(mesh.getGeom());
+}
 
-        ++it;
-        for(;  it != points.end()-1; ++it)
-            update(*it);
-    }
+Box::Box(const std::vector<Vector3f>& points)
+{
+    parcourtPoints(points);
 }
 
 
@@ -78,4 +66,25 @@ inline void Box::updateMax(const Vector3f& p)
     for(int i = 0;  i < 3;  i++)
         if(p(i) > max(i))
             max(i) = p(i);
+}
+
+inline void Box::parcourtPoints(const std::vector<Vector3f>& points)
+{
+    if(points.empty())
+        setDefaultBox();
+    else if(points.size() == 1)
+    {
+        min = points[0];
+        max = points[0];
+    }
+    else
+    {
+        std::vector<Vector3f>::const_iterator it = points.begin();
+        min = *it;
+        max = points[points.size()-1];
+
+        ++it;
+        for(;  it != points.end()-1; ++it)
+            update(*it);
+    }
 }

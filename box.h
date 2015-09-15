@@ -14,6 +14,7 @@ public:
     Box();
     Box(const Vector3f& _min, const Vector3f& _max);
     Box(const Mesh& mesh);
+    Box(const std::vector<Vector3f>& points);
 
     void updatePoint(const Vector3f& p);
     bool isIn(const Vector3f& p);
@@ -23,6 +24,8 @@ protected:
     inline void update(const Vector3f& p);
     inline void updateMin(const Vector3f& p);
     inline void updateMax(const Vector3f& p);
+
+    inline void parcourtPoints(const std::vector<Vector3f>& points);
 
 };
 
