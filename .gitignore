@@ -5,3 +5,5 @@ Makefile*
 *.pro.*
 *.autosave
 *.user
+p1103800-terrain.pro.user
+*.user

@@ -40,3 +40,25 @@ Eigen::Vector3f Camera::pointScreen(int &i, int &j) const
     return _origine + vecScreen(i, j);
 }
 
+bool Camera::rendu(){
+    for(int x = 0; x < _lu ; x++){
+        for(int y = 0; y < _lv ; y++){
+            Rayon r = new Rayon(_origine,Eigen::Vector3f(0,0,0));
+            float coefdisttmp = FLT_MAX;
+            float coefdistfinal = FLT_MAX;
+            Eigen::Vector3f zonetouchee;
+            Terrain objleplusproche;
+            r.setDirection(vecScreen(x,y));
+            for(z=0;z<_t.size();z++){
+                if(_t.at(z).interesct(r,&coefdisttmp)){//si on touche
+                    if(coefdisttmp < coefdistfinal){//on sélectionne l'objet touché le plus proche
+                        coefdistfinal = coefdisttmp;
+                        objleplusproche = _t.at(z);
+                        zonetouchee = _origine + (coefdistfinal*_w);
+                    }
+                }
+            }
+            //RENDU::rendu(x,y,zonetouchee,objleplusproche,r);
+        }
+    }
+}
