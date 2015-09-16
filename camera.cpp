@@ -14,7 +14,7 @@ Camera::Camera(Vector3f pOr, Vector3f pAt, int l, int h, QList<Terrain> listTerr
 
     _w.normalize();
 
-    _u = - ( _w.cross(Vector3f(0,0,1)) );
+    _u = - ( _w.cross(Vector3f(0.0,0.0,1.0)) );
     _u.normalize();
 
     _v = _w.cross(_u);
@@ -28,11 +28,11 @@ Vector3f Camera::vecScreen(int& i, int& j) const
         exit(-1);
     }
 
-    float ti = i / (_lu*2-1);
-    float tj = j / (_lv*2-1);
+    float ti = (float)i / (_lu*2.0-1.0);
+    float tj = (float)j / (_lv*2.0-1.0);
 
 
-    return _w*_lw + ( (1 - ti)*(-_lu)+(ti*_lu) )*_u + ( (1-tj)*(-_lv)+(tj*_lv) )*_v;
+    return _w*_lw + ( (1.0 - ti)*(-_lu)+(ti*_lu) )*_u + ( (1.0-tj)*(-_lv)+(tj*_lv) )*_v;
 }
 
 Vector3f Camera::pointScreen(int &i, int &j) const

@@ -102,7 +102,7 @@ void Terrain::simpleInitTopo()
 
 void Terrain::calculNormals()
 {
-    //this->normalsTriangles();   //reconstruit toutes les nornales des triangles du terrain.
+    normalsTriangles();   //reconstruit toutes les nornales des triangles du terrain.
     //maintenant, on calcul les normales des points
     this->normalsPoints.reserve(nbGeom());
 
@@ -113,14 +113,15 @@ void Terrain::calculNormals()
 
             int t6 = ((i+ j*nbPointLargeur)-j)*2;   //pour 5x5, p12: 12 = ligne 2:  t6 = (12-2)*2 = 20
 
-            if(j < nbPointLongueur-1)            {
+            if(j < nbPointLongueur-1) {
                 if(i < nbPointLargeur-1)
                     n += normals[t6];
-                if(i > 0)                {
+                if(i > 0) {
                     n += normals[t6-1];
                     n += normals[t6-2];
                 }
             }
+
             if(j > 0)
             {
                 int t3 = t6-(nbPointLargeur-1)*2;   //p12:  t3 = 20 - 4*2 = 12;
@@ -133,6 +134,8 @@ void Terrain::calculNormals()
             }
 
             normalsPoints.push_back(n.normalized());
+
+
         }
     }
 }
@@ -154,8 +157,11 @@ float Terrain::getHauteur(Vector2f &pointXY) const
 
 float Terrain::getHauteur(float &pointX, float &pointY) const
 {
-    int indiceX = pointX; // * ( nbPointLargeur/largeur );
-    int indiceY = ( (int)pointY ) * ( nbPointLargeur );
+    if(pointX < 0 || pointY < 0 || pointX > largeur || pointY > longueur)
+        return HAUTEUR_HORS_MAP;
+
+    int indiceX = pointX * ( (float)nbPointLargeur / largeur );
+    int indiceY = ( (int)pointY ) * ( (float)nbPointLongueur / longueur ) * ( nbPointLargeur );
 
     Eigen::Vector3f point11 = geom.at( indiceX + indiceY ),
             point12 = geom.at(indiceX+1 + indiceY),
@@ -178,8 +184,8 @@ Vector3f Terrain::getNormal(const Vector2f &pointXY) const
 
 Vector3f Terrain::getNormal(const float &pointX, const float &pointY) const
 {
-    int indiceX = pointX; // * ( nbPointLargeur/largeur );
-    int indiceY = ( (int)pointY ) * ( nbPointLargeur );
+    int indiceX = pointX * ( (float)nbPointLargeur / largeur );
+    int indiceY = ( (int)pointY ) * ( (float)nbPointLongueur / longueur ) * ( nbPointLargeur );
 
     Eigen::Vector3f point11 = geom.at( indiceX + indiceY ),
             normal11 = normalsPoints.at( indiceX + indiceY ),
@@ -212,26 +218,27 @@ void Terrain::generationTerrain(int width, int lenght, int nbPointLongueur, int 
 {
     plan(lenght, width, nbPointLongueur, nbPointLargeur);
     applicationNoise(200, 250);
-    this->save("terrainNoise1.obj");
+    //this->save("terrainNoise1.obj");
     applicationRidge(150, 50, 500);
-    this->save("terrainRidge1.obj");
+    //this->save("terrainRidge1.obj");
     //applicationWarp(30, 100);
     //this->save("terrainWarp1.obj");
 
 
     applicationNoise(20, 100);
-    this->save("terrainNoise2.obj");
+    //this->save("terrainNoise2.obj");
     applicationRidge(150, 50, 400);
-    this->save("terrainRidge2.obj");
+    //this->save("terrainRidge2.obj");
     //applicationWarp(10, 75);
     //this->save("terrainWarp2.obj");
 
 
     applicationNoise(5, 50);
-    this->save("terrainNoise3.obj");
-    applicationWarp(5, 25);
+    //this->save("terrainNoise3.obj");
+    //applicationWarp(5, 25);
     this->save("terrainWarp3.obj");
 
+    calculNormals();
     englobant = Box(geom);
 }
 
@@ -244,7 +251,7 @@ bool Terrain::inOut(Eigen::Vector3f pointXYZ)
     return true;
 }
 
-bool Terrain::interesct(const Rayon& rayon, float coeffDistance) const{
+bool Terrain::interesct(const Rayon& rayon, float &coeffDistance) const{
 
     float dmin = 0.0;
     float dmax = 1000.0;
@@ -252,11 +259,18 @@ bool Terrain::interesct(const Rayon& rayon, float coeffDistance) const{
     if(!englobant.intersect(rayon, dmin, dmax ))
         return false;
 
+    dmin = 0.0;
+    dmax = 1000.0;
+
     coeffDistance = dmin;
 
     for( int i=0; i<256; i++ )
     {
         Eigen::Vector3f pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
+
+        if(getHauteur( pos(0), pos(1) ) == HAUTEUR_HORS_MAP)
+            break;
+
         float h = pos(2) - getHauteur( pos(0), pos(1) );
 
         if( h <(0.002 * coeffDistance) ) {
