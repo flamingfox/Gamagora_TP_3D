@@ -46,7 +46,7 @@ public:
 
     bool inOut(Eigen::Vector3f pointXYZ);
 
-    bool interesct(const Rayon& rayon, float coeffDistance) const;
+    bool intersect(const Rayon& rayon, float coeffDistance) const;
     void calculNormals();
 
 private :

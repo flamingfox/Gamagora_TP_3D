@@ -244,7 +244,7 @@ bool Terrain::inOut(Eigen::Vector3f pointXYZ)
     return true;
 }
 
-bool Terrain::interesct(const Rayon& rayon, float coeffDistance) const{
+bool Terrain::intersect(const Rayon& rayon, float coeffDistance) const{
 
     float dmin = 0.0;
     float dmax = 1000.0;

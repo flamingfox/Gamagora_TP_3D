@@ -5,7 +5,7 @@ Camera::Camera()
 
 }
 
-Camera::Camera(Vector3f pOr, Vector3f pAt, int l, int h, QList<Terrain> listTerrain) :
+Camera::Camera(const Vector3f& pOr, const Vector3f& pAt, int l, int h, const std::vector<Terrain*>& listTerrain) :
     _origine(pOr), _lu(l/2), _lv(h/2), _t(listTerrain)
 {
     _w = pAt - pOr;
@@ -79,14 +79,14 @@ bool Camera::rendu(){
             float coefdisttmp = FLT_MAX;
             float coefdistfinal = FLT_MAX;
             Vector3f zonetouchee;
-            Terrain objleplusproche;
+            const Terrain* objleplusproche;
             r.setDirection(vecScreen(x,y));
-            for(int z=0;z<_t.size();z++){
-                if(_t.at(z).interesct(r,coefdisttmp)){//si on touche
+            for(const Terrain* terrain: _t){
+                if(terrain->intersect(r,coefdisttmp)){//si on touche
                     touche = true;
                     if(coefdisttmp < coefdistfinal){//on sélectionne l'objet touché le plus proche
                         coefdistfinal = coefdisttmp;
-                        objleplusproche = _t.at(z);
+                        objleplusproche = terrain;
                         zonetouchee = _origine + (coefdistfinal*_w);
                     }
                 }
@@ -97,7 +97,7 @@ bool Camera::rendu(){
             //uint alpha = rand()%255;
             //QColor toto(gris,gris,gris,alpha);
             //SetPixel(img, x, y,toto);
-            SetPixel(img, x, y, render(touche, zonetouchee, objleplusproche, r));
+            SetPixel(img, x, y, render(touche, zonetouchee, *objleplusproche, r));
         }
     }
     antialiasing(img)->save("testaliasing.png");
@@ -111,7 +111,7 @@ QColor Camera::renderHors()
     return QColor(116, 208, 241);
 }
 
-QColor Camera::render(const bool toucheoupas, const Eigen::Vector3f& pointImpact, const Terrain& objleplusproche, const Rayon &ray)
+QColor Camera::render(const bool toucheoupas, const Eigen::Vector3f& pointImpact, const Terrain& objleplusproche, const Rayon& ray)
 {
     if(!toucheoupas)
         return renderHors();
