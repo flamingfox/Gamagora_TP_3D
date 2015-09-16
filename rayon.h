@@ -19,7 +19,7 @@ public:
 
     inline Eigen::Vector3f getOrigine()const{return _origine;}
     inline Eigen::Vector3f getDirection()const{return _direction;}
-    inline void setDirection(Eigen::Vector3f dir){_direction = dir;}
+    inline void setDirection(const Eigen::Vector3f& dir){_direction = dir;}
 
 };
 

@@ -26,8 +26,8 @@ int main(int argc, char *argv[])
     //testSphere();
     //testImage(QImage("image.png"));
 
-    testTotal();
-    //testCamera();
+    //testTotal();
+    testCamera();
     //testBox();
     //testNormals();
 
