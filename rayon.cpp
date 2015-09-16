@@ -6,7 +6,7 @@ Rayon::Rayon()
 }
 
 Rayon::Rayon(const Eigen::Vector3f& origine, const Eigen::Vector3f& direction):
-        _origine(origine),  _direction(direction)
+        _origine(origine),  _direction(direction.normalized())
 {
 }
 

@@ -5,6 +5,10 @@ Camera::Camera()
 
 }
 
+/**
+@pOr origine de la caméra
+@pAt point à regarder avec la caméra
+*/
 Camera::Camera(const Vector3f& pOr, const Vector3f& pAt, int l, int h, const std::vector<Terrain*>& listTerrain) :
     _origine(pOr), _lu(l/2), _lv(h/2), _t(listTerrain)
 {
@@ -14,14 +18,22 @@ Camera::Camera(const Vector3f& pOr, const Vector3f& pAt, int l, int h, const std
 
     _w.normalize();
 
-    _u = - ( _w.cross(Vector3f(0,0,1)) );
-    _u.normalize();
+    if(_w == Vector3f(0,0,1) || _w == Vector3f(0,0,-1))
+    {
+        _u = Vector3f(_w(2),0,0);
+        _v = Vector3f(0,_w(2),0);
+    }
+    else
+    {
+        _u = - ( _w.cross(Vector3f(0,0,1)) );
+        _u.normalize();
 
-    _v = _w.cross(_u);
-    _v.normalize();
+        _v = _w.cross(_u);
+        _v.normalize();
+    }
 }
 
-Vector3f Camera::vecScreen(int& i, int& j) const
+Vector3f Camera::vecScreen(int i, int j) const
 {
     if(i >= _lu*2 || j >= _lv*2){
         std::cerr << "i or j is incorrect" << std::endl;
@@ -35,19 +47,19 @@ Vector3f Camera::vecScreen(int& i, int& j) const
     return _w*_lw + ( (1 - ti)*(-_lu)+(ti*_lu) )*_u + ( (1-tj)*(-_lv)+(tj*_lv) )*_v;
 }
 
-Vector3f Camera::pointScreen(int &i, int &j) const
+Vector3f Camera::pointScreen(int i, int j) const
 {
     return _origine + vecScreen(i, j);
 }
 
-bool Camera::SetPixel(QImage *img, int x, int y, QColor color){
+bool Camera::SetPixel(QImage *img, int x, int y, const QColor& color){
     //qDebug()<<color;
     img->setPixel(x,y,color.rgba());
 
     return true;
 }
 
-int Camera::getrouge(QRgb couleur){
+int Camera::getrouge(const QRgb& couleur){
     QColor tmp(QColor::fromRgb(couleur));
     return tmp.red();
 }
@@ -58,7 +70,7 @@ QImage* Camera::antialiasing(QImage *img){
     for(int i=1;i<img->width()-1;i++){
         for(int y=1;y<img->height()-1;y++){
             int newcolor;
-            newcolor = getrouge(img->pixel(i,y))-getrouge(img->pixel(i-1,y-1))/100-getrouge(img->pixel(i,y-1)/100)-getrouge(img->pixel(i+1,y-1))/100
+            newcolor = getrouge(img->pixel(i,y))-getrouge(img->pixel(i-1,y-1))/100-getrouge(img->pixel(i,y-1))/100-getrouge(img->pixel(i+1,y-1))/100
                                            -getrouge(img->pixel(i-1,y))/100-getrouge(img->pixel(i+1,y))/100
                                            -getrouge(img->pixel(i-1,y+1))/100-getrouge(img->pixel(i,y+1))/100-getrouge(img->pixel(i+1,y+1))/100;
             if(newcolor<0)newcolor = 0;

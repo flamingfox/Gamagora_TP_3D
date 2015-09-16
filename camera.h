@@ -34,12 +34,12 @@ public:
     Camera();
     Camera(const Vector3f& pOr, const Vector3f& pAt, int l, int h, const std::vector<Terrain*>& listTerrain);
 
-    Vector3f vecScreen(int &i, int &j) const;
-    Vector3f pointScreen(int &i, int &j) const;
+    Vector3f vecScreen(int i, int j) const;
+    Vector3f pointScreen(int i, int j) const;
 
-    bool SetPixel(QImage *img, int x, int y, QColor color);//permet de mettre une couleur au pixel de coordonnées x,y
+    bool SetPixel(QImage *img, int x, int y, const QColor& color);//permet de mettre une couleur au pixel de coordonnées x,y
 
-    int getrouge(QRgb couleur);
+    int getrouge(const QRgb& couleur);
     bool rendu();
     QImage* antialiasing(QImage *img);
     QImage generateImage(int largeur, int hauteur);//fonction de test à ne pas utiliser
