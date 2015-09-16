@@ -4,6 +4,7 @@
 #include <Eigen/Geometry>
 #include "mesh.h"
 #include "float.h"  //FLT_MIN FLT_MAX
+#include "rayon.h"
 
 using namespace Eigen;
 
@@ -18,6 +19,8 @@ public:
 
     void updatePoint(const Vector3f& p);
     bool isIn(const Vector3f& p);
+
+    bool intersect(const Rayon &r, float &distanceMin, float &distanceMax) const;
 
 protected:
     inline void setDefaultBox();

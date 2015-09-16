@@ -194,6 +194,8 @@ void Terrain::generationTerrain(int width, int lenght, int nbPointLongueur, int 
     this->save("terrainNoise3.obj");
     applicationWarp(5, 25);
     this->save("terrainWarp3.obj");
+
+    englobant = Box(geom);
 }
 
 bool Terrain::inOut(Eigen::Vector3f pointXYZ)
@@ -209,6 +211,10 @@ bool Terrain::interesct(const Rayon& rayon, float coeffDistance) const{
 
     float dmin = 0.0;
     float dmax = 1000.0;
+
+    if(!englobant.intersect(rayon, dmin, dmax ))
+        return false;
+
     coeffDistance = dmin;
 
     for( int i=0; i<256; i++ )

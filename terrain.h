@@ -5,6 +5,7 @@
 #include <QImage>
 #include "interpolation.h"
 #include "rayon.h"
+#include "box.h"
 
 class Terrain : public Mesh
 {
@@ -13,6 +14,7 @@ protected :
     int longueur, largeur;
     int nbPointLongueur, nbPointLargeur;
     std::vector<Eigen::Vector3f> normalsPoints;
+    Box englobant;
 
 public:
     Terrain();

@@ -7,6 +7,7 @@
 #include "camera.h"
 //#include "generationvegetation.h" //inclue la librairie pour "srand" et "time"
 #include "box.h"
+#include "rayon.h"
 
 #include <string>
 #include <QImage>   //enlever -qt dans le fichier .pro pour faire marcher
@@ -19,7 +20,7 @@ void testSphere();
 void testNormals();
 void testBox();
 void testCamera();
-
+void testIntersect();
 
 int main(int argc, char *argv[])
 {
@@ -27,9 +28,11 @@ int main(int argc, char *argv[])
     //testImage(QImage("image.png"));
 
     //testTotal();
-    testCamera();
+    //testCamera();
+    //testCamera();
     //testBox();
     //testNormals();
+    testIntersect();
 
     return 0;
 }
@@ -68,6 +71,21 @@ void testCamera(){
     Camera cam(Vector3f(0,0,0),Vector3f(0,0,1),500,500);
     //cam.generateImage(500,500).save("test2.png");
     cam.rendu();
+
+}
+
+void testIntersect(){
+    Box b = Box(Eigen::Vector3f(1,1,1), Eigen::Vector3f(3,3,3));
+    Rayon r = Rayon(Eigen::Vector3f(4,4,4), Eigen::Vector3f(-1,-1,-1));
+
+    float distanceMin = 0, distanceMax = 0;
+
+    if(b.intersect(r, distanceMin, distanceMax)){
+        std::cout << "Intersection, dMin = " << distanceMin << " , dMax = " << distanceMax << std::endl;
+    }
+    else{
+        std::cout << "Pas d'intersection" << std::endl;
+    }
 
 }
 
