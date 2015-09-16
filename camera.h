@@ -22,17 +22,17 @@ protected:
     int _lu, _lv;
     float _lw; //lv et lw constants    exemple : lu = 16.0 / 20.0
                          //                                lv = 9.0 / 20.0
-    QList<Terrain> _t;//liste des objets dans la scene
+    std::vector<Terrain*> _t;//liste des objets dans la scene
     // un vecteur u, un vecteur v et un vecteur w  (u,v,w)
     // une distance dw
     // une distance lu et lv
 
     QColor renderHors();
-    QColor render(const bool toucheoupas, const Eigen::Vector3f &pointImpact, const Terrain &objleplusproche, const Rayon &ray);
+    QColor render(const bool toucheoupas, const Eigen::Vector3f& pointImpact, const Terrain& objleplusproche, const Rayon& ray);
 
 public:
     Camera();
-    Camera(Vector3f pOr,Vector3f pAt, int l, int h, QList<Terrain> listTerrain);
+    Camera(const Vector3f& pOr, const Vector3f& pAt, int l, int h, const std::vector<Terrain*>& listTerrain);
 
     Vector3f vecScreen(int &i, int &j) const;
     Vector3f pointScreen(int &i, int &j) const;
