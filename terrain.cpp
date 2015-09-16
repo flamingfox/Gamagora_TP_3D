@@ -142,8 +142,8 @@ void Terrain::calculNormals()
 
 Eigen::Vector2d Terrain::getDimension() const
 {
-    return Eigen::Vector2d( ( longueur-(longueur/(double)nbPointLongueur) ),
-                            ( largeur-(longueur/(double)nbPointLargeur) )); //problème largeur longueur
+    return Eigen::Vector2d( largeur,
+                            longueur);
 }
 
 float Terrain::getHauteur(Eigen::Vector2f pointXY) const
@@ -151,12 +151,12 @@ float Terrain::getHauteur(Eigen::Vector2f pointXY) const
     return getHauteur(pointXY(0), pointXY(1));
 }
 
+
 float Terrain::getHauteur(float pointX, float pointY) const
 {
-    Eigen::Vector2d dim = getDimension();
 
-    int indiceX = (pointX) * ( nbPointLargeur/dim(0) );     //problème possible: dans getDimension(), pointsXY(0) -> longueur
-    int indiceY = pointY * ( nbPointLongueur/dim(1) );
+    int indiceX = pointX * ( nbPointLargeur/largeur );
+    int indiceY = pointY * ( nbPointLongueur/longueur );
     indiceX *= nbPointLargeur;
 
     Eigen::Vector3f point = geom.at( indiceX + indiceY);
@@ -178,16 +178,16 @@ void Terrain::generationTerrain(int width, int lenght, int nbPointLongueur, int 
     this->save("terrainNoise1.obj");
     applicationRidge(150, 50, 500);
     this->save("terrainRidge1.obj");
-    applicationWarp(30, 100);
-    this->save("terrainWarp1.obj");
+    //applicationWarp(30, 100);
+    //this->save("terrainWarp1.obj");
 
 
     applicationNoise(20, 100);
     this->save("terrainNoise2.obj");
     applicationRidge(150, 50, 400);
     this->save("terrainRidge2.obj");
-    applicationWarp(10, 75);
-    this->save("terrainWarp2.obj");
+    //applicationWarp(10, 75);
+    //this->save("terrainWarp2.obj");
 
 
     applicationNoise(5, 50);
