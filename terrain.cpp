@@ -155,13 +155,16 @@ float Terrain::getHauteur(Eigen::Vector2f pointXY) const
 float Terrain::getHauteur(float pointX, float pointY) const
 {
 
-    int indiceX = pointX * ( nbPointLargeur/largeur );
-    int indiceY = pointY * ( nbPointLongueur/longueur );
-    indiceX *= nbPointLargeur;
+    int indiceX = pointX; // * ( nbPointLargeur/largeur );
+    int indiceY = ( (int)pointY ) * ( nbPointLargeur );
 
-    Eigen::Vector3f point = geom.at( indiceX + indiceY);
+    Eigen::Vector3f point11 = geom.at( indiceX + indiceY ),
+            point12 = geom.at(indiceX+1 + indiceY),
+            point21 = geom.at(indiceX + indiceY+nbPointLargeur),
+            point22 = geom.at(indiceX+1 + indiceY+nbPointLargeur);
 
-    return point(2);
+    return interp::interp_linear2D(pointX, pointY, point11(0), point11(1), point22(0), point22(1),
+                                   point11(2), point12(2), point21(2), point22(2));
 }
 
 
