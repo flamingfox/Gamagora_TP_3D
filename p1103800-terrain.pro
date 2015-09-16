@@ -25,4 +25,5 @@ HEADERS +=  mesh.h \
     interpolation.h \
     camera.h \
     rayon.h \
-    box.h
+    box.h \
+    rendu.h
