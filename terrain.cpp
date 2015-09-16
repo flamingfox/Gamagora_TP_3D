@@ -146,15 +146,14 @@ Eigen::Vector2d Terrain::getDimension() const
                             longueur);
 }
 
-float Terrain::getHauteur(Eigen::Vector2f pointXY) const
+float Terrain::getHauteur(Vector2f &pointXY) const
 {
     return getHauteur(pointXY(0), pointXY(1));
 }
 
 
-float Terrain::getHauteur(float pointX, float pointY) const
+float Terrain::getHauteur(float &pointX, float &pointY) const
 {
-
     int indiceX = pointX; // * ( nbPointLargeur/largeur );
     int indiceY = ( (int)pointY ) * ( nbPointLargeur );
 
@@ -165,6 +164,34 @@ float Terrain::getHauteur(float pointX, float pointY) const
 
     return interp::interp_linear2D(pointX, pointY, point11(0), point11(1), point22(0), point22(1),
                                    point11(2), point12(2), point21(2), point22(2));
+}
+
+Vector3f Terrain::getNormal(Vector2f &pointXY) const
+{
+    return getNormal(pointXY(0), pointXY(1));
+}
+
+Vector3f Terrain::getNormal(float &pointX, float &pointY) const
+{
+    int indiceX = pointX; // * ( nbPointLargeur/largeur );
+    int indiceY = ( (int)pointY ) * ( nbPointLargeur );
+
+    Eigen::Vector3f point11 = geom.at( indiceX + indiceY ),
+            normal11 = normalsPoints.at( indiceX + indiceY ),
+            normal12 = geom.at(indiceX+1 + indiceY),
+            normal21 = geom.at(indiceX + indiceY+nbPointLargeur),
+            point22 = geom.at(indiceX+1 + indiceY+nbPointLargeur),
+            normal22 = geom.at(indiceX+1 + indiceY+nbPointLargeur),
+            normal;
+
+    normal(0) = interp::interp_linear2D(pointX, pointY, point11(0), point11(1), point22(0), point22(1),
+                                   normal11(0), normal12(0), normal21(0), normal22(0));
+    normal(1) = interp::interp_linear2D(pointX, pointY, point11(0), point11(1), point22(0), point22(1),
+                                   normal11(1), normal12(1), normal21(1), normal22(1));
+    normal(2) = interp::interp_linear2D(pointX, pointY, point11(0), point11(1), point22(0), point22(1),
+                                   normal11(2), normal12(2), normal21(2), normal22(2));
+
+    return normal;
 }
 
 

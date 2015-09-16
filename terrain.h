@@ -35,8 +35,11 @@ public:
 
     Eigen::Vector2d getDimension() const;
 
-    float getHauteur(Eigen::Vector2f pointXY) const;
-    float getHauteur(float pointX, float pointY) const;
+    float getHauteur(Eigen::Vector2f &pointXY) const;
+    float getHauteur(float &pointX, float &pointY) const;
+
+    Eigen::Vector3f getNormal(Eigen::Vector2f &pointXY) const;
+    Eigen::Vector3f getNormal(float &pointX, float &pointY) const;
 
     void generationTerrain(int width, int lenght, int nbPointLongueur, int nbPointLargeur);
 
