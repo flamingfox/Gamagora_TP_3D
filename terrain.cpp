@@ -191,6 +191,8 @@ Vector3f Terrain::getNormal(float &pointX, float &pointY) const
     normal(2) = interp::interp_linear2D(pointX, pointY, point11(0), point11(1), point22(0), point22(1),
                                    normal11(2), normal12(2), normal21(2), normal22(2));
 
+    normal.normalize();
+
     return normal;
 }
 
