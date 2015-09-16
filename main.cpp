@@ -67,8 +67,7 @@ void testImage(const QImage& img)
 
 void testCamera(){
     Terrain m = Terrain(1500, 1500, 250, 250);
-    m.normalsTriangles();
-    m.calculNormals();
+    m.save("terrain.obj");
     std::vector<Terrain*> t;
     t.push_back(&m);
     Camera cam(Vector3f(0,0,0),Vector3f(0,0,1),500,500,t);

@@ -102,7 +102,7 @@ void Terrain::simpleInitTopo()
 
 void Terrain::calculNormals()
 {
-    //this->normalsTriangles();   //reconstruit toutes les nornales des triangles du terrain.
+    normalsTriangles();   //reconstruit toutes les normales des triangles du terrain.
     //maintenant, on calcul les normales des points
     this->normalsPoints.reserve(nbGeom());
 
@@ -113,14 +113,15 @@ void Terrain::calculNormals()
 
             int t6 = ((i+ j*nbPointLargeur)-j)*2;   //pour 5x5, p12: 12 = ligne 2:  t6 = (12-2)*2 = 20
 
-            if(j < nbPointLongueur-1)            {
+            if(j < nbPointLongueur-1) {
                 if(i < nbPointLargeur-1)
                     n += normals[t6];
-                if(i > 0)                {
+                if(i > 0) {
                     n += normals[t6-1];
                     n += normals[t6-2];
                 }
             }
+
             if(j > 0)
             {
                 int t3 = t6-(nbPointLargeur-1)*2;   //p12:  t3 = 20 - 4*2 = 12;
@@ -152,10 +153,13 @@ float Terrain::getHauteur(Vector2f &pointXY) const
 }
 
 
-float Terrain::getHauteur(float &pointX, float &pointY) const
+float Terrain::getHauteur(float pointX, float pointY) const
 {
-    int indiceX = pointX; // * ( nbPointLargeur/largeur );
-    int indiceY = ( (int)pointY ) * ( nbPointLargeur );
+    if(pointX < 0 || pointY < 0 || pointX > largeur || pointY > longueur)
+        return HAUTEUR_HORS_MAP;
+
+    /*int indiceX = pointX * ( (float)nbPointLargeur / largeur );         //à revoir
+    int indiceY = ( (int)pointY ) * ( (float)nbPointLongueur / longueur ) * ( nbPointLargeur );
 
     Eigen::Vector3f point11 = geom.at( indiceX + indiceY ),
             point12 = geom.at(indiceX+1 + indiceY),
@@ -163,7 +167,30 @@ float Terrain::getHauteur(float &pointX, float &pointY) const
             point22 = geom.at(indiceX+1 + indiceY+nbPointLargeur);
 
     return interp::interp_linear2D(pointX, pointY, point11(0), point11(1), point22(0), point22(1),
-                                   point11(2), point12(2), point21(2), point22(2));
+                                   point11(2), point12(2), point21(2), point22(2));*/
+
+    float x = (pointX * (nbPointLargeur-1)) / largeur,    //largeur: 1m et 5 points: (1.0f*(5-1))/1 = 4.0f donc regarder l'indice 4
+          y = (pointY * (nbPointLongueur-1)) / longueur;
+
+    int x1 = floorf(x),
+        y1 = floorf(y),
+        x2 = ceilf(x),
+        y2 = ceilf(y);
+
+    const Eigen::Vector3f   & p11 = getPoint(x1, y1);
+
+    if(y1 == y2)    {
+        if(x1 == x2 )
+            return p11(2);
+        return interp::interp_linear1D(x, p11(2), getPoint(x2, y1)(2));
+    }
+    else    {
+        const Eigen::Vector3f   & p12 = getPoint(x1, y2);
+        if(x1 == x2 )
+            return interp::interp_linear1D(x, p11(2), p12(2));
+        return interp::interp_linear2D(x, y, x1, y1, x2, y2,
+                                       p11(2), p12(2), getPoint(x2, y1)(2), getPoint(x2, y2)(2));
+    }
 }
 
 Vector3f Terrain::getNormal(const Vector3f &pointXYZ) const
@@ -176,24 +203,35 @@ Vector3f Terrain::getNormal(const Vector2f &pointXY) const
     return getNormal(pointXY(0), pointXY(1));
 }
 
-Vector3f Terrain::getNormal(const float &pointX, const float &pointY) const
+Vector3f Terrain::getNormal(float pointX, float pointY) const
 {
-    int indiceX = pointX; // * ( nbPointLargeur/largeur );
-    int indiceY = ( (int)pointY ) * ( nbPointLargeur );
+    /*int indiceX = pointX * ( (float)nbPointLargeur / largeur );
+    int indiceY = ( (int)pointY ) * ( (float)nbPointLongueur / longueur ) * ( nbPointLargeur );
 
-    Eigen::Vector3f point11 = geom.at( indiceX + indiceY ),
-            normal11 = normalsPoints.at( indiceX + indiceY ),
-            normal12 = normalsPoints.at(indiceX+1 + indiceY),
-            normal21 = normalsPoints.at(indiceX + indiceY+nbPointLargeur),
-            point22 = geom.at(indiceX+1 + indiceY+nbPointLargeur),
-            normal22 = normalsPoints.at(indiceX+1 + indiceY+nbPointLargeur),
-            normal;
+    const Eigen::Vector3f   & point11 = geom.at( indiceX + indiceY ),
+                            & normal11 = normalsPoints.at( indiceX + indiceY ),
+                            & normal12 = normalsPoints.at(indiceX+1 + indiceY),
+                            & normal21 = normalsPoints.at(indiceX + indiceY+nbPointLargeur),
+                            & point22 = geom.at(indiceX+1 + indiceY+nbPointLargeur),
+                            & normal22 = normalsPoints.at(indiceX+1 + indiceY+nbPointLargeur),
+                            normal;
+                            */
+    float x = (pointX * (nbPointLargeur-1)) / largeur,    //largeur: 1m et 5 points: (1.0f*(5-1))/1 = 4.0f donc regarder l'indice 4
+          y = (pointY * (nbPointLongueur-1)) / longueur;
 
-    normal(0) = interp::interp_linear2D(pointX, pointY, point11(0), point11(1), point22(0), point22(1),
+    const Eigen::Vector3f   & p11 = getPoint(floorf(x), floorf(y)),
+                            & p22 = getPoint(ceilf(x), ceilf(y)),
+                            & normal11 = getN(floorf(x), floorf(y)),
+                            & normal12 = getN(floorf(x), ceilf(y)),
+                            & normal21 = getN(ceilf(x), floorf(y)),
+                            & normal22 = getN(ceilf(x), ceilf(y));
+
+    Eigen::Vector3f normal;
+    normal(0) = interp::interp_linear2D(pointX, pointY, p11(0), p11(1), p22(0), p22(1),
                                    normal11(0), normal12(0), normal21(0), normal22(0));
-    normal(1) = interp::interp_linear2D(pointX, pointY, point11(0), point11(1), point22(0), point22(1),
+    normal(1) = interp::interp_linear2D(pointX, pointY, p11(0), p11(1), p22(0), p22(1),
                                    normal11(1), normal12(1), normal21(1), normal22(1));
-    normal(2) = interp::interp_linear2D(pointX, pointY, point11(0), point11(1), point22(0), point22(1),
+    normal(2) = interp::interp_linear2D(pointX, pointY, p11(0), p11(1), p22(0), p22(1),
                                    normal11(2), normal12(2), normal21(2), normal22(2));
 
     normal.normalize();
@@ -212,30 +250,31 @@ void Terrain::generationTerrain(int width, int lenght, int nbPointLongueur, int 
 {
     plan(lenght, width, nbPointLongueur, nbPointLargeur);
     applicationNoise(200, 250);
-    this->save("terrainNoise1.obj");
+    //this->save("terrainNoise1.obj");
     applicationRidge(150, 50, 500);
-    this->save("terrainRidge1.obj");
+    //this->save("terrainRidge1.obj");
     //applicationWarp(30, 100);
     //this->save("terrainWarp1.obj");
 
 
     applicationNoise(20, 100);
-    this->save("terrainNoise2.obj");
+    //this->save("terrainNoise2.obj");
     applicationRidge(150, 50, 400);
-    this->save("terrainRidge2.obj");
+    //this->save("terrainRidge2.obj");
     //applicationWarp(10, 75);
     //this->save("terrainWarp2.obj");
 
 
     applicationNoise(5, 50);
-    this->save("terrainNoise3.obj");
-    applicationWarp(5, 25);
+    //this->save("terrainNoise3.obj");
+    //applicationWarp(5, 25);
     this->save("terrainWarp3.obj");
 
+    calculNormals();
     englobant = Box(geom);
 }
 
-bool Terrain::inOut(Eigen::Vector3f pointXYZ)
+bool Terrain::inOut(const Eigen::Vector3f& pointXYZ)
 {
     if(pointXYZ(2) > getHauteur(pointXYZ(0), pointXYZ(1))){
         return false;
@@ -244,7 +283,7 @@ bool Terrain::inOut(Eigen::Vector3f pointXYZ)
     return true;
 }
 
-bool Terrain::intersect(const Rayon& rayon, float coeffDistance) const{
+bool Terrain::intersect(const Rayon& rayon, float &coeffDistance) const{
 
     float dmin = 0.0;
     float dmax = 1000.0;
@@ -252,11 +291,18 @@ bool Terrain::intersect(const Rayon& rayon, float coeffDistance) const{
     if(!englobant.intersect(rayon, dmin, dmax ))
         return false;
 
+    dmin = 0.0;
+    dmax = 1000.0;
+
     coeffDistance = dmin;
 
     for( int i=0; i<256; i++ )
     {
         Eigen::Vector3f pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
+
+        if(getHauteur( pos(0), pos(1) ) == HAUTEUR_HORS_MAP)
+            break;
+
         float h = pos(2) - getHauteur( pos(0), pos(1) );
 
         if( h <(0.002 * coeffDistance) ) {
@@ -339,8 +385,22 @@ float Terrain::maxElevation()
 
 
 
-float Terrain::interpolation(float a, float b, float x)
-{
+float Terrain::interpolation(float a, float b, float x){
     return (1. - x) * a + x * b;
 }
 
+inline const Vector3f& Terrain::getPoint(int i, int j) const{
+    return geom[i+j*nbPointLargeur];
+}
+
+inline const Vector3f& Terrain::getPoint(const Eigen::Vector2i& pos) const{
+    return getPoint(pos(0), pos(1));
+}
+
+inline const Vector3f& Terrain::getN(int i, int j) const{
+    return normalsPoints[i+j*nbPointLargeur];
+}
+
+inline const Vector3f& Terrain::getN(const Eigen::Vector2i& pos) const{
+    return getN(pos(0), pos(1));
+}

@@ -113,8 +113,12 @@ bool Box::intersect(const Rayon &r, float &distanceMin, float &distanceMax) cons
     if(tzmax < tmax)
         tmax = tzmax;
 
-    distanceMin = tmin;
-    distanceMax = tmax;
+    if(tmin>0)
+        distanceMin = tmin;
+
+    if(tmax>0)
+        distanceMax = tmax;
+
     return true;
 }
 

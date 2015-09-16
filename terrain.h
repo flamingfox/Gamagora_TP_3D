@@ -36,17 +36,17 @@ public:
     Eigen::Vector2d getDimension() const;
 
     float getHauteur(Eigen::Vector2f &pointXY) const;
-    float getHauteur(float &pointX, float &pointY) const;
+    float getHauteur(float pointX, float pointY) const;
 
     Eigen::Vector3f getNormal(const Eigen::Vector3f &pointXYZ) const;
     Eigen::Vector3f getNormal(const Eigen::Vector2f &pointXY) const;
-    Eigen::Vector3f getNormal(const float &pointX, const float &pointY) const;
+    Eigen::Vector3f getNormal(const float pointX, const float pointY) const;
 
     void generationTerrain(int width, int lenght, int nbPointLongueur, int nbPointLargeur);
 
-    bool inOut(Eigen::Vector3f pointXYZ);
+    bool inOut(const Eigen::Vector3f& pointXYZ);
 
-    bool intersect(const Rayon& rayon, float coeffDistance) const;
+    bool intersect(const Rayon& rayon, float &coeffDistance) const;
     void calculNormals();
 
 private :
@@ -68,6 +68,11 @@ private :
 
     void simpleInitImage(const QImage& img, float _longueur, float _largeur, float _amplitude);
     void simpleInitTopo();
+
+    inline const Vector3f& getPoint(int i, int j) const;
+    inline const Vector3f& getPoint(const Eigen::Vector2i& pos) const;
+    inline const Vector3f& getN(int i, int j) const;
+    inline const Vector3f& getN(const Eigen::Vector2i& pos) const;
 };
 
 #endif // TERRAIN_H
