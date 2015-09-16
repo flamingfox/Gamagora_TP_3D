@@ -10,6 +10,7 @@
 #include "float.h"  //FLT_MIN FLT_MAX
 #include <QColor>
 #include <QDebug>
+#include "rendu.h"
 
 using namespace Eigen;
 
@@ -25,6 +26,10 @@ protected:
     // un vecteur u, un vecteur v et un vecteur w  (u,v,w)
     // une distance dw
     // une distance lu et lv
+
+    QColor renderHors();
+    QColor render(const bool toucheoupas, const Eigen::Vector3f &pointImpact, const Terrain &objleplusproche, const Rayon &ray);
+
 public:
     Camera();
     Camera(Vector3f pOr,Vector3f pAt, int l, int h, QList<Terrain> listTerrain);

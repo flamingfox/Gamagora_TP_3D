@@ -4,9 +4,10 @@
 #include <QImage>
 #include <Eigen/Geometry>
 #include "rayon.h"
+#include "terrain.h"
+#include "qcolor.h"
 
-
-QImage renduImage(int nbWidth, int nbHeight)
+/*QImage renduImage(int nbWidth, int nbHeight)
 {
     QImage img(nbWidth, nbHeight);
     for(int j = 0;  j < nbHeight;   j++)    {
@@ -17,39 +18,9 @@ QImage renduImage(int nbWidth, int nbHeight)
         }
     }
 
-}
+}*/
 
 
-
-QColor renduHors()
-{
-    Qt::blue;
-}
-
-QColor rendu(const Eigen::Vector3f& ray, const Eigen::Vector3f& n)
-{
-    Eigen::Vector3f diff = ray.normalized() - n;
-    double norm = diff.squareNorm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
-    norm = 4-norm;
-
-    qRgb color;
-    if(norm >= 2)
-        color = Qt::black;
-    else if(norm == 0)
-        color = Qt::white;
-    else
-    {
-        int c = 255-(255*norm)/2;
-        color = qRgb(c, c, c);
-    }
-    return color;
-}
-
-
-QColor rendu(const Rayon& ray, const Eigen::Vector3f& n)
-{
-    return rendu(ray.getDirection(), n);
-}
 
 
 

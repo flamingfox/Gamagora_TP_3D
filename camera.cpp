@@ -91,13 +91,13 @@ bool Camera::rendu(){
                     }
                 }
             }
-            //QColor rendu(bool toucheoupas, zonetouchee,objleplusproche,r);
+            //QColor render(bool toucheoupas, zonetouchee,objleplusproche,r);
             //qDebug()<<x;
             //uint gris = rand()%255;
             //uint alpha = rand()%255;
             //QColor toto(gris,gris,gris,alpha);
             //SetPixel(img, x, y,toto);
-            SetPixel(img, x, y,rendu(touche, zonetouchee, objleplusproche, r));
+            SetPixel(img, x, y, render(touche, zonetouchee, objleplusproche, r));
         }
     }
     antialiasing(img)->save("testaliasing.png");
@@ -105,6 +105,39 @@ bool Camera::rendu(){
     delete img;
     return true;
 }
+
+QColor Camera::renderHors()
+{
+    return QColor(116, 208, 241);
+}
+
+QColor Camera::render(const bool toucheoupas, const Eigen::Vector3f& pointImpact, const Terrain& objleplusproche, const Rayon &ray)
+{
+    if(!toucheoupas)
+        return renderHors();
+
+    Eigen::Vector3f dRay = ray.getDirection();
+    dRay.normalize();
+
+    Eigen::Vector3f n = objleplusproche.getNormal(pointImpact);
+
+    Eigen::Vector3f diff = dRay - n;
+    double norm = diff.norm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
+    norm = 4-norm;
+
+    QColor color;
+    if(norm >= 2)
+        color = QColor(0,0,0); //Black
+    else if(norm == 0)
+        color = QColor(255,255,255); // White
+    else
+    {
+        int c = 255-(255*norm)/2;
+        color = QColor(c, c, c); // Grey
+    }
+    return color;
+}
+
 
 QImage Camera::generateImage(int largeur, int hauteur){
     QImage img(largeur, hauteur, QImage::Format_RGB888);

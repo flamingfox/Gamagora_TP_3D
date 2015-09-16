@@ -166,12 +166,17 @@ float Terrain::getHauteur(float &pointX, float &pointY) const
                                    point11(2), point12(2), point21(2), point22(2));
 }
 
-Vector3f Terrain::getNormal(Vector2f &pointXY) const
+Vector3f Terrain::getNormal(const Vector3f &pointXYZ) const
+{
+   return getNormal(pointXYZ(0), pointXYZ(1));
+}
+
+Vector3f Terrain::getNormal(const Vector2f &pointXY) const
 {
     return getNormal(pointXY(0), pointXY(1));
 }
 
-Vector3f Terrain::getNormal(float &pointX, float &pointY) const
+Vector3f Terrain::getNormal(const float &pointX, const float &pointY) const
 {
     int indiceX = pointX; // * ( nbPointLargeur/largeur );
     int indiceY = ( (int)pointY ) * ( nbPointLargeur );
