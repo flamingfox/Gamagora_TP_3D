@@ -11,7 +11,16 @@ class Terrain : public Mesh
 {
 protected :
     //float uniteDistance;
+    ///
+    /// \brief longueur distance sur axe y
+    /// \brief largeur distance sur axe x
+    ///
     int longueur, largeur;
+
+    ///
+    /// \brief nbPointLongueur nombre de point sur axe y
+    /// \brief nbPointLargeur nombre de point sur axe x
+    ///
     int nbPointLongueur, nbPointLargeur;
     std::vector<Eigen::Vector3f> normalsPoints;
     Box englobant;
