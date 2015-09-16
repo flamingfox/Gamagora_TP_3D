@@ -21,13 +21,13 @@ protected:
     int _lu, _lv;
     float _lw; //lv et lw constants    exemple : lu = 16.0 / 20.0
                          //                                lv = 9.0 / 20.0
-    QList<Terrain> _t;
+    QList<Terrain> _t;//liste des objets dans la scene
     // un vecteur u, un vecteur v et un vecteur w  (u,v,w)
     // une distance dw
     // une distance lu et lv
 public:
     Camera();
-    Camera(Vector3f pOr,Vector3f pAt, int l, int h);
+    Camera(Vector3f pOr,Vector3f pAt, int l, int h, QList<Terrain> listTerrain);
 
     Vector3f vecScreen(int &i, int &j) const;
     Vector3f pointScreen(int &i, int &j) const;

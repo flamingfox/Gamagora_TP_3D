@@ -5,8 +5,8 @@ Camera::Camera()
 
 }
 
-Camera::Camera(Vector3f pOr, Vector3f pAt, int l, int h) :
-    _origine(pOr), _lu(l/2), _lv(h/2)
+Camera::Camera(Vector3f pOr, Vector3f pAt, int l, int h, QList<Terrain> listTerrain) :
+    _origine(pOr), _lu(l/2), _lv(h/2), _t(listTerrain)
 {
     _w = pAt - pOr;
 
@@ -81,13 +81,13 @@ bool Camera::rendu(){
             Terrain objleplusproche;
             r.setDirection(vecScreen(x,y));
             for(int z=0;z<_t.size();z++){
-                /*if(_t.at(z).interesct(r,&coefdisttmp)){//si on touche
+                if(_t.at(z).interesct(r,coefdisttmp)){//si on touche
                     if(coefdisttmp < coefdistfinal){//on sélectionne l'objet touché le plus proche
                         coefdistfinal = coefdisttmp;
                         objleplusproche = _t.at(z);
                         zonetouchee = _origine + (coefdistfinal*_w);
                     }
-                }*/
+                }
             }
             //RENDU::rendu(x,y,zonetouchee,objleplusproche,r);
             //qDebug()<<x;

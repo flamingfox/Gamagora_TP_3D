@@ -28,10 +28,10 @@ int main(int argc, char *argv[])
     //testImage(QImage("image.png"));
 
     //testTotal();
-    //testCamera();
+    testCamera();
     //testBox();
     //testNormals();
-    testIntersect();
+    //testIntersect();
 
     return 0;
 }
@@ -66,8 +66,8 @@ void testImage(const QImage& img)
 }
 
 void testCamera(){
-
-    Camera cam(Vector3f(0,0,0),Vector3f(0,0,1),500,500);
+    QList<Terrain> t;
+    Camera cam(Vector3f(0,0,0),Vector3f(0,0,1),500,500,t);
     //cam.generateImage(500,500).save("test2.png");
     cam.rendu();
 
