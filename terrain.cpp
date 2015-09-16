@@ -178,10 +178,10 @@ Vector3f Terrain::getNormal(float &pointX, float &pointY) const
 
     Eigen::Vector3f point11 = geom.at( indiceX + indiceY ),
             normal11 = normalsPoints.at( indiceX + indiceY ),
-            normal12 = geom.at(indiceX+1 + indiceY),
-            normal21 = geom.at(indiceX + indiceY+nbPointLargeur),
+            normal12 = normalsPoints.at(indiceX+1 + indiceY),
+            normal21 = normalsPoints.at(indiceX + indiceY+nbPointLargeur),
             point22 = geom.at(indiceX+1 + indiceY+nbPointLargeur),
-            normal22 = geom.at(indiceX+1 + indiceY+nbPointLargeur),
+            normal22 = normalsPoints.at(indiceX+1 + indiceY+nbPointLargeur),
             normal;
 
     normal(0) = interp::interp_linear2D(pointX, pointY, point11(0), point11(1), point22(0), point22(1),
