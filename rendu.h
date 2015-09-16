@@ -4,7 +4,6 @@
 #include <QImage>
 #include <Eigen/Geometry>
 #include "rayon.h"
-#include "camera.h"
 
 
 QImage renduImage(int nbWidth, int nbHeight)
@@ -22,7 +21,7 @@ QImage renduImage(int nbWidth, int nbHeight)
 
 
 
-QColor renduHors(int x, int y)
+QColor renduHors()
 {
     Qt::blue;
 }
@@ -40,7 +39,7 @@ QColor rendu(const Eigen::Vector3f& ray, const Eigen::Vector3f& n)
         color = Qt::white;
     else
     {
-        int c = 255*(norm/2);
+        int c = 255-(255*norm)/2;
         color = qRgb(c, c, c);
     }
     return color;
