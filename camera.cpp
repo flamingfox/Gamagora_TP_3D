@@ -74,6 +74,7 @@ bool Camera::rendu(){
     img->fill(QColor(Qt::white).rgb());
     for(int x = 0; x < _lu ; x++){
         for(int y = 0; y < _lv ; y++){
+            bool touche = false;
             Rayon r(_origine,Vector3f(0,0,0));
             float coefdisttmp = FLT_MAX;
             float coefdistfinal = FLT_MAX;
@@ -82,6 +83,7 @@ bool Camera::rendu(){
             r.setDirection(vecScreen(x,y));
             for(int z=0;z<_t.size();z++){
                 if(_t.at(z).interesct(r,coefdisttmp)){//si on touche
+                    touche = true;
                     if(coefdisttmp < coefdistfinal){//on sélectionne l'objet touché le plus proche
                         coefdistfinal = coefdisttmp;
                         objleplusproche = _t.at(z);
@@ -89,12 +91,13 @@ bool Camera::rendu(){
                     }
                 }
             }
-            //RENDU::rendu(x,y,zonetouchee,objleplusproche,r);
+            //QColor rendu(bool toucheoupas, zonetouchee,objleplusproche,r);
             //qDebug()<<x;
-            uint gris = rand()%255;
-            uint alpha = rand()%255;
-            QColor toto(gris,gris,gris,alpha);
-            SetPixel(img, x, y,toto);
+            //uint gris = rand()%255;
+            //uint alpha = rand()%255;
+            //QColor toto(gris,gris,gris,alpha);
+            //SetPixel(img, x, y,toto);
+            SetPixel(img, x, y,rendu(touche, zonetouchee, objleplusproche, r));
         }
     }
     antialiasing(img)->save("testaliasing.png");
