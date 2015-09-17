@@ -135,7 +135,7 @@ QColor Camera::render(const bool toucheoupas, const Eigen::Vector3f& pointImpact
     Eigen::Vector3f diff = dRay - n;
     double norm = diff.squaredNorm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
     norm = 4-norm;
-
+    //qDebug()<<norm;
     QColor color;
     if(norm >= 2)
         color = QColor(0,0,0); //Black
