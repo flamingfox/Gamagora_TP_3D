@@ -38,11 +38,11 @@ Vector3f Camera::vecScreen(int i, int j) const
         exit(-1);
     }
 
-    float ti = ((float)i) / (_lu*2 - 1);
-    float tj = ((float)j) / (_lv*2 - 1);
+    float ti = ((float)i) / (_lu - 1);
+    float tj = ((float)j) / (_lv - 1);
 
 
-    return _w*_lw + ( (1.0 - ti)*(-_lu)+(ti*_lu) )*_u + ( (1.0-tj)*(-_lv)+(tj*_lv) )*_v;
+    return _w*_lw + ( (1.0 - ti)*(-_lu/2)+(ti*_lu/2) )*_u + ( (1.0-tj)*(_lv/2)+(tj*(-_lv/2)) )*_v;
 }
 
 Vector3f Camera::pointScreen(int i, int j) const
@@ -97,7 +97,7 @@ bool Camera::rendu(){
                     if(coefdisttmp < coefdistfinal){//on sélectionne l'objet touché le plus proche
                         coefdistfinal = coefdisttmp;
                         objleplusproche = terrain;
-                        zonetouchee = _origine + (coefdistfinal*_w);
+                        zonetouchee = _origine + (coefdistfinal*r.getDirection());
                     }
                 }
             }
