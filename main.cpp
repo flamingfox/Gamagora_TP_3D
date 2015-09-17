@@ -70,7 +70,7 @@ void testCamera(){
     m.save("terrain.obj");
     std::vector<Terrain*> t;
     t.push_back(&m);
-    Camera cam(Vector3f(0,0,0),Vector3f(0,0,1),500,500,t);
+    Camera cam(Vector3f(0,0,2000),Vector3f(750,750,0),1000,1000,t);
     //cam.generateImage(500,500).save("test2.png");
     cam.rendu();
 

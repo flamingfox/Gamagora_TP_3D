@@ -286,13 +286,13 @@ bool Terrain::inOut(const Eigen::Vector3f& pointXYZ)
 bool Terrain::intersect(const Rayon& rayon, float &coeffDistance) const{
 
     float dmin = 0.0;
-    float dmax = 1000.0;
+    float dmax = 5000.0;
 
     if(!englobant.intersect(rayon, dmin, dmax ))
         return false;
 
     dmin = 0.0;
-    dmax = 1000.0;
+    dmax = 5000.0;
 
     coeffDistance = dmin;
 
