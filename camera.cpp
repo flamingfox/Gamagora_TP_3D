@@ -133,7 +133,7 @@ QColor Camera::render(const bool toucheoupas, const Eigen::Vector3f& pointImpact
     Eigen::Vector3f n = objleplusproche.getNormal(pointImpact);
 
     Eigen::Vector3f diff = dRay - n;
-    double norm = diff.norm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
+    double norm = diff.squaredNorm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
     norm = 4-norm;
 
     QColor color;
@@ -143,7 +143,7 @@ QColor Camera::render(const bool toucheoupas, const Eigen::Vector3f& pointImpact
         color = QColor(255,255,255); // White
     else
     {
-        int c = 255-(255*norm)/2;
+        int c = 255-round((255*norm)/2);
         color = QColor(c, c, c); // Grey
     }
     return color;

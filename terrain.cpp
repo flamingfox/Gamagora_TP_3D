@@ -299,11 +299,11 @@ bool Terrain::intersect(const Rayon& rayon, float &coeffDistance) const{
     for( int i=0; i<256; i++ )
     {
         Eigen::Vector3f pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
-
-        if(getHauteur( pos(0), pos(1) ) == HAUTEUR_HORS_MAP)
+        float h = getHauteur( pos(0), pos(1) );
+        if(h == HAUTEUR_HORS_MAP)
             break;
 
-        float h = pos(2) - getHauteur( pos(0), pos(1) );
+        h = pos(2) - h;
 
         if( h <(0.002 * coeffDistance) ) {
                 return true;
