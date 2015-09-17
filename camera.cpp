@@ -7,15 +7,14 @@ Camera::Camera()
 
 /**
 @pOr origine de la caméra
-@pAt point à regarder avec la caméra
+@pAt vecteur direction de la caméra (comprenant distance)
 */
 Camera::Camera(const Vector3f& pOr, const Vector3f& pAt, int l, int h, const std::vector<Terrain*>& listTerrain) :
-    _origine(pOr), _lu(l/2), _lv(h/2), _t(listTerrain)
+    _origine(pOr), _lu(l), _lv(h), _t(listTerrain)
 {
-    _w = pAt - pOr;
+    _w = pAt.normalized();
 
-    _lw = _w.norm();
-    _w.normalize();
+    _lw = pAt.norm();
 
     if(_w == Vector3f(0,0,1) || _w == Vector3f(0,0,-1))
     {
@@ -34,16 +33,16 @@ Camera::Camera(const Vector3f& pOr, const Vector3f& pAt, int l, int h, const std
 
 Vector3f Camera::vecScreen(int i, int j) const
 {
-    if(i >= _lu*2 || j >= _lv*2){
+    if(i >= _lu || j >= _lv){
         std::cerr << "i or j is incorrect" << std::endl;
         exit(-1);
     }
 
-    float ti = ((float)i) / (_lu*2 - 1);
-    float tj = ((float)j) / (_lv*2 - 1);
+    float ti = ((float)i) / (_lu - 1);
+    float tj = ((float)j) / (_lv - 1);
 
 
-    return _w*_lw + ( (1.0 - ti)*(-_lu)+(ti*_lu) )*_u + ( (1.0-tj)*(-_lv)+(tj*_lv) )*_v;
+    return _w*_lw + ( (1.0 - ti)*(-_lu/2)+(ti*_lu/2) )*_u + ( (1.0-tj)*(_lv/2)+(tj*(-_lv/2)) )*_v;
 }
 
 Vector3f Camera::pointScreen(int i, int j) const

@@ -255,26 +255,26 @@ Vector3f Terrain::getNormal(float pointX, float pointY) const
 void Terrain::generationTerrain(int width, int lenght, int nbPointLongueur, int nbPointLargeur)
 {
     plan(lenght, width, nbPointLongueur, nbPointLargeur);
-    applicationNoise(200, 250);
+    //applicationNoise(200, 250);
     //this->save("terrainNoise1.obj");
-    applicationRidge(150, 50, 500);
+    //applicationRidge(150, 50, 500);
     //this->save("terrainRidge1.obj");
     //applicationWarp(30, 100);
     //this->save("terrainWarp1.obj");
 
 
-    applicationNoise(20, 100);
+    //applicationNoise(20, 100);
     //this->save("terrainNoise2.obj");
-    applicationRidge(150, 50, 400);
+    //applicationRidge(150, 50, 400);
     //this->save("terrainRidge2.obj");
     //applicationWarp(10, 75);
     //this->save("terrainWarp2.obj");
 
 
-    applicationNoise(5, 50);
+    //applicationNoise(5, 50);
     //this->save("terrainNoise3.obj");
     //applicationWarp(5, 25);
-    this->save("terrainWarp3.obj");
+    //this->save("terrainWarp3.obj");
 
     calculNormals();
     englobant = Box(geom);
