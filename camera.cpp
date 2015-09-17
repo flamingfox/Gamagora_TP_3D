@@ -86,19 +86,18 @@ bool Camera::rendu(){
     for(int x = 0; x < _lu ; x++){
         for(int y = 0; y < _lv ; y++){
             bool touche = false;
-            Rayon r(_origine,Vector3f(0,0,0));
+            Rayon r(_origine,vecScreen(x,y));
             float coefdisttmp = FLT_MAX;
             float coefdistfinal = FLT_MAX;
             Vector3f zonetouchee;
             const Terrain* objleplusproche;
-            r.setDirection(vecScreen(x,y));
             for(const Terrain* terrain: _t){
                 if(terrain->intersect(r,coefdisttmp)){//si on touche
                     touche = true;
                     if(coefdisttmp < coefdistfinal){//on sélectionne l'objet touché le plus proche
                         coefdistfinal = coefdisttmp;
                         objleplusproche = terrain;
-                        zonetouchee = _origine + (coefdistfinal*_w);
+                        zonetouchee = _origine + (coefdistfinal*r.getDirection());
                     }
                 }
             }

@@ -67,10 +67,11 @@ void testImage(const QImage& img)
 
 void testCamera(){
     Terrain m = Terrain(1500, 1500, 250, 250);
+    m.initFinal();
     m.save("terrain.obj");
     std::vector<Terrain*> t;
     t.push_back(&m);
-    Camera cam(Vector3f(0,0,2000),Vector3f(750,750,0),1000,1000,t);
+    Camera cam(Vector3f(0,0,500),Vector3f(100,100,490),1000,1000,t);
     //cam.generateImage(500,500).save("test2.png");
     cam.rendu();
 

@@ -49,6 +49,9 @@ public:
     bool intersect(const Rayon& rayon, float &coeffDistance) const;
     void calculNormals();
 
+
+    void initFinal();
+
 private :
 
     /***** fonction de génération de terrain ******/
