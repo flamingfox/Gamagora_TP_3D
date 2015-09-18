@@ -38,7 +38,7 @@ int main(int, char **)
 
 void testNormals()
 {
-    Terrain m = Terrain(150, 150, 5, 5);
+    Terrain m = Terrain(150, 150, 5, 5,0);
     m.normalsTriangles();
     m.calculNormals();
     m.save("terrain.obj");
@@ -47,7 +47,7 @@ void testNormals()
 
 void testBox()
 {
-    Terrain m = Terrain(150, 150, 150, 150);
+    Terrain m = Terrain(150, 150, 150, 150,0);
     Box box(m);
     std::cout << "min = " << std::endl << box.min << std::endl <<
                  "max = " << std::endl << box.max << std::endl;
@@ -66,11 +66,14 @@ void testImage(const QImage& img)
 }
 
 void testCamera(){
-    Terrain m = Terrain(1500, 1500, 250, 250);
+    Terrain m = Terrain(1500, 1500, 250, 250, 0);
     m.save("terrain.obj");
+    //Terrain m2 = Terrain(1500, 1500, 250, 250, 1);
+    //m.save("eau.obj");
     std::vector<Terrain*> t;
     t.push_back(&m);
-    Camera cam(Vector3f(0,0,500),Vector3f(50,50,-25),500,500,t);
+    //t.push_back(&m2);
+    Camera cam(Vector3f(0,750,1200),Vector3f(300,0,-600),800,800,t);
     //cam.generateImage(500,500).save("test2.png");
     cam.rendu();
 
@@ -97,7 +100,7 @@ void testTotal()
 
     std::cout << "Hello !" << std::endl << "World generating !" << std::endl;
 
-    Terrain m = Terrain(1500, 1500, 250, 250);
+    Terrain m = Terrain(1500, 1500, 250, 250, 0);
     m.save("terrain.obj");
 
 

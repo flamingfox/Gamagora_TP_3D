@@ -28,7 +28,9 @@ Camera::Camera(const Vector3f& pOr, const Vector3f& pAt, int l, int h, const std
 
         _v = _w.cross(_u);
         _v.normalize();
-    }
+    }    
+    heatMapGradient.createDefaultHeatMapGradient();
+
 }
 
 Vector3f Camera::vecScreen(int i, int j) const
@@ -83,6 +85,7 @@ bool Camera::rendu(){
     QImage *img = new QImage(_lu, _lv, QImage::Format_RGB888);
     img->fill(QColor(Qt::white).rgb());
     for(int x = 0; x < _lu ; x++){
+        std::cerr << "\rRendering: " << 100 * x / (_lu - 1) << "%";
         for(int y = 0; y < _lv ; y++){
             bool touche = false;
             Rayon r(_origine,Vector3f(0,0,0));
@@ -108,6 +111,8 @@ bool Camera::rendu(){
             //QColor toto(gris,gris,gris,alpha);
             //SetPixel(img, x, y,toto);
             SetPixel(img, x, y, render(touche, zonetouchee, *objleplusproche, r));
+
+
         }
     }
     antialiasing(img)->save("testaliasing.png");
@@ -136,14 +141,26 @@ QColor Camera::render(const bool toucheoupas, const Eigen::Vector3f& pointImpact
     norm = 4-norm;
     //qDebug()<<norm;
     QColor color;
+
+    float hauteur = objleplusproche.getHauteur(pointImpact(0),pointImpact(1));
+    hauteur = (hauteur/objleplusproche.maxelev)*1.2;
+
+    float r,g,b;
+    heatMapGradient.getColorAtValue(hauteur, r,g,b);
+
+    color.setRed(r*255);
+    color.setGreen(g*255);
+    color.setBlue(b*255);
+
     if(norm >= 2)
         color = QColor(0,0,0); //Black
     else if(norm == 0)
-        color = QColor(255,255,255); // White
+            color = QColor(255,255,255); // White
+
     else
     {
-        int c = 255-round((255*norm)/2);
-        color = QColor(c, c, c); // Grey
+            int c = 255-round((255*norm)/2);
+            color = QColor(color.red()*c/255,color.green()*c/255, color.blue()*c/255); // Grey
     }
     return color;
 }

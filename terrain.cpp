@@ -3,12 +3,19 @@
 Terrain::Terrain() : longueur(0), largeur(0), nbPointLargeur(0), nbPointLongueur(0)
 {}
 
-Terrain::Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur) : longueur(_longueur),
-    largeur(_largeur), nbPointLongueur(_nbPointLongueur), nbPointLargeur(_nbPointLargeur)
+Terrain::Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur, int _type) : longueur(_longueur),
+    largeur(_largeur), nbPointLongueur(_nbPointLongueur), nbPointLargeur(_nbPointLargeur), type(_type)
 {
     //plan(_longueur,_largeur,_nbPointLongueur,_nbPointLargeur);
-    generationTerrain(largeur, longueur, nbPointLongueur, nbPointLargeur);
+    if(type){
+        generationTerrainSin(largeur, longueur, nbPointLongueur, nbPointLargeur);
+    }else{
+        generationTerrain(largeur, longueur, nbPointLongueur, nbPointLargeur);
+    }
+    maxelev = maxElevation();
+
 }
+
 
 /*Terrain::Terrain(int _longueur, int _largeur, int _resolution, std::vector<ZoneTerrain> parametre) :
     Terrain(type, _longueur, _largeur, _resolution)
@@ -249,6 +256,35 @@ Vector3f Terrain::getNormal(float pointX, float pointY) const
 void Terrain::generationTerrain(int width, int lenght, int nbPointLongueur, int nbPointLargeur)
 {
     plan(lenght, width, nbPointLongueur, nbPointLargeur);
+    applicationNoise(200, 250);
+    //this->save("terrainNoise1.obj");
+    applicationRidge(150, 50, 500);
+    //this->save("terrainRidge1.obj");
+    //applicationWarp(30, 100);
+    //this->save("terrainWarp1.obj");
+
+
+    applicationNoise(20, 100);
+    //this->save("terrainNoise2.obj");
+    applicationRidge(150, 50, 400);
+    //this->save("terrainRidge2.obj");
+    //applicationWarp(10, 75);
+    //this->save("terrainWarp2.obj");
+
+
+    applicationNoise(5, 50);
+    //this->save("terrainNoise3.obj");
+    //applicationWarp(5, 25);
+    //this->save("terrainWarp3.obj");
+
+    calculNormals();
+    englobant = Box(geom);
+}
+
+void Terrain::generationTerrainSin(int width, int lenght, int nbPointLongueur, int nbPointLargeur)
+{
+    plan(lenght, width, nbPointLongueur, nbPointLargeur);
+    applicationSin(3,10);
     //applicationNoise(200, 250);
     //this->save("terrainNoise1.obj");
     //applicationRidge(150, 50, 500);
@@ -286,13 +322,13 @@ bool Terrain::inOut(const Eigen::Vector3f& pointXYZ)
 bool Terrain::intersect(const Rayon& rayon, float &coeffDistance) const{
 
     float dmin = 0.0;
-    float dmax = 5000.0;
+    float dmax = 3000.0;
 
     if(!englobant.intersect(rayon, dmin, dmax ))
         return false;
 
     dmin = 0.0;
-    dmax = 5000.0;
+    dmax = 3000.0;
 
     coeffDistance = dmin;
 
@@ -315,6 +351,7 @@ bool Terrain::intersect(const Rayon& rayon, float &coeffDistance) const{
 
     return false;
 }
+
 
 void Terrain::plan(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur)
 {
@@ -370,7 +407,19 @@ void Terrain::applicationWarp(int amplitude, int periode)
     }
 }
 
-float Terrain::maxElevation()
+void Terrain::applicationSin(int amplitude, int periode)
+{
+    //for(size_t i = 0; i < geom.size(); i++)
+    for(Eigen::Vector3f& p: geom)
+    {
+        float warp = amplitude * sin(p(0)*periode) + amplitude * sin(p(1)*periode);
+        p(0) += 50;
+        p(1) += 50;
+        p(2) += warp +50;
+    }
+}
+
+float Terrain::maxElevation()const
 {
     float hMax = FLT_MIN;
 

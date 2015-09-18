@@ -16,6 +16,7 @@ protected :
     /// \brief largeur distance sur axe x
     ///
     int longueur, largeur;
+    int type;
 
     ///
     /// \brief nbPointLongueur nombre de point sur axe y
@@ -27,13 +28,15 @@ protected :
 
 public:
     Terrain();
-    Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur);
+    Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur, int _type);
     //Terrain(int _longueur, int _largeur, int _resolution, std::vector<ZoneTerrain> parametre);
 
     Terrain(const QImage& img, float _longueur, float _largeur, float amplitude, int _nbHeight, int _nbWidth);
     Terrain(const QImage& img, float _longueur, float _largeur, float amplitude);
 
     Eigen::Vector2d getDimension() const;
+
+    inline int gettype() const {return type;}
 
     float getHauteur(Eigen::Vector2f &pointXY) const;
     float getHauteur(float pointX, float pointY) const;
@@ -43,11 +46,13 @@ public:
     Eigen::Vector3f getNormal(const float pointX, const float pointY) const;
 
     void generationTerrain(int width, int lenght, int nbPointLongueur, int nbPointLargeur);
-
+    void generationTerrainSin(int width, int lenght, int nbPointLongueur, int nbPointLargeur);
     bool inOut(const Eigen::Vector3f& pointXYZ);
 
     bool intersect(const Rayon& rayon, float &coeffDistance) const;
     void calculNormals();
+    float maxElevation()const;
+    float maxelev;
 
 private :
 
@@ -60,9 +65,10 @@ private :
     void applicationNoise(int amplitude, int periode);
     void applicationRidge(float seuil, float amplitude, int periode);
     void applicationWarp(int amplitude, int periode);
+    void applicationSin(int amplitude, int periode);
     //void generationTerrainParametre(Terrain &terrainBase, std::vector<ZoneTerrain> parametre);
 
-    float maxElevation();
+
 
     float interpolation(float a, float b, float x);
 
