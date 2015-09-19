@@ -146,6 +146,12 @@ void Terrain::calculNormals()
 }
 
 
+void Terrain::initFinal()
+{
+    calculNormals();
+    englobant = Box(geom);
+}
+
 
 
 Eigen::Vector2d Terrain::getDimension() const

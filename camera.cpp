@@ -88,12 +88,11 @@ bool Camera::rendu(){
         std::cerr << "\rRendering: " << 100 * x / (_lu - 1) << "%";
         for(int y = 0; y < _lv ; y++){
             bool touche = false;
-            Rayon r(_origine,Vector3f(0,0,0));
+            Rayon r(_origine,vecScreen(x,y));
             float coefdisttmp = FLT_MAX;
             float coefdistfinal = FLT_MAX;
             Vector3f zonetouchee;
             const Terrain* objleplusproche;
-            r.setDirection(vecScreen(x,y));
             for(const Terrain* terrain: _t){
                 if(terrain->intersect(r,coefdisttmp)){//si on touche
                     touche = true;

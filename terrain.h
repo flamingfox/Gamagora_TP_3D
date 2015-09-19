@@ -54,6 +54,9 @@ public:
     float maxElevation()const;
     float maxelev;
 
+
+    void initFinal();
+
 private :
 
     /***** fonction de génération de terrain ******/
