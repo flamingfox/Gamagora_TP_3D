@@ -18,6 +18,7 @@ public:
     Eigen::Vector3f Reflect(const Eigen::Vector3f& normal);
 
     inline Eigen::Vector3f getOrigine()const{return _origine;}
+    //Eigen::Vector3f getOrigine()const{return _origine;}
     inline Eigen::Vector3f getDirection()const{return _direction;}
     inline void setDirection(const Eigen::Vector3f& dir){ _direction = dir.normalized();}
 

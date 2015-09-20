@@ -26,7 +26,7 @@ void Box::updatePoint(const Vector3f& p)
 }
 
 
-bool Box::isIn(const Vector3f& p)
+bool Box::isIn(const Vector3f& p) const
 {
     for(int i = 0;  i < 3;  i++)
     {
@@ -122,6 +122,105 @@ bool Box::intersect(const Rayon &r, float &distanceMin, float &distanceMax) cons
     return true;
 }
 
+/////////////////////////////////////////////////
+
+bool Box::intersect(const Rayon &r, float &distanceMin, float &distanceMax, Eigen::Vector3f& pointDentrer) const
+{
+    float tmin, tmax, tymin, tymax, tzmin, tzmax;
+
+    float divx;
+
+    if(r.getDirection()(0) != 0)
+        divx = 1 / r.getDirection()(0);
+    else
+        divx = 0;
+
+    if(r.getDirection()(0) >= 0)
+    {
+        tmin = (min(0) - r.getOrigine()(0)) * divx;
+        tmax = (max(0) - r.getOrigine()(0)) * divx;
+        pointDentrer(0) = min(0);
+    }
+    else
+    {
+        tmin = (max(0) - r.getOrigine()(0)) * divx;
+        tmax = (min(0) - r.getOrigine()(0)) * divx;
+        pointDentrer(0) = max(0);
+    }
+
+    float divy;
+
+    if(r.getDirection()(1) != 0)
+        divy = 1 / r.getDirection()(1);
+    else
+        divy = 0;
+
+    if(r.getDirection()(1) >= 0)
+    {
+        tymin = (min(1) - r.getOrigine()(1)) * divy;
+        tymax = (max(1) - r.getOrigine()(1)) * divy;
+        pointDentrer(1) = min(1);
+    }
+    else
+    {
+        tymin = (max(1) - r.getOrigine()(1)) * divy;
+        tymax = (min(1) - r.getOrigine()(1)) * divy;
+        pointDentrer(1) = max(1);
+    }
+    if( (tmin > tymax) || (tymin > tmax) )
+        return false;
+
+    if(tymin > tmin)
+        tmin = tymin;
+
+    if(tymax < tmax)
+        tmax = tymax;
+
+    float divz;
+
+    if(r.getDirection()(2) != 0)
+        divz = 1 / r.getDirection()(2);
+    else
+        divz = 0;
+
+    if (r.getDirection()(2) >= 0)
+    {
+        tzmin = (min(2) - r.getOrigine()(2)) * divz;
+        tzmax = (max(2) - r.getOrigine()(2)) * divz;
+        pointDentrer(2) = min(2);
+    }
+    else
+    {
+        tzmin = (max(2) - r.getOrigine()(2)) * divz;
+        tzmax = (min(2) - r.getOrigine()(2)) * divz;
+        pointDentrer(2) = max(2);
+    }
+
+    if( (tmin > tzmax) || (tzmin > tmax) )
+        return false;
+
+    if(tzmin > tmin)
+        tmin = tzmin;
+
+    if(tzmax < tmax)
+        tmax = tzmax;
+
+    if(isIn(r.getOrigine()))
+    {
+        pointDentrer = r.getOrigine();
+        distanceMin = 0;
+        if(tmax>0)
+            distanceMax = tmax-tmin;
+    }
+    else
+    {
+        if(tmin>0)
+            distanceMin = tmin;
+        if(tmax>0)
+            distanceMax = tmax;
+    }
+    return true;
+}
 
 /**********************inline********************/
 

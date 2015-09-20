@@ -1,11 +1,11 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 
-#include "mesh.h"
+#include "../mesh.h"
 #include <QImage>
-#include "interpolation.h"
-#include "rayon.h"
-#include "box.h"
+#include "./outils/interpolation.h"
+#include "./outils/parametres.h"
+#include "noisegenerator.h"
 
 class Terrain : public Mesh
 {
@@ -24,6 +24,7 @@ protected :
     int nbPointLongueur, nbPointLargeur;
     std::vector<Eigen::Vector3f> normalsPoints;
     Box englobant;
+
 
 public:
     Terrain();
@@ -51,6 +52,16 @@ public:
 
 
     void initFinal();
+
+    Vector3f getColor(const Eigen::Vector3f& p) const;
+    Phong getPhong() const{
+        return phong;
+    }
+
+    float maxHerbe = 60, minNeige = 100;
+    //pente à 1 => normal = vector3f(0,0,1) => plat,
+    //pente à 0 => pente vertical;
+    float minPenteRoche = (1-0.05), maxPenteRoche = (1-0.5);
 
 private :
 

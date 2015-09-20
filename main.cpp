@@ -1,13 +1,13 @@
 #include <iostream>
 #include <sstream>
 
-#include "mesh.h"
 //#include "arbre.h"
-#include "terrain.h"
-#include "camera.h"
+#include "mesh/terrain/terrain.h"
+#include "scene/camera.h"
 //#include "generationvegetation.h" //inclue la librairie pour "srand" et "time"
-#include "box.h"
-#include "rayon.h"
+
+#include "scene/rayon.h"
+#include "scene/scene.h"
 
 #include <string>
 #include <QImage>   //enlever -qt dans le fichier .pro pour faire marcher
@@ -48,7 +48,7 @@ void testNormals()
 void testBox()
 {
     Terrain m = Terrain(150, 150, 150, 150);
-    Box box(m);
+    Box box(m.getGeom());
     std::cout << "min = " << std::endl << box.min << std::endl <<
                  "max = " << std::endl << box.max << std::endl;
 }
@@ -66,15 +66,22 @@ void testImage(const QImage& img)
 }
 
 void testCamera(){
-    Terrain m = Terrain(1500, 1500, 250, 250);
+    Terrain m = Terrain(1500, 1500, 150, 150);
     //m.initFinal();
     m.save("terrain.obj");
-    std::vector<Terrain*> t;
-    t.push_back(&m);
-    Camera cam(Vector3f(0,0,500),Vector3f(50,50,-25),500,500,t);
-    //cam.generateImage(500,500).save("test2.png");
-    cam.rendu();
+    //std::vector<Terrain*> t;
+    //t.push_back(&m);
+    Scene scene;
+    scene.addT(&m);
+    scene.addC(new Camera(Vector3f(0,750,1200),Vector3f(300,0,-600),800,800));
+    scene.addL(new Lumiere(Vector3f(750,750,100),800,3));
+    scene.addL(new Lumiere(Vector3f(0,0,100),400,1));
+    scene.addL(new Lumiere(Vector3f(1500,1500,100),300,4));
 
+    //cam.generateImage(500,500).save("test2.png");
+    //cam.rendu();
+
+    scene.rendu();
 }
 
 void testIntersect(){

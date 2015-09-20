@@ -1,6 +1,6 @@
 #include "terrain.h"
 
-Terrain::Terrain() : longueur(0), largeur(0), nbPointLargeur(0), nbPointLongueur(0)
+Terrain::Terrain() : longueur(0), largeur(0), nbPointLongueur(0), nbPointLargeur(0)
 {}
 
 Terrain::Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur) : longueur(_longueur),
@@ -20,14 +20,14 @@ Terrain::Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPoint
 /********************Terrain Image************************/
 
 Terrain::Terrain(const QImage &img, float _longueur, float _largeur, float amplitude):
-    nbPointLongueur(img.height()), nbPointLargeur(img.width()), longueur(_longueur), largeur(_largeur)
+    longueur(_longueur), largeur(_largeur), nbPointLongueur(img.height()), nbPointLargeur(img.width())
 {
     simpleInitImage(img, _longueur, _largeur, amplitude);
 }
 
 
 Terrain::Terrain(const QImage& img, float _longueur, float _largeur, float _amplitude, int _nbHeight, int _nbWidth):
-    nbPointLongueur(_nbHeight), nbPointLargeur(_nbWidth), longueur(_longueur), largeur(_largeur)
+    longueur(_longueur), largeur(_largeur), nbPointLongueur(_nbHeight), nbPointLargeur(_nbWidth)
 {
     if(_nbHeight == img.height() && _nbWidth == img.width())
         simpleInitImage(img, _longueur, _largeur, _amplitude);
@@ -255,23 +255,24 @@ Vector3f Terrain::getNormal(float pointX, float pointY) const
 void Terrain::generationTerrain(int width, int lenght, int nbPointLongueur, int nbPointLargeur)
 {
     plan(lenght, width, nbPointLongueur, nbPointLargeur);
-    //applicationNoise(200, 250);
+
+    applicationNoise(200, 250);
     //this->save("terrainNoise1.obj");
-    //applicationRidge(150, 50, 500);
+    applicationRidge(150, 50, 500);
     //this->save("terrainRidge1.obj");
     //applicationWarp(30, 100);
     //this->save("terrainWarp1.obj");
 
 
-    //applicationNoise(20, 100);
+    applicationNoise(20, 100);
     //this->save("terrainNoise2.obj");
-    //applicationRidge(150, 50, 400);
+    applicationRidge(150, 50, 400);
     //this->save("terrainRidge2.obj");
     //applicationWarp(10, 75);
     //this->save("terrainWarp2.obj");
 
 
-    //applicationNoise(5, 50);
+    applicationNoise(5, 50);
     //this->save("terrainNoise3.obj");
     //applicationWarp(5, 25);
     //this->save("terrainWarp3.obj");
@@ -294,17 +295,15 @@ bool Terrain::intersect(const Rayon& rayon, float &coeffDistance) const{
     float dmin = 0.0;
     float dmax = 5000.0;
 
-    if(!englobant.intersect(rayon, dmin, dmax ))
+    //Eigen::Vector3f pe;
+    if(!englobant.intersect(rayon, dmin, dmax))
         return false;
-
-    dmin = 0.0;
-    dmax = 5000.0;
 
     coeffDistance = dmin;
 
     for( int i=0; i<256; i++ )
     {
-        Eigen::Vector3f pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
+        Eigen::Vector3f pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();//pe + coeffDistance*rayon.getDirection();
         float h = getHauteur( pos(0), pos(1) );
         if(h == HAUTEUR_HORS_MAP)
             break;
@@ -313,7 +312,7 @@ bool Terrain::intersect(const Rayon& rayon, float &coeffDistance) const{
 
         if( h <(0.002 * coeffDistance) ) {
                 return true;
-        }else if(coeffDistance > dmax )
+        }else if(coeffDistance > dmax*1.01f )
                 break;
 
         coeffDistance += 0.5*h;
@@ -395,6 +394,8 @@ float Terrain::interpolation(float a, float b, float x){
     return (1. - x) * a + x * b;
 }
 
+/*************************************************************************/
+
 inline const Vector3f& Terrain::getPoint(int i, int j) const{
     return geom[i+j*nbPointLargeur];
 }
@@ -409,4 +410,48 @@ inline const Vector3f& Terrain::getN(int i, int j) const{
 
 inline const Vector3f& Terrain::getN(const Eigen::Vector2i& pos) const{
     return getN(pos(0), pos(1));
+}
+
+/*************************************************************************/
+
+Vector3f Terrain::getColor(const Eigen::Vector3f& p) const
+{
+    float x = p(0)-englobant.min(0), y = p(1)-englobant.min(1);
+    Vector3f n = this->getNormal(x, y);
+    float pente = n.dot(Vector3f(0,0,1));
+    Vector3f marron(88, 44, 0);
+    if(pente < maxPenteRoche)
+        return marron;
+
+    float h = this->getHauteur(x, y);
+
+    Vector3f blanc(255,255,255);
+    Vector3f vert(0,255,0);
+
+    if(pente > minPenteRoche)
+    {
+        if(h > minNeige)
+            return blanc;
+        else if(h < maxHerbe)
+            return vert;
+        else
+        {
+            float h2 = (h-maxHerbe)/(minNeige-maxHerbe);
+            return vert*(1-h2) + blanc*h2;
+        }
+    }
+    else
+    {
+        float pente2 = (pente-maxPenteRoche)/(minPenteRoche-maxPenteRoche);
+        marron *= 1-pente2;
+        if(h > minNeige)
+            return blanc*pente2 + marron;
+        else if(h < maxHerbe)
+            return vert*pente2 + marron;
+        else
+        {
+            float h2 = (h-maxHerbe)/(minNeige-maxHerbe);
+            return (vert*(1-h2) + blanc*h2)*pente2 + marron;
+        }
+    }
 }

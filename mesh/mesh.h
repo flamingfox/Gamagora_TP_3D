@@ -14,10 +14,11 @@
 #include <math.h>
 #include "float.h"
 
-#include "noisegenerator.h"
+#include "./scene/rayon.h"
+#include "./lumiere/phong.h"
 
-#include "zoneterrain.h"
-
+class Box;
+#include "box.h"
 
 class Mesh{
 
@@ -26,12 +27,15 @@ protected:
     std::vector<Eigen::Vector3f> normals; //!!!! a ajouté !!!!
     std::vector<int> topo;
 
+    Phong phong = {0.9f, 0.5f, 0.9f, 50};
+
 public :
 
-    Mesh(const std::vector<Eigen::Vector3f> listGeom, const std::vector<int> listTopo): geom(listGeom), topo(listTopo)
-    {};
 
-    Mesh(){};
+    Mesh(){}
+    Mesh(const std::vector<Eigen::Vector3f> listGeom, const std::vector<int> listTopo): geom(listGeom), topo(listTopo)
+    {}
+
 
     void Translation(const Eigen::Vector3f T);
     void Translation(const float x, const float y, const float z);
@@ -75,7 +79,7 @@ private :
 
 protected:
 
-    inline void addTopo(int i0, int i1, int i2);
+    void addTopo(int i0, int i1, int i2);
 };
 
 
