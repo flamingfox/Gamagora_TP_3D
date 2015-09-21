@@ -1,6 +1,6 @@
 #include "terrain.h"
 
-Terrain::Terrain() : longueur(0), largeur(0), nbPointLargeur(0), nbPointLongueur(0)
+Terrain::Terrain() : longueur(0), largeur(0), nbPointLongueur(0), nbPointLargeur(0)
 {}
 
 Terrain::Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur, int _type) : longueur(_longueur),
@@ -27,14 +27,14 @@ Terrain::Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPoint
 /********************Terrain Image************************/
 
 Terrain::Terrain(const QImage &img, float _longueur, float _largeur, float amplitude):
-    nbPointLongueur(img.height()), nbPointLargeur(img.width()), longueur(_longueur), largeur(_largeur)
+    longueur(_longueur), largeur(_largeur), nbPointLongueur(img.height()), nbPointLargeur(img.width())
 {
     simpleInitImage(img, _longueur, _largeur, amplitude);
 }
 
 
 Terrain::Terrain(const QImage& img, float _longueur, float _largeur, float _amplitude, int _nbHeight, int _nbWidth):
-    nbPointLongueur(_nbHeight), nbPointLargeur(_nbWidth), longueur(_longueur), largeur(_largeur)
+    longueur(_longueur), largeur(_largeur), nbPointLongueur(_nbHeight), nbPointLargeur(_nbWidth)
 {
     if(_nbHeight == img.height() && _nbWidth == img.width())
         simpleInitImage(img, _longueur, _largeur, _amplitude);
