@@ -94,7 +94,8 @@ bool Camera::rendu(){
             Vector3f zonetouchee;
             const Terrain* objleplusproche;
             for(const Terrain* terrain: _t){
-                if(terrain->intersect(r,coefdisttmp)){//si on touche
+                if(terrain->intersect2(r,coefdisttmp)){//si on touche
+                    //qDebug()<<coefdisttmp;
                     touche = true;
                     if(coefdisttmp < coefdistfinal){//on sélectionne l'objet touché le plus proche
                         coefdistfinal = coefdisttmp;
@@ -132,17 +133,17 @@ QColor Camera::render(const bool toucheoupas, const Eigen::Vector3f& pointImpact
 
     Eigen::Vector3f dRay = ray.getDirection();
     dRay.normalize();
-
+/*
     Eigen::Vector3f n = objleplusproche.getNormal(pointImpact);
 
-    Eigen::Vector3f diff = dRay - n;
-    double norm = diff.squaredNorm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
-    norm = 4-norm;
+    Eigen::Vector3f diff = dRay - n;*/
+    //double norm = diff.squaredNorm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
+    //norm = 4-norm;
     //qDebug()<<norm;
     QColor color;
 
-    float hauteur = objleplusproche.getHauteur(pointImpact(0),pointImpact(1));
-    hauteur = (hauteur/objleplusproche.maxelev)*1.2;
+    float hauteur = objleplusproche.getHauteur2(pointImpact(0),pointImpact(1));
+    hauteur = (hauteur/objleplusproche.maxelev);
 
     float r,g,b;
     heatMapGradient.getColorAtValue(hauteur, r,g,b);
@@ -150,7 +151,7 @@ QColor Camera::render(const bool toucheoupas, const Eigen::Vector3f& pointImpact
     color.setRed(r*255);
     color.setGreen(g*255);
     color.setBlue(b*255);
-
+/*
     if(norm >= 2)
         color = QColor(0,0,0); //Black
     else if(norm == 0)
@@ -160,7 +161,7 @@ QColor Camera::render(const bool toucheoupas, const Eigen::Vector3f& pointImpact
     {
             int c = 255-round((255*norm)/2);
             color = QColor(color.red()*c/255,color.green()*c/255, color.blue()*c/255); // Grey
-    }
+    }*/
     return color;
 }
 

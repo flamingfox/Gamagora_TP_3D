@@ -262,7 +262,7 @@ Vector3f Terrain::getNormal(float pointX, float pointY) const
 void Terrain::generationTerrain(int width, int lenght, int nbPointLongueur, int nbPointLargeur)
 {
     plan(lenght, width, nbPointLongueur, nbPointLargeur);
-    applicationNoise(200, 250);
+    applicationNoise(200, 1000);
     //this->save("terrainNoise1.obj");
     applicationRidge(150, 50, 500);
     //this->save("terrainRidge1.obj");
@@ -358,6 +358,39 @@ bool Terrain::intersect(const Rayon& rayon, float &coeffDistance) const{
     return false;
 }
 
+bool Terrain::intersect2(const Rayon& rayon, float &coeffDistance) const{
+
+    float dmin = 0.0;
+    float dmax = 3000.0;
+
+    if(!englobant.intersect(rayon, dmin, dmax ))
+        return false;
+
+    dmin = 0.0;
+    dmax = 3000.0;
+
+    coeffDistance = dmin;
+
+    for( int i=0; i<256; i++ )
+    {
+        Eigen::Vector3f pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
+        float h = getHauteur2( pos(0), pos(1) );
+        if(h == HAUTEUR_HORS_MAP)
+            break;
+
+        h = pos(2) - h;
+
+        if( h <(0.002 * coeffDistance) ) {
+                return true;
+        }else if(coeffDistance > dmax )
+                break;
+
+        coeffDistance += 0.5*h;
+    }
+
+    return false;
+}
+
 
 void Terrain::plan(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur)
 {
@@ -386,6 +419,8 @@ void Terrain::applicationNoise(int amplitude, int periode)
     }
 }
 
+
+
 void Terrain::applicationRidge(float seuil, float amplitude, int periode)
 {
     //for(size_t i = 0; i < geom.size(); i++)
@@ -400,6 +435,30 @@ void Terrain::applicationRidge(float seuil, float amplitude, int periode)
             p(2) = 2*hRidge - p(2);
     }
 }
+
+float Terrain::noise(int amplitude, float periode, float x, float y)const{
+    float h = NoiseGenerator::perlinNoise( x/periode, y/periode);
+    h = (h+1)/2;
+    return amplitude * h;
+}
+
+float Terrain::ridge(float hauteur, float seuil)const{
+    if(hauteur > seuil)return (2*seuil - hauteur);
+    else return hauteur;
+}
+
+float Terrain::getHauteur2(float x, float y)const{
+    float h = noise(200,300,x,y);
+    float h2 = ridge(h, 160);
+
+    float h3 = h2 + noise(20,40,x,y);
+    //float h4 = ridge(h3, 160);
+    return h3;
+}
+
+/*
+float Terrain::warp()
+*/
 
 void Terrain::applicationWarp(int amplitude, int periode)
 {
@@ -428,13 +487,17 @@ void Terrain::applicationSin(int amplitude, int periode)
 float Terrain::maxElevation()const
 {
     float hMax = FLT_MIN;
-
+    for(int i = 0 ; i<longueur; i++){
+        for(int y = 0; y<largeur; y++){
+            if(getHauteur2(i,y)>hMax)hMax=getHauteur2(i,y);
+        }
+    }/*
     for(const Eigen::Vector3f& p: geom)
     {
         if(p(2)>hMax)
             hMax = p(2);
     }
-
+*/
     return hMax;
 }
 

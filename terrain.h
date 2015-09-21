@@ -50,9 +50,14 @@ public:
     bool inOut(const Eigen::Vector3f& pointXYZ);
 
     bool intersect(const Rayon& rayon, float &coeffDistance) const;
+    bool intersect2(const Rayon& rayon, float &coeffDistance) const;
     void calculNormals();
     float maxElevation()const;
     float maxelev;
+
+    float noise(int amplitude, float periode, float x, float y)const;
+    float ridge(float hauteur, float seuil)const;
+    float getHauteur2(float x, float y)const;
 
 
     void initFinal();
