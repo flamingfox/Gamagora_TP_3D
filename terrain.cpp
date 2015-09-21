@@ -3,15 +3,12 @@
 Terrain::Terrain() : longueur(0), largeur(0), nbPointLongueur(0), nbPointLargeur(0)
 {}
 
-Terrain::Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur, int _type) : longueur(_longueur),
-    largeur(_largeur), nbPointLongueur(_nbPointLongueur), nbPointLargeur(_nbPointLargeur), type(_type)
+Terrain::Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur) : longueur(_longueur),
+    largeur(_largeur), nbPointLongueur(_nbPointLongueur), nbPointLargeur(_nbPointLargeur)
 {
     //plan(_longueur,_largeur,_nbPointLongueur,_nbPointLargeur);
-    if(type){
-        generationTerrainSin(largeur, longueur, nbPointLongueur, nbPointLargeur);
-    }else{
-        generationTerrain(largeur, longueur, nbPointLongueur, nbPointLargeur);
-    }
+    generationTerrain(largeur, longueur, nbPointLongueur, nbPointLargeur);
+
     maxelev = maxElevation();
 
 }
@@ -363,11 +360,11 @@ bool Terrain::intersect2(const Rayon& rayon, float &coeffDistance) const{
     float dmin = 0.0;
     float dmax = 3000.0;
 
-    if(!englobant.intersect(rayon, dmin, dmax ))
+    /*if(!englobant.intersect(rayon, dmin, dmax ))
         return false;
 
     dmin = 0.0;
-    dmax = 3000.0;
+    dmax = 3000.0;*/
 
     coeffDistance = dmin;
 
@@ -412,7 +409,7 @@ void Terrain::applicationNoise(int amplitude, int periode)
     //for(size_t i = 0; i < geom.size(); i++)
     for(Eigen::Vector3f& p: geom)
     {
-        float h = NoiseGenerator::perlinNoise( p(0)*(1.0/periode), p(1)*(1.0/periode) );
+        float h = NoiseGenerator::perlinNoise( p(0)/periode, p(1)/periode );
         h = (h+1)/2;
         h *= amplitude;
         p(2) += h;
@@ -437,23 +434,35 @@ void Terrain::applicationRidge(float seuil, float amplitude, int periode)
 }
 
 float Terrain::noise(int amplitude, float periode, float x, float y)const{
+
     float h = NoiseGenerator::perlinNoise( x/periode, y/periode);
     h = (h+1)/2;
     return amplitude * h;
 }
 
-float Terrain::ridge(float hauteur, float seuil)const{
-    if(hauteur > seuil)return (2*seuil - hauteur);
-    else return hauteur;
+float Terrain::ridge(const float& hauteur, const float& seuil, const float& amplitude, const float& periode, const float& x, const float& y) const{
+
+    float hRidge = amplitude * NoiseGenerator::perlinNoise( x*(1.0/periode), y*(1.0/periode) );
+    hRidge += seuil;
+
+    //std::cout << hRidge << std::endl;
+
+    if(hauteur > hRidge)
+        return  (2*hRidge - hauteur);
+
+    return hauteur;
 }
 
 float Terrain::getHauteur2(float x, float y)const{
-    float h = noise(200,300,x,y);
-    float h2 = ridge(h, 160);
 
-    float h3 = h2 + noise(20,40,x,y);
-    //float h4 = ridge(h3, 160);
-    return h3;
+    if(x < 0 || y < 0 || x > largeur || y > longueur)
+        return HAUTEUR_HORS_MAP;
+
+    float h = noise(200, 300, x, y);
+    h = ridge(h, 150, 20, 100, x, y);
+
+    h = h + noise(20, 100, x, y);
+    return h;
 }
 
 /*

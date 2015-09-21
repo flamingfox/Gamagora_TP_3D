@@ -28,7 +28,7 @@ protected :
 
 public:
     Terrain();
-    Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur, int _type);
+    Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur);
     //Terrain(int _longueur, int _largeur, int _resolution, std::vector<ZoneTerrain> parametre);
 
     Terrain(const QImage& img, float _longueur, float _largeur, float amplitude, int _nbHeight, int _nbWidth);
@@ -56,7 +56,7 @@ public:
     float maxelev;
 
     float noise(int amplitude, float periode, float x, float y)const;
-    float ridge(float hauteur, float seuil)const;
+    float ridge(const float& hauteur, const float& seuil, const float& amplitude, const float& periode, const float& x, const float& y)const;
     float getHauteur2(float x, float y)const;
 
 
