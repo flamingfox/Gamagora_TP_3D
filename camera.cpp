@@ -9,12 +9,10 @@ Camera::Camera()
 @pOr origine de la caméra
 @pAt vecteur direction de la caméra (comprenant distance)
 */
-Camera::Camera(const Vector3f& pOr, const Vector3f& pAt, int l, int h, const std::vector<Terrain*>& listTerrain) :
-    _origine(pOr), _lu(l), _lv(h), _t(listTerrain)
+Camera::Camera(const Vector3f& pOr, const Vector3f& vAtUnit, int l, int h, const std::vector<Terrain*>& listTerrain) :
+    _origine(pOr), _lu(l), _lv(h), _t(listTerrain), _w(vAtUnit.normalized()), _lw(vAtUnit.norm())
 {
-    _w = pAt.normalized();
-
-    _lw = pAt.norm();
+    _lw = vAtUnit.norm();
 
     if(_w == Vector3f(0,0,1) || _w == Vector3f(0,0,-1))
     {
@@ -31,6 +29,26 @@ Camera::Camera(const Vector3f& pOr, const Vector3f& pAt, int l, int h, const std
     }    
     heatMapGradient.createDefaultHeatMapGradient();
 
+}
+
+Camera::Camera(const Vector3f &pOr, const Vector3f &vAtUnit, const float &distance, int l, int h, const std::vector<Terrain *> &listTerrain) :
+    _origine(pOr), _lu(l), _lv(h), _t(listTerrain), _w(vAtUnit.normalized()), _lw(distance)
+{
+
+    if(_w == Vector3f(0,0,1) || _w == Vector3f(0,0,-1))
+    {
+        _u = Vector3f(_w(2),0,0);
+        _v = Vector3f(0,_w(2),0);
+    }
+    else
+    {
+        _u = - ( _w.cross(Vector3f(0,0,1)) );
+        _u.normalize();
+
+        _v = _w.cross(_u);
+        _v.normalize();
+    }
+    heatMapGradient.createDefaultHeatMapGradient();
 }
 
 Vector3f Camera::vecScreen(int i, int j) const

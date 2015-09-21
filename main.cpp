@@ -73,7 +73,9 @@ void testCamera(){
     std::vector<Terrain*> t;
     t.push_back(&m);
     //t.push_back(&m2);
-    Camera cam(Vector3f(0,750,1200),Vector3f(300,0,-600),800,800,t);
+    Camera cam( Vector3f(0,300,1200), Vector3f(225,150,-500), 500, 800, 800, t);
+
+    //Camera cam(Vector3f(0,300,1200),Vector3f(225,150,-550),800,800,t);
     //cam.generateImage(500,500).save("test2.png");
     cam.rendu();
 
