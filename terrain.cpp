@@ -3,16 +3,13 @@
 Terrain::Terrain() : longueur(0), largeur(0), nbPointLongueur(0), nbPointLargeur(0)
 {}
 
-Terrain::Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur, int _type) : longueur(_longueur),
-    largeur(_largeur), nbPointLongueur(_nbPointLongueur), nbPointLargeur(_nbPointLargeur), type(_type)
+Terrain::Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur) : longueur(_longueur),
+    largeur(_largeur), nbPointLongueur(_nbPointLongueur), nbPointLargeur(_nbPointLargeur)
 {
     //plan(_longueur,_largeur,_nbPointLongueur,_nbPointLargeur);
-    if(type){
-        generationTerrainSin(largeur, longueur, nbPointLongueur, nbPointLargeur);
-    }else{
-        generationTerrain(largeur, longueur, nbPointLongueur, nbPointLargeur);
-    }
+    generationTerrain(largeur, longueur, nbPointLongueur, nbPointLargeur);
     maxelev = maxElevation();
+    minelev = minElevation();
 
 }
 
@@ -448,12 +445,21 @@ float Terrain::ridge(float hauteur, float seuil)const{
 }
 
 float Terrain::getHauteur2(float x, float y)const{
-    float h = noise(200,300,x,y);
-    float h2 = ridge(h, 160);
+    if(x < 0 || y < 0 || x > largeur || y > longueur)
+        return HAUTEUR_HORS_MAP;
+    float h = noise(200,200,x,y);
+    float h2 = ridge(h, 150);
 
-    float h3 = h2 + noise(20,40,x,y);
-    //float h4 = ridge(h3, 160);
+    float h3 = h2 + noise(20,50,x,y)*attenuation(h2,100,130);
+
     return h3;
+}
+
+float Terrain::attenuation(float h, float min, float max)const{
+    if(h<min)return 0;
+    if(h>max)return 1;
+    double t = (h-min)/(max-min);
+    return (1-((1-(t*t))*(1-(t*t))));
 }
 
 /*
@@ -491,14 +497,19 @@ float Terrain::maxElevation()const
         for(int y = 0; y<largeur; y++){
             if(getHauteur2(i,y)>hMax)hMax=getHauteur2(i,y);
         }
-    }/*
-    for(const Eigen::Vector3f& p: geom)
-    {
-        if(p(2)>hMax)
-            hMax = p(2);
     }
-*/
     return hMax;
+}
+
+float Terrain::minElevation()const
+{
+    float hMin = FLT_MAX;
+    for(int i = 0 ; i<longueur; i++){
+        for(int y = 0; y<largeur; y++){
+            if(getHauteur2(i,y)<hMin)hMin=getHauteur2(i,y);
+        }
+    }
+    return hMin;
 }
 
 
