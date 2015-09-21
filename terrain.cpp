@@ -250,6 +250,18 @@ Vector3f Terrain::getNormal(float pointX, float pointY) const
     return normal;
 }
 
+Vector3f Terrain::getNormal2(float pointX, float pointY) const
+{
+    Vector3f p1(pointX-1,pointY-1,getHauteur2(pointX-1,pointY-1));
+    Vector3f p2(pointX+1,pointY-1,getHauteur2(pointX+1,pointY-1));
+    Vector3f p3(pointX-1,pointY+1,getHauteur2(pointX-1,pointY+1));
+
+    Vector3f a = p3-p2;
+    Vector3f b = p1-p2;
+    Vector3f normal = a.cross(b);
+    return normal.normalized();
+}
+
 
 /* -------------------------------------------- */
 /* -------------------------------------------- */

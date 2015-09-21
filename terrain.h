@@ -41,6 +41,7 @@ public:
     Eigen::Vector3f getNormal(const Eigen::Vector3f &pointXYZ) const;
     Eigen::Vector3f getNormal(const Eigen::Vector2f &pointXY) const;
     Eigen::Vector3f getNormal(const float pointX, const float pointY) const;
+    Eigen::Vector3f getNormal2(float pointX, float pointY) const;
 
     void generationTerrain(int width, int lenght, int nbPointLongueur, int nbPointLargeur);
     void generationTerrainSin(int width, int lenght, int nbPointLongueur, int nbPointLargeur);

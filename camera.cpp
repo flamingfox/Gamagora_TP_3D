@@ -116,7 +116,6 @@ bool Camera::rendu(){
             int tmp;
             for(const Terrain* terrain: _t){
                 if(terrain->intersect2(r,coefdisttmp, tmp)){//si on touche
-                    //qDebug()<<coefdisttmp;
                     touche = true;
                     if(coefdisttmp < coefdistfinal){//on sélectionne l'objet touché le plus proche
                         coefdistfinal = coefdisttmp;
@@ -125,12 +124,6 @@ bool Camera::rendu(){
                     }
                 }
             }
-            //QColor render(bool toucheoupas, zonetouchee,objleplusproche,r);
-            //qDebug()<<x;
-            //uint gris = rand()%255;
-            //uint alpha = rand()%255;
-            //QColor toto(gris,gris,gris,alpha);
-            //SetPixel(img, x, y,toto);
             SetPixel(img, x, y, render(touche, zonetouchee, *objleplusproche, r));
             eric.setPixel(x,y,qRgb(tmp,tmp,tmp));
 
@@ -154,13 +147,12 @@ QColor Camera::render(const bool toucheoupas, const Eigen::Vector3f& pointImpact
 
     Eigen::Vector3f dRay = ray.getDirection();
     dRay.normalize();
-/*
-    Eigen::Vector3f n = objleplusproche.getNormal(pointImpact);
 
-    Eigen::Vector3f diff = dRay - n;*/
-    //double norm = diff.squaredNorm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
-    //norm = 4-norm;
-    //qDebug()<<norm;
+    Eigen::Vector3f n = objleplusproche.getNormal2(pointImpact(0),pointImpact(1));
+
+    Eigen::Vector3f diff = dRay - n;
+    double norm = diff.squaredNorm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
+    norm = 4-norm;
     QColor color;
 
     float hauteur = objleplusproche.getHauteur2(pointImpact(0),pointImpact(1));
@@ -172,7 +164,7 @@ QColor Camera::render(const bool toucheoupas, const Eigen::Vector3f& pointImpact
     color.setRed(r*255);
     color.setGreen(g*255);
     color.setBlue(b*255);
-/*
+
     if(norm >= 2)
         color = QColor(0,0,0); //Black
     else if(norm == 0)
@@ -182,7 +174,7 @@ QColor Camera::render(const bool toucheoupas, const Eigen::Vector3f& pointImpact
     {
             int c = 255-round((255*norm)/2);
             color = QColor(color.red()*c/255,color.green()*c/255, color.blue()*c/255); // Grey
-    }*/
+    }
     return color;
 }
 
