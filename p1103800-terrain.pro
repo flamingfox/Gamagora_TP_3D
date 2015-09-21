@@ -11,18 +11,24 @@ SOURCES += main.cpp \
     mesh.cpp \
     noisegenerator.cpp \
     zoneterrain.cpp \
-    terrain.cpp \
     interpolation.cpp \
     camera.cpp \
     rayon.cpp \
-    box.cpp
+    box.cpp \
+    terrain.cpp \
+    terrain/terrainnoise.cpp \
+    terrain/terraintab.cpp \
+    terrain/terrain2.cpp
 
 HEADERS +=  mesh.h \
     noisegenerator.h \
     zoneterrain.h \
-    terrain.h \
     parametres.h \
     interpolation.h \
     camera.h \
     rayon.h \
-    box.h
+    box.h \
+    terrain.h \
+    terrain/terrainnoise.h \
+    terrain/terraintab.h \
+    terrain/terrain2.h
