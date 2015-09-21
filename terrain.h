@@ -16,7 +16,6 @@ protected :
     /// \brief largeur distance sur axe x
     ///
     int longueur, largeur;
-    int type;
 
     ///
     /// \brief nbPointLongueur nombre de point sur axe y
@@ -36,8 +35,6 @@ public:
 
     Eigen::Vector2d getDimension() const;
 
-    inline int gettype() const {return type;}
-
     float getHauteur(Eigen::Vector2f &pointXY) const;
     float getHauteur(float pointX, float pointY) const;
 
@@ -50,14 +47,17 @@ public:
     bool inOut(const Eigen::Vector3f& pointXYZ);
 
     bool intersect(const Rayon& rayon, float &coeffDistance) const;
-    bool intersect2(const Rayon& rayon, float &coeffDistance) const;
+    bool intersect2(const Rayon& rayon, float &coeffDistance, int &i) const;
     void calculNormals();
     float maxElevation()const;
+    float minElevation()const;
     float maxelev;
+    float minelev;
 
     float noise(int amplitude, float periode, float x, float y)const;
     float ridge(const float& hauteur, const float& seuil, const float& amplitude, const float& periode, const float& x, const float& y)const;
     float getHauteur2(float x, float y)const;
+    float attenuation(float h, float min, float max)const;
 
 
     void initFinal();

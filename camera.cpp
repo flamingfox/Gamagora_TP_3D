@@ -100,6 +100,8 @@ QImage* Camera::antialiasing(QImage *img){
 }
 
 bool Camera::rendu(){
+    QImage eric(_lu, _lv, QImage::Format_RGB888);
+
     QImage *img = new QImage(_lu, _lv, QImage::Format_RGB888);
     img->fill(QColor(Qt::white).rgb());
     for(int x = 0; x < _lu ; x++){
@@ -111,8 +113,9 @@ bool Camera::rendu(){
             float coefdistfinal = FLT_MAX;
             Vector3f zonetouchee;
             const Terrain* objleplusproche;
+            int tmp;
             for(const Terrain* terrain: _t){
-                if(terrain->intersect2(r,coefdisttmp)){//si on touche
+                if(terrain->intersect2(r,coefdisttmp, tmp)){//si on touche
                     //qDebug()<<coefdisttmp;
                     touche = true;
                     if(coefdisttmp < coefdistfinal){//on sélectionne l'objet touché le plus proche
@@ -129,12 +132,12 @@ bool Camera::rendu(){
             //QColor toto(gris,gris,gris,alpha);
             //SetPixel(img, x, y,toto);
             SetPixel(img, x, y, render(touche, zonetouchee, *objleplusproche, r));
-
+            eric.setPixel(x,y,qRgb(tmp,tmp,tmp));
 
         }
     }
     antialiasing(img)->save("testaliasing.png");
-    img->save("test.png");
+    img->save("test.png");  eric.save("eric.png");
     delete img;
     return true;
 }

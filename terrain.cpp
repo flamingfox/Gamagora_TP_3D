@@ -10,6 +10,7 @@ Terrain::Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPoint
     generationTerrain(largeur, longueur, nbPointLongueur, nbPointLargeur);
 
     maxelev = maxElevation();
+    minelev = minElevation();
 
 }
 
@@ -355,7 +356,7 @@ bool Terrain::intersect(const Rayon& rayon, float &coeffDistance) const{
     return false;
 }
 
-bool Terrain::intersect2(const Rayon& rayon, float &coeffDistance) const{
+bool Terrain::intersect2(const Rayon& rayon, float &coeffDistance, int& i) const{
 
     float dmin = 0.0;
     float dmax = 3000.0;
@@ -368,7 +369,7 @@ bool Terrain::intersect2(const Rayon& rayon, float &coeffDistance) const{
 
     coeffDistance = dmin;
 
-    for( int i=0; i<256; i++ )
+    for( i=0; i<256; i++ )
     {
         Eigen::Vector3f pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
         float h = getHauteur2( pos(0), pos(1) );
@@ -461,8 +462,16 @@ float Terrain::getHauteur2(float x, float y)const{
     float h = noise(200, 300, x, y);
     h = ridge(h, 150, 20, 100, x, y);
 
-    h = h + noise(20, 100, x, y);
+    h = h + noise(20, 100, x, y)*attenuation(h, 100, 130);
     return h;
+
+}
+
+float Terrain::attenuation(float h, float min, float max)const{
+    if(h<min)return 0;
+    if(h>max)return 1;
+    double t = (h-min)/(max-min);
+    return (1-((1-(t*t))*(1-(t*t))));
 }
 
 /*
@@ -500,14 +509,19 @@ float Terrain::maxElevation()const
         for(int y = 0; y<largeur; y++){
             if(getHauteur2(i,y)>hMax)hMax=getHauteur2(i,y);
         }
-    }/*
-    for(const Eigen::Vector3f& p: geom)
-    {
-        if(p(2)>hMax)
-            hMax = p(2);
     }
-*/
     return hMax;
+}
+
+float Terrain::minElevation()const
+{
+    float hMin = FLT_MAX;
+    for(int i = 0 ; i<longueur; i++){
+        for(int y = 0; y<largeur; y++){
+            if(getHauteur2(i,y)<hMin)hMin=getHauteur2(i,y);
+        }
+    }
+    return hMin;
 }
 
 
