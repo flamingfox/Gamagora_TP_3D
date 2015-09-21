@@ -22,6 +22,8 @@ public:
 
     bool intersect(const Rayon &r, float &distanceMin, float &distanceMax) const;
 
+    float diffZ() const;
+
 protected:
     inline void setDefaultBox();
     inline void update(const Vector3f& p);

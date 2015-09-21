@@ -8,9 +8,9 @@
 class TerrainTab: Terrain2
 {
 public:
-    TerrainTab():   Terrain2(1000,1000), height(0),  width(0),   amplitude(0)    {}
-    TerrainTab(const QImage& img, float amplitude = 1.0f);
-    TerrainTab(const QImage& img, int _nbHeight, int _nbWidth, float _amplitude);
+    TerrainTab():   height(0),  width(0),   amplitude(0)    {}
+    TerrainTab(const QImage& img, float longueur, float largeur, float amplitude = 1.0f);
+    TerrainTab(const QImage& img, int _nbHeight, int _nbWidth, float longueur, float largeur, float _amplitude = 1.0f);
     TerrainTab(const TerrainTab& copy);
 
     ~TerrainTab();
@@ -20,12 +20,10 @@ public:
 
     float amplitude;
 
-
-    void getNormal(float pointX, float pointY) const;
-
 private:
 
     float getHauteurXY(float x, float y) const;
+    Eigen::Vector3f getNormalXY(float x, float y) const;
 
     void initGrille();
     void simpleInitImage(const QImage& img);

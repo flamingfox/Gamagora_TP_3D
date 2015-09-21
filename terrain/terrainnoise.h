@@ -10,7 +10,6 @@ public:
     TerrainNoise();
     TerrainNoise(int _longueur, int _largeur);
 
-    bool intersect(const Rayon& rayon, float &coeffDistance) const;
 
 
 protected:

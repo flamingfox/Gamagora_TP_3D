@@ -3,11 +3,14 @@
 
 #include "mesh.h"
 //#include "arbre.h"
+
 #include "terrain.h"
-#include "camera.h"
+#include "terrain/terrainnoise.h"
+//#include "camera.h"
 //#include "generationvegetation.h" //inclue la librairie pour "srand" et "time"
-#include "box.h"
-#include "rayon.h"
+//#include "box.h"
+//#include "rayon.h"
+#include "rendu/scene.h"
 
 #include <string>
 #include <QImage>   //enlever -qt dans le fichier .pro pour faire marcher
@@ -21,6 +24,7 @@ void testNormals();
 void testBox();
 void testCamera();
 void testIntersect();
+void testScene();
 
 int main(int, char **)
 {
@@ -28,12 +32,22 @@ int main(int, char **)
     //testImage(QImage("image.png"));
 
     //testTotal();
-    testCamera();
+    //testCamera();
     //testBox();
     //testNormals();
     //testIntersect();
-
+    testScene();
     return 0;
+}
+
+void testScene()
+{
+    TerrainNoise* noise = new TerrainNoise(1500,1500);
+    Camera* cam = new Camera(Vector3f(0,0,1000), Vector3f(750,750,0), 700, 1200, 800);
+    Scene scene;
+    scene.addO(noise);
+    scene.addC(cam);
+    scene.rendu();
 }
 
 void testNormals()
@@ -66,7 +80,7 @@ void testImage(const QImage& img)
 }
 
 void testCamera(){
-    Terrain m = Terrain(1500, 1500, 250, 250);
+ /*   Terrain m = Terrain(1500, 1500, 250, 250);
     m.save("terrain.obj");
     //Terrain m2 = Terrain(1500, 1500, 250, 250, 1);
     //m.save("eau.obj");
@@ -78,7 +92,7 @@ void testCamera(){
     Camera cam( Vector3f(-300,-300, 1000), Vector3f(500, 500, 0), 700, 1200, 800, t);
     //cam.generateImage(500,500).save("test2.png");
     cam.rendu();
-
+*/
 }
 
 void testIntersect(){

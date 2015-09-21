@@ -12,23 +12,31 @@ SOURCES += main.cpp \
     noisegenerator.cpp \
     zoneterrain.cpp \
     interpolation.cpp \
-    camera.cpp \
-    rayon.cpp \
     box.cpp \
     terrain.cpp \
     terrain/terrainnoise.cpp \
     terrain/terraintab.cpp \
-    terrain/terrain2.cpp
+    terrain/terrain2.cpp \
+    rendu/scene.cpp \
+    rendu/rayon.cpp \
+    rendu/camera.cpp \
+    lumiere/lumiere.cpp \
+    object.cpp \
+    rendu/colorgradient.cpp
 
 HEADERS +=  mesh.h \
     noisegenerator.h \
     zoneterrain.h \
     parametres.h \
     interpolation.h \
-    camera.h \
-    rayon.h \
     box.h \
     terrain.h \
     terrain/terrainnoise.h \
     terrain/terraintab.h \
-    terrain/terrain2.h
+    terrain/terrain2.h \
+    rendu/scene.h \
+    rendu/rayon.h \
+    rendu/camera.h \
+    lumiere/lumiere.h \
+    object.h \
+    rendu/colorgradient.h

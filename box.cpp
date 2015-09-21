@@ -125,6 +125,7 @@ bool Box::intersect(const Rayon &r, float &distanceMin, float &distanceMax) cons
 }
 
 
+
 /**********************inline********************/
 
 inline void Box::setDefaultBox()
@@ -173,4 +174,9 @@ inline void Box::parcourtPoints(const std::vector<Vector3f>& points)
         for(;  it != points.end()-1; ++it)
             update(*it);
     }
+}
+
+float Box::diffZ() const
+{
+    return max(2)-min(2);
 }

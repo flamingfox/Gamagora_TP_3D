@@ -63,22 +63,54 @@ float TerrainTab::getHauteurXY(float x, float y) const
     getNormal(x,y);
 }
 
+
+/**peut être mieux*/
+Eigen::Vector3f TerrainTab::getNormalXY(float x, float y) const
+{
+    float h = getHauteurXY(x,y);
+    float   xg = std::max(x-0.01f, 0.f),
+            xd = std::min(x+0.01f, 1.f),
+            yb = std::min(y+0.01f, 1.f),
+            yh = std::max(y-0.01f, 0.f);
+    float   g = getHauteurXY(xg,y),
+            d = getHauteurXY(xd,y),
+            b = getHauteurXY(x,yb),
+            ha = getHauteurXY(x,yh);
+    Eigen::Vector3f vg(xg-x, 0, h-g),
+                    vd(xd-x, 0, h-d),
+                    vb(0,yb-y,h-b),
+                    vh(0,yh-y, h-ha);
+    vg.normalize();
+    vd.normalize();
+    vb.normalize();
+    vh.normalize();
+    Eigen::Vector3f v1 = vg.cross(vh),
+                    v2 = vh.cross(vd),
+                    v3 = vd.cross(vb),
+                    v4 = vb.cross(vg);
+    v1.normalize();
+    v2.normalize();
+    v3.normalize();
+    v4.normalize();
+    Eigen::Vector3f normale = v1 + v2 + v3 + v4;
+    normale.normalize();
+    return normale;
+}
+
 /*******************************Image********************************/
 
 
-TerrainTab::TerrainTab(const QImage &img, float amplitude):
-    Terrain2(1000,1000),    height(img.height()), width(img.width()), amplitude(amplitude)
+TerrainTab::TerrainTab(const QImage &img, float longueur, float largeur, float amplitude):
+    Terrain2(longueur,largeur,amplitude),    height(img.height()), width(img.width()), amplitude(amplitude)
 {
-    box = Box(Vector3f(0,0,0),Vector3f(1000,1000,amplitude));
     initGrille();
     simpleInitImage(img);
 }
 
 
-TerrainTab::TerrainTab(const QImage& img, int _nbHeight, int _nbWidth, float _amplitude):
-    Terrain2(1000,1000), height(_nbHeight), width(_nbWidth), amplitude(_amplitude)
+TerrainTab::TerrainTab(const QImage& img, int _nbHeight, int _nbWidth, float longueur, float largeur, float amplitude):
+    Terrain2(longueur,largeur,amplitude), height(_nbHeight), width(_nbWidth), amplitude(amplitude)
 {
-    box = Box(Vector3f(0,0,0),Vector3f(1000,1000,_amplitude));
     initGrille();
     if(_nbHeight == img.height() && _nbWidth == img.width())
         simpleInitImage(img);
@@ -118,30 +150,4 @@ void TerrainTab::initGrille()
     grille2d = new float*[height];
     for(int j = 0;  j < height; j++)
         grille2d[j] = &grille[j*width];
-}
-
-
-void TerrainTab::getNormal(float pointX, float pointY) const
-{
-    float x = pointX * (width-1),    //largeur: 1m et 5 points: (1.0f*(5-1))/1 = 4.0f donc regarder l'indice 4
-          y = pointY * (height-1);
-
-    const float p11 = get(floorf(x), floorf(y)),
-                p22 = get(ceilf(x), ceilf(y));
-                            /*& normal11 = getN(floorf(x), floorf(y)),
-                            & normal12 = getN(floorf(x), ceilf(y)),
-                            & normal21 = getN(ceilf(x), floorf(y)),
-                            & normal22 = getN(ceilf(x), ceilf(y));
-
-    Eigen::Vector3f normal;
-    normal(0) = interp::interp_linear2D(pointX, pointY, p11(0), p11(1), p22(0), p22(1),
-                                   normal11(0), normal12(0), normal21(0), normal22(0));
-    normal(1) = interp::interp_linear2D(pointX, pointY, p11(0), p11(1), p22(0), p22(1),
-                                   normal11(1), normal12(1), normal21(1), normal22(1));
-    normal(2) = interp::interp_linear2D(pointX, pointY, p11(0), p11(1), p22(0), p22(1),
-                                   normal11(2), normal12(2), normal21(2), normal22(2));
-
-    normal.normalize();
-
-    return normal;*/
 }
