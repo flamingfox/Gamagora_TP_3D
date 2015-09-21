@@ -75,7 +75,7 @@ void testCamera(){
     //t.push_back(&m2);
 
 
-    Camera cam( Vector3f(0,0, 1500), Vector3f(750, 750, 0), 700, 1200, 800, t);
+    Camera cam( Vector3f(-300,-300, 1000), Vector3f(500, 500, 0), 700, 1200, 800, t);
     //cam.generateImage(500,500).save("test2.png");
     cam.rendu();
 

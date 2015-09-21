@@ -7,10 +7,12 @@ Terrain::Terrain(int _longueur, int _largeur, int _nbPointLongueur, int _nbPoint
     largeur(_largeur), nbPointLongueur(_nbPointLongueur), nbPointLargeur(_nbPointLargeur)
 {
     //plan(_longueur,_largeur,_nbPointLongueur,_nbPointLargeur);
-    generationTerrain(largeur, longueur, nbPointLongueur, nbPointLargeur);
+    //generationTerrain(largeur, longueur, nbPointLongueur, nbPointLargeur);
 
     maxelev = maxElevation();
     minelev = minElevation();
+
+    englobant = Box(Eigen::Vector3f(0,0,minelev), Eigen::Vector3f(largeur, longueur, maxelev));
 
 }
 
@@ -373,11 +375,11 @@ bool Terrain::intersect2(const Rayon& rayon, float &coeffDistance, int& i) const
     float dmin = 0.0;
     float dmax = 3000.0;
 
-    /*if(!englobant.intersect(rayon, dmin, dmax ))
+    if(!englobant.intersect(rayon, dmin, dmax ))
         return false;
 
-    dmin = 0.0;
-    dmax = 3000.0;*/
+    //dmin = 0.0;
+    //dmax = 3000.0;
 
     coeffDistance = dmin;
 
@@ -385,10 +387,10 @@ bool Terrain::intersect2(const Rayon& rayon, float &coeffDistance, int& i) const
     {
         Eigen::Vector3f pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
         float h = getHauteur2( pos(0), pos(1) );
-        if(h == HAUTEUR_HORS_MAP)
-            break;
+        //if(h == HAUTEUR_HORS_MAP)
+            //h = -500;
 
-        h = pos(2) - h;
+        h = fabsf(pos(2) - h);
 
         if( h <(0.002 * coeffDistance) ) {
                 return true;
