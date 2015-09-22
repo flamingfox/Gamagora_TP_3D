@@ -82,16 +82,10 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Object& objleplus
 
     Eigen::Vector3f n = objleplusproche.getNormal(pointImpact);
 
-    Eigen::Vector3f diff = dRay - n;    //-n;   //mais dRay pointe vers le terrain et n vers le haut.
+    Eigen::Vector3f diff = dRay+ n;    //-n;   //mais dRay pointe vers le terrain et n vers le haut.
     double norm = diff.squaredNorm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
-    norm = 4-norm;
-    QColor color;
+    //norm = 4-norm;
 
-    float hauteur = objleplusproche.getVal(pointImpact);
-    hauteur /= objleplusproche.box.diffZ();
-
-    float r,g,b;
-    objleplusproche.getColor(r,g,b, hauteur);
             //heatMapGradient.getColorAtValue(hauteur, r,g,b);
 
     /*color.setRed(r*255);
@@ -99,15 +93,20 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Object& objleplus
     color.setBlue(b*255);*/
 
     if(norm >= 2)
-        color = QColor(0,0,0); //Black
+        return QColor(0,0,0); //Black
     else if(norm == 0)
-            color = QColor(255,255,255); // White
+        return QColor(255,255,255); // White
     else
     {
-            float c = 255-(255*norm)/2;
-            color = QColor(roundf(r*c),roundf(g*c), roundf(b*c)); // Grey
+        float hauteur = objleplusproche.getVal(pointImpact);
+        hauteur /= objleplusproche.box.diffZ();
+
+        float r,g,b;
+        objleplusproche.getColor(r,g,b, hauteur);
+
+        float c = 255-(255*norm)/2;
+        return QColor(roundf(r*c),roundf(g*c), roundf(b*c)); // Grey
     }
-    return color;
 
     /*Eigen::Vector3f dRay = ray.getDirection();
     dRay.normalize();

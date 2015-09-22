@@ -89,7 +89,10 @@ bool Terrain2::intersect2(const Rayon& rayon, float &coeffDistance) const{
     if(!box.intersect(rayon, dmin, dmax ))
         return false;
     if(box.isIn(rayon.getOrigine()))
+    {
         dmin = 0;
+        dmax += dmin;
+    }
 
     //à modifier à cause de la précision des floats, mais c'est bizarre que ça marche comme un gant. faire attention que le point de départ ne soit pas en dehors de la box.
     //dmin = 0.0;
@@ -100,7 +103,7 @@ bool Terrain2::intersect2(const Rayon& rayon, float &coeffDistance) const{
     for( int i=0; i<256; i++ )
     {
         Eigen::Vector3f pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
-        float h = getHauteur( pos(0), pos(1) );
+        float h = getHauteur( pos );
         if(h == HAUTEUR_HORS_MAP)
             break;
 
@@ -111,7 +114,7 @@ bool Terrain2::intersect2(const Rayon& rayon, float &coeffDistance) const{
         }else if(coeffDistance > dmax )
                 break;
 
-        coeffDistance += 0.5*h;
+        coeffDistance += 0.5*h;    // des interfacts apparaissent à 0.5, le rayon dépasse le points qu'il devrait attendre
     }
 
     return false;
@@ -141,26 +144,24 @@ float Terrain2::getVal(const Vector3f& p) const
 Eigen::Vector3f Terrain2::getNormalXY(float x, float y) const
 {
     float h = getHauteurXY(x,y);
-    float   xg = std::max(x-0.01f, 0.f),
-            xd = std::min(x+0.01f, 1.f),
-            yb = std::min(y+0.01f, 1.f),
-            yh = std::max(y-0.01f, 0.f);
+    float   rx = 1/largeur,
+            ry = 1/longueur;
+    float   xg = std::max(x-rx, 0.f),
+            xd = std::min(x+rx, 1.f),
+            yb = std::min(y+ry, 1.f),
+            yh = std::max(y-ry, 0.f);
     float   g = getHauteurXY(xg,y),
             d = getHauteurXY(xd,y),
             b = getHauteurXY(x,yb),
             ha = getHauteurXY(x,yh);
-    Eigen::Vector3f vg((xg-x)*largeur, 0, h-g),
-                    vd((xd-x)*largeur, 0, h-d),
-                    vb(0,(yb-y)*longueur,h-b),
-                    vh(0,(yh-y)*longueur, h-ha);
+    Eigen::Vector3f vg((xg-x)*largeur, 0, g-h),
+                    vd((xd-x)*largeur, 0, d-h),
+                    vb(0, (yb-y)*longueur, b-h),
+                    vh(0, (yh-y)*longueur, ha-h);
     float   distg = vg.norm(),
             distd = vd.norm(),
             distb = vb.norm(),
             disth = vh.norm();
-    vg.normalize();
-    vd.normalize();
-    vb.normalize();
-    vh.normalize();
     Eigen::Vector3f v1 = vg.cross(vh),
                     v2 = vh.cross(vd),
                     v3 = vd.cross(vb),

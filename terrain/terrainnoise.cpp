@@ -38,13 +38,20 @@ float TerrainNoise::getHauteurXY(float x, float y) const
 {
     if(x < 0    || y < 0 || x > 1 || y > 1)
         return HAUTEUR_HORS_MAP;
-    float h = noise(250,300,x*largeur,y*longueur);
-    float h2 = ridge(h, 180);
+    float h = noise(400,300,x*largeur,y*longueur);
+    h = ridge(h, 250);
 
-    float h3 = h2 + noise(20,40,x*largeur,y*longueur);
+    float h2 = noise(100, 100, x*largeur, y*longueur);
+    h -= h2*(h/250);
+
+    float h3 = noise(50,30,x*largeur,y*longueur);
+    float div = h/250;
+    if(div> 1)
+        std::cout << "bizarre?" << std::endl;
+    h += h3*div*div;
     //float h4 = ridge(h3, 160);
 
-    return h3;
+    return h;
 }
 
 
