@@ -38,10 +38,10 @@ float TerrainNoise::getHauteurXY(float x, float y) const
 {
     if(x < 0    || y < 0 || x > 1 || y > 1)
         return HAUTEUR_HORS_MAP;
-    float h = noise(200,0.1,x,y);
-    float h2 = ridge(h, 160);
+    float h = noise(250,0.2,x,y);
+    float h2 = ridge(h, 180);
 
-    float h3 = h2 + noise(20,0.01,x,y);
+    float h3 = h2 + noise(20,0.05,x,y);
     //float h4 = ridge(h3, 160);
 
     return h3;

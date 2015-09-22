@@ -1,5 +1,25 @@
 #include "mesh.h"
 
+Mesh::Mesh(const Terrain2 &terrain, int nbHeight, int nbWidth)
+{
+    geom.reserve(nbHeight*nbWidth);
+    for(int j = 0;  j < nbHeight;   j++)
+    {
+        float y = j/(float)(nbHeight-1);
+        float y2 = y*terrain.longueur + terrain.box.min(1);
+        for(int i = 0;  i < nbWidth;   i++)
+        {
+            float x = i/(float)(nbWidth-1);
+            float x2 = x*terrain.largeur + terrain.box.min(0);
+            float h = terrain.getHauteurXY(x, y);
+            float h2 = h+terrain.box.min(2);
+
+            geom.push_back(Vector3f(x2, y2, h2));
+        }
+    }
+    this->simpleInitTopoTerrain(nbHeight, nbWidth);
+}
+
 void Mesh::Translation(const Eigen::Vector3f T){
     for(Eigen::Vector3f& p : geom)
         p +=T;
@@ -520,4 +540,26 @@ Eigen::Vector3f Mesh::normalTriangle(int i) const
     Eigen::Vector3f c(s1.cross(s2));
     c.normalize();
     return c;
+}
+
+/**************************************************************/
+
+void Mesh::simpleInitTopoTerrain(int nbHeight, int nbWidth)
+{
+    this->topo.reserve((nbHeight-1)*(nbWidth-1)*6); //grille 5p x 7p = 35p => 24 carrés (4*6) = 48 triangles = 144 int = (5-1) * (7-1) * 2 * 3
+
+    for(int j = 0; j < nbHeight-1; j++){
+        for(int i = 0; i < nbWidth-1; i++)
+        {
+            //triangle 1: 0,1,2
+            addTopo(i + j * nbWidth,
+                    (i+1) + j * nbWidth,
+                    i + (j+1) * nbWidth);
+
+            //triangle 2: 1,3,2
+            addTopo((i+1) + j * nbWidth,
+                    (i+1) + (j+1) * nbWidth,
+                    i + (j+1) * nbWidth);
+        }
+    }
 }

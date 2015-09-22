@@ -131,3 +131,7 @@ float Terrain2::getVal(const Vector3f& p) const
 {
     return getHauteur(p(0), p(1));
 }
+
+/***********************************************************************/
+
+

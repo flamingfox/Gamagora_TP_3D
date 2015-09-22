@@ -3,6 +3,7 @@
 
 #include "./object.h"
 #include "./rendu/colorgradient.h"
+#include "./parametres.h"
 
 class Terrain2: public Object
 {
@@ -25,12 +26,13 @@ public:
 
     bool inOut(const Eigen::Vector3f& pointXYZ) const;
 
+    virtual float getHauteurXY(float x, float y) const = 0;
+
 
     //Eigen::Vector3f normale;
     ColorGradient heatMapGradient;    // Used to create a nice array of different colors.
 
 protected:
-    virtual float getHauteurXY(float x, float y) const = 0;
     virtual Eigen::Vector3f getNormalXY(float x, float y) const = 0;
 
     bool intersect2(const Rayon& rayon, float &coeffDistance) const;

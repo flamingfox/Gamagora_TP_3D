@@ -3,6 +3,7 @@
 
 #include "parametres.h"
 #include "terrain2.h"
+#include "noisegenerator.h"
 
 class TerrainNoise: public Terrain2
 {

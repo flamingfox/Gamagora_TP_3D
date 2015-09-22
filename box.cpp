@@ -9,10 +9,10 @@ Box::Box(const Vector3f& _min, const Vector3f& _max)    :   min(_min),  max(_max
 {
 }
 
-Box::Box(const Mesh& mesh)
+/*Box::Box(const Mesh& mesh)
 {
     parcourtPoints(mesh.getGeom());
-}
+}*/
 
 Box::Box(const std::vector<Vector3f>& points)
 {

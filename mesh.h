@@ -17,6 +17,7 @@
 #include "noisegenerator.h"
 
 #include "zoneterrain.h"
+#include "terrain/terrain2.h"
 
 
 class Mesh{
@@ -28,10 +29,13 @@ protected:
 
 public :
 
+    Mesh(){}
     Mesh(const std::vector<Eigen::Vector3f> listGeom, const std::vector<int> listTopo): geom(listGeom), topo(listTopo)
-    {};
+    {}
 
-    Mesh(){};
+    Mesh(const Terrain2& terrain, int nbHeight, int nbWidth);
+
+    ~Mesh(){}
 
     void Translation(const Eigen::Vector3f T);
     void Translation(const float x, const float y, const float z);
@@ -67,11 +71,14 @@ public :
     void normalsTriangles();
     Eigen::Vector3f normalTriangle(int i) const;
 
+    void simpleInitTopoTerrain(int nbHeight, int nbWidth);
+
     //std::pair<Eigen::Vector3f,Eigen::Vector3f> calculBoite();
 
 private :
 
     static Mesh generationSphere(const Eigen::Vector3f& centre, const float rayon, const int resolution = DEFAULT_RESOLUTION);
+
 
 protected:
 

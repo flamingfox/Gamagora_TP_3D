@@ -43,6 +43,8 @@ int main(int, char **)
 void testScene()
 {
     TerrainNoise* noise = new TerrainNoise(1500,1500);
+    Mesh m(*noise, 200, 200);
+    m.save("terrainNoiseTest.obj");
     Camera* cam = new Camera(Vector3f(0,0,1000), Vector3f(750,750,0), 700, 1200, 800);
     Scene scene;
     scene.addO(noise);
@@ -50,22 +52,22 @@ void testScene()
     scene.rendu();
 }
 
-void testNormals()
+/*void testNormals()
 {
     Terrain m = Terrain(150, 150, 5, 5);
     m.normalsTriangles();
     m.calculNormals();
     m.save("terrain.obj");
 
-}
+}*/
 
-void testBox()
+/*void testBox()
 {
     Terrain m = Terrain(150, 150, 150, 150);
     Box box(m);
     std::cout << "min = " << std::endl << box.min << std::endl <<
                  "max = " << std::endl << box.max << std::endl;
-}
+}*/
 
 void testSphere()
 {
@@ -73,11 +75,11 @@ void testSphere()
     m.save("sphere.obj");
 }
 
-void testImage(const QImage& img)
+/*void testImage(const QImage& img)
 {
     Terrain m = Terrain(img, 100, 100, 10);
     m.save("image.obj");
-}
+}*/
 
 void testCamera(){
  /*   Terrain m = Terrain(1500, 1500, 250, 250);
