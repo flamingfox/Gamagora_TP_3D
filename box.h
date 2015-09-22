@@ -19,11 +19,15 @@ public:
     Box(const std::vector<Vector3f>& points);
 
     void updatePoint(const Vector3f& p);
-    bool isIn(const Vector3f& p);
+    bool isIn(const Vector3f& p) const;
 
     bool intersect(const Rayon &r, float &distanceMin, float &distanceMax) const;
 
     float diffZ() const;
+
+    void merge(const Box& box2);
+
+    void operator+=(const Vector3f& t);
 
 protected:
     inline void setDefaultBox();

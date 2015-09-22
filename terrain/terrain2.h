@@ -33,7 +33,7 @@ public:
     ColorGradient heatMapGradient;    // Used to create a nice array of different colors.
 
 protected:
-    virtual Eigen::Vector3f getNormalXY(float x, float y) const = 0;
+    virtual Eigen::Vector3f getNormalXY(float x, float y) const;
 
     bool intersect2(const Rayon& rayon, float &coeffDistance) const;
     void translate2(const Vector3f& t);

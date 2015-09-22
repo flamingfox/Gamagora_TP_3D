@@ -64,39 +64,6 @@ float TerrainTab::getHauteurXY(float x, float y) const
 }
 
 
-/**peut être mieux*/
-Eigen::Vector3f TerrainTab::getNormalXY(float x, float y) const
-{
-    float h = getHauteurXY(x,y);
-    float   xg = std::max(x-0.01f, 0.f),
-            xd = std::min(x+0.01f, 1.f),
-            yb = std::min(y+0.01f, 1.f),
-            yh = std::max(y-0.01f, 0.f);
-    float   g = getHauteurXY(xg,y),
-            d = getHauteurXY(xd,y),
-            b = getHauteurXY(x,yb),
-            ha = getHauteurXY(x,yh);
-    Eigen::Vector3f vg(xg-x, 0, h-g),
-                    vd(xd-x, 0, h-d),
-                    vb(0,yb-y,h-b),
-                    vh(0,yh-y, h-ha);
-    vg.normalize();
-    vd.normalize();
-    vb.normalize();
-    vh.normalize();
-    Eigen::Vector3f v1 = vg.cross(vh),
-                    v2 = vh.cross(vd),
-                    v3 = vd.cross(vb),
-                    v4 = vb.cross(vg);
-    v1.normalize();
-    v2.normalize();
-    v3.normalize();
-    v4.normalize();
-    Eigen::Vector3f normale = v1 + v2 + v3 + v4;
-    normale.normalize();
-    return normale;
-}
-
 /*******************************Image********************************/
 
 

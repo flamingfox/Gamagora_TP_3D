@@ -88,9 +88,12 @@ bool Terrain2::intersect2(const Rayon& rayon, float &coeffDistance) const{
 
     if(!box.intersect(rayon, dmin, dmax ))
         return false;
+    if(box.isIn(rayon.getOrigine()))
+        dmin = 0;
 
-    dmin = 0.0;
-    dmax = 3000.0;
+    //à modifier à cause de la précision des floats, mais c'est bizarre que ça marche comme un gant. faire attention que le point de départ ne soit pas en dehors de la box.
+    //dmin = 0.0;
+    //dmax = 3000.0;
 
     coeffDistance = dmin;
 
@@ -101,7 +104,7 @@ bool Terrain2::intersect2(const Rayon& rayon, float &coeffDistance) const{
         if(h == HAUTEUR_HORS_MAP)
             break;
 
-        h = pos(2) - h;
+        h = fabsf(pos(2) - h);
 
         if( h <(0.002 * coeffDistance) ) {
                 return true;
@@ -135,3 +138,38 @@ float Terrain2::getVal(const Vector3f& p) const
 /***********************************************************************/
 
 
+Eigen::Vector3f Terrain2::getNormalXY(float x, float y) const
+{
+    float h = getHauteurXY(x,y);
+    float   xg = std::max(x-0.01f, 0.f),
+            xd = std::min(x+0.01f, 1.f),
+            yb = std::min(y+0.01f, 1.f),
+            yh = std::max(y-0.01f, 0.f);
+    float   g = getHauteurXY(xg,y),
+            d = getHauteurXY(xd,y),
+            b = getHauteurXY(x,yb),
+            ha = getHauteurXY(x,yh);
+    Eigen::Vector3f vg((xg-x)*largeur, 0, h-g),
+                    vd((xd-x)*largeur, 0, h-d),
+                    vb(0,(yb-y)*longueur,h-b),
+                    vh(0,(yh-y)*longueur, h-ha);
+    float   distg = vg.norm(),
+            distd = vd.norm(),
+            distb = vb.norm(),
+            disth = vh.norm();
+    vg.normalize();
+    vd.normalize();
+    vb.normalize();
+    vh.normalize();
+    Eigen::Vector3f v1 = vg.cross(vh),
+                    v2 = vh.cross(vd),
+                    v3 = vd.cross(vb),
+                    v4 = vb.cross(vg);
+    v1.normalize();
+    v2.normalize();
+    v3.normalize();
+    v4.normalize();
+    Eigen::Vector3f normale = v1*distg*disth + v2*disth*distd + v3*distd*distb + v4*distb*distg;
+    normale.normalize();
+    return normale;
+}

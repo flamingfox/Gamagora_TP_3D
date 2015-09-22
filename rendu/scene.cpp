@@ -82,7 +82,7 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Object& objleplus
 
     Eigen::Vector3f n = objleplusproche.getNormal(pointImpact);
 
-    Eigen::Vector3f diff = dRay + n;    //-n;   //mais dRay pointe vers le terrain et n vers le haut.
+    Eigen::Vector3f diff = dRay - n;    //-n;   //mais dRay pointe vers le terrain et n vers le haut.
     double norm = diff.squaredNorm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
     norm = 4-norm;
     QColor color;

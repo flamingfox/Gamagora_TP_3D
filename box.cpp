@@ -26,7 +26,7 @@ void Box::updatePoint(const Vector3f& p)
 }
 
 
-bool Box::isIn(const Vector3f& p)
+bool Box::isIn(const Vector3f& p) const
 {
     for(int i = 0;  i < 3;  i++)
     {
@@ -179,4 +179,17 @@ inline void Box::parcourtPoints(const std::vector<Vector3f>& points)
 float Box::diffZ() const
 {
     return max(2)-min(2);
+}
+
+void Box::merge(const Box& box2)
+{
+    updateMin(box2.min);
+    updateMax(box2.max);
+}
+
+
+void Box::operator+=(const Vector3f& t)
+{
+    min += t;
+    max += t;
 }
