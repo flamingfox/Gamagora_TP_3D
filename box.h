@@ -30,6 +30,8 @@ public:
     void operator+=(const Vector3f& t);
 
 protected:
+
+private:
     inline void setDefaultBox();
     inline void update(const Vector3f& p);
     inline void updateMin(const Vector3f& p);
@@ -37,6 +39,7 @@ protected:
 
     inline void parcourtPoints(const std::vector<Vector3f>& points);
 
+    inline float intersectIn(const Rayon& r) const;
 };
 
 #endif // BOX_H

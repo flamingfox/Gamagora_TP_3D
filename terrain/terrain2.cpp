@@ -81,18 +81,13 @@ bool Terrain2::inOut(const Eigen::Vector3f& pointXYZ) const
     return (pointXYZ(2) <= getHauteur(pointXYZ(0), pointXYZ(1)));
 }
 
-bool Terrain2::intersect2(const Rayon& rayon, float &coeffDistance) const{
-
-    float dmin = 0.0;
-    float dmax = 3000.0;
+bool Terrain2::intersect2(const Rayon& rayon, float &coeffDistance) const
+{
+    float dmin;
+    float dmax;
 
     if(!box.intersect(rayon, dmin, dmax ))
         return false;
-    if(box.isIn(rayon.getOrigine()))
-    {
-        dmin = 0;
-        dmax += dmin;
-    }
 
     //à modifier à cause de la précision des floats, mais c'est bizarre que ça marche comme un gant. faire attention que le point de départ ne soit pas en dehors de la box.
     //dmin = 0.0;
@@ -100,13 +95,19 @@ bool Terrain2::intersect2(const Rayon& rayon, float &coeffDistance) const{
 
     coeffDistance = dmin;
 
-    for( int i=0; i<256; i++ )
+    for(int i = 0;  i<256;  i++)
     {
         Eigen::Vector3f pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
         float h = getHauteur( pos );
         if(h == HAUTEUR_HORS_MAP)
-            break;
-
+        {
+            if(i == 0)  {
+                coeffDistance += 0.01f;
+                continue;
+            }
+            else
+                break;
+        }
         h = fabsf(pos(2) - h);
 
         if( h <(0.002 * coeffDistance) ) {
@@ -114,7 +115,7 @@ bool Terrain2::intersect2(const Rayon& rayon, float &coeffDistance) const{
         }else if(coeffDistance > dmax )
                 break;
 
-        coeffDistance += 0.5*h;    // des interfacts apparaissent à 0.5, le rayon dépasse le points qu'il devrait attendre
+        coeffDistance += 0.25*h;    // des interfacts apparaissent à 0.5, le rayon dépasse le points qu'il devrait attendre
     }
 
     return false;
@@ -166,11 +167,15 @@ Eigen::Vector3f Terrain2::getNormalXY(float x, float y) const
                     v2 = vh.cross(vd),
                     v3 = vd.cross(vb),
                     v4 = vb.cross(vg);
-    v1.normalize();
-    v2.normalize();
-    v3.normalize();
-    v4.normalize();
-    Eigen::Vector3f normale = v1*distg*disth + v2*disth*distd + v3*distd*distb + v4*distb*distg;
+    Eigen::Vector3f normale(0,0,0);
+    if(distg*disth > 0)
+        normale += v1.normalized()*distg*disth;
+    if(disth*distd > 0)
+        normale += v2.normalized()*disth*distd;
+    if(distd*distb > 0)
+        normale += v3.normalized()*distd*distb;
+    if(distb*distg > 0)
+        normale += v4.normalized()*distb*distg;
     normale.normalize();
     return normale;
 }

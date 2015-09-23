@@ -46,10 +46,14 @@ void testScene()
     //Mesh m(*noise, 200, 200);
     //m.save("terrainNoiseTest.obj");
     Camera* cam = new Camera(Vector3f(-350,-350,1000), Vector3f(750,750,0), 700, 1200, 800);
+                            //Vector3f(1000,1000,-100),Vector3f(900,900,-1000), 700, 1200, 800);
+
     Scene scene;
     scene.addO(noise);
     scene.addC(cam);
     scene.rendu();
+    delete noise;
+    delete cam;
 }
 
 /*void testNormals()
