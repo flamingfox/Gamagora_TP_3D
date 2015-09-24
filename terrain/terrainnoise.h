@@ -13,6 +13,11 @@ class TerrainNoise: public Terrain2
 {
 public:
     TerrainNoise();
+    /**
+     * @brief Constructeur de TerrainNoise.
+     * @param _longueur Distance du terrain en metre sur l'axe y
+     * @param _largeur Distance du terrain en metre sur l'axe x
+     */
     TerrainNoise(int _longueur, int _largeur);
 
 protected:
