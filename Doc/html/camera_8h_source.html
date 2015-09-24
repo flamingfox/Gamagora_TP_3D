@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>Terrain tracing:  Fichier source de camera.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Terrain tracing
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.10 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">camera.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef CAMERA_H</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define CAMERA_H</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;Eigen/Core&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;QList&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;rayon.h&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;terrain.h&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;float.h&quot;</span>  <span class="comment">//FLT_MIN FLT_MAX</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;QColor&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;QDebug&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;rendu.h&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;QLinearGradient&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;QBrush&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespace_eigen.html">Eigen</a>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="class_color_gradient.html">   19</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_color_gradient.html">ColorGradient</a></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keyword">struct </span>ColorPoint  <span class="comment">// Internal class used to store colors at different points in the gradient.</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordtype">float</span> r,g,b;      <span class="comment">// Red, green and blue values of our color.</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">float</span> val;        <span class="comment">// Position of our color along the gradient (between 0 and 1).</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    ColorPoint(<span class="keywordtype">float</span> red, <span class="keywordtype">float</span> green, <span class="keywordtype">float</span> blue, <span class="keywordtype">float</span> value)</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;      : r(red), g(green), b(blue), val(value) {}</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  };</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  std::vector&lt;ColorPoint&gt; color;      <span class="comment">// An array of color points in ascending value.</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="comment">//-- Default constructor:</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <a class="code" href="class_color_gradient.html">ColorGradient</a>()  {  createDefaultHeatMapGradient();  }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="comment">//-- Inserts a new color point into its correct position:</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordtype">void</span> addColorPoint(<span class="keywordtype">float</span> red, <span class="keywordtype">float</span> green, <span class="keywordtype">float</span> blue, <span class="keywordtype">float</span> value)</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;color.size(); i++)  {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      <span class="keywordflow">if</span>(value &lt; color[i].val) {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        color.insert(color.begin()+i, ColorPoint(red,green,blue, value));</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordflow">return</span>;  }}</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    color.push_back(ColorPoint(red,green,blue, value));</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="comment">//-- Inserts a new color point into its correct position:</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordtype">void</span> clearGradient() { color.clear(); }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="comment">//-- Places a 5 color heapmap gradient into the &quot;color&quot; vector:</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordtype">void</span> createDefaultHeatMapGradient()</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    color.clear();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    color.push_back(ColorPoint(154.0/255.0, 205.0/255.0, 50.0/255.0,   0.0f));      <span class="comment">// Herbe.</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    color.push_back(ColorPoint(139.0/255.0, 69.0/255.0, 19.0/255.0,   0.5f));     <span class="comment">// Terre.</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="comment">//color.push_back(ColorPoint(139.0/255.0, 119.0/255.0, 101.0/255.0,   0.66f));      // Roche.</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    color.push_back(ColorPoint(255.0/255.0, 250.0/255.0, 250.0/255.0,   1.0f));      <span class="comment">// Neige.</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="comment">//-- Inputs a (value) between 0 and 1 and outputs the (red), (green) and (blue)</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <span class="comment">//-- values representing that position in the gradient.</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keywordtype">void</span> getColorAtValue(<span class="keyword">const</span> <span class="keywordtype">float</span> value, <span class="keywordtype">float</span> &amp;red, <span class="keywordtype">float</span> &amp;green, <span class="keywordtype">float</span> &amp;blue)</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">if</span>(color.size()==0)</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;color.size(); i++)</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      ColorPoint &amp;currC = color[i];</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;      <span class="keywordflow">if</span>(value &lt; currC.val)</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        ColorPoint &amp;prevC  = color[ std::max(0,i-1) ];</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordtype">float</span> valueDiff    = (prevC.val - currC.val);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordtype">float</span> fractBetween = (valueDiff==0) ? 0 : (value - currC.val) / valueDiff;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        red   = (prevC.r - currC.r)*fractBetween + currC.r;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        green = (prevC.g - currC.g)*fractBetween + currC.g;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        blue  = (prevC.b - currC.b)*fractBetween + currC.b;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    red   = color.back().r;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    green = color.back().g;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    blue  = color.back().b;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;};</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="class_camera.html">   88</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_camera.html">Camera</a></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;{</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    Vector3f _origine; <span class="comment">//position de la camera</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    Vector3f _u, _v, _w;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordtype">int</span> _lu, _lv;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">float</span> _lw; <span class="comment">//lv et lw constants    exemple : lu = 16.0 / 20.0</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                         <span class="comment">//                                lv = 9.0 / 20.0</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    std::vector&lt;Terrain*&gt; _t;<span class="comment">//liste des objets dans la scene</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="comment">// un vecteur u, un vecteur v et un vecteur w  (u,v,w)</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="comment">// une distance dw</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="comment">// une distance lu et lv</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    QColor colors[5]={QColor(154,205,50),QColor(139,69,19),QColor(205,183,158),QColor(255,250,250),QColor(255,250,250)};</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    QColor renderHors();</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    QColor render(<span class="keyword">const</span> <span class="keywordtype">bool</span> toucheoupas, <span class="keyword">const</span> Eigen::Vector3f&amp; pointImpact, <span class="keyword">const</span> Terrain&amp; objleplusproche, <span class="keyword">const</span> <a class="code" href="class_rayon.html">Rayon</a>&amp; ray);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <a class="code" href="class_color_gradient.html">ColorGradient</a> heatMapGradient;    <span class="comment">// Used to create a nice array of different colors.</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <a class="code" href="class_camera.html">Camera</a>();</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <a class="code" href="class_camera.html">Camera</a>(<span class="keyword">const</span> Vector3f&amp; pOr, <span class="keyword">const</span> Vector3f&amp; pAt, <span class="keyword">const</span> <span class="keywordtype">float</span>&amp; distance, <span class="keywordtype">int</span> l, <span class="keywordtype">int</span> h, <span class="keyword">const</span> std::vector&lt;Terrain*&gt;&amp; listTerrain);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="comment">//Camera(const Vector3f&amp; pOr, const Vector3f&amp; vAtUnit, const float&amp; distance, int l, int h, const std::vector&lt;Terrain*&gt;&amp; listTerrain);</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    Vector3f vecScreen(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    Vector3f pointScreen(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keywordtype">bool</span> SetPixel(QImage *img, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keyword">const</span> QColor&amp; color);<span class="comment">//permet de mettre une couleur au pixel de coordonnées x,y</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordtype">int</span> getrouge(<span class="keyword">const</span> QRgb&amp; couleur);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordtype">bool</span> rendu();</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    QImage* antialiasing(QImage *img);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    QImage generateImage(<span class="keywordtype">int</span> largeur, <span class="keywordtype">int</span> hauteur);<span class="comment">//fonction de test à ne pas utiliser</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;};</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">#endif // CAMERA_H</span></div>
+<div class="ttc" id="class_camera_html"><div class="ttname"><a href="class_camera.html">Camera</a></div><div class="ttdef"><b>Definition:</b> camera.h:88</div></div>
+<div class="ttc" id="namespace_eigen_html"><div class="ttname"><a href="namespace_eigen.html">Eigen</a></div></div>
+<div class="ttc" id="class_rayon_html"><div class="ttname"><a href="class_rayon.html">Rayon</a></div><div class="ttdef"><b>Definition:</b> rayon.h:10</div></div>
+<div class="ttc" id="class_color_gradient_html"><div class="ttname"><a href="class_color_gradient.html">ColorGradient</a></div><div class="ttdef"><b>Definition:</b> camera.h:19</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>

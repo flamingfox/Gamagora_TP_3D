@@ -4,7 +4,6 @@
 #include "mesh.h"
 //#include "arbre.h"
 
-#include "terrain.h"
 #include "terrain/terrainnoise.h"
 //#include "camera.h"
 //#include "generationvegetation.h" //inclue la librairie pour "srand" et "time"
@@ -120,7 +119,7 @@ void testTotal()
 {
     //srand(time(NULL));
 
-    std::cout << "Hello !" << std::endl << "World generating !" << std::endl;
+    /*std::cout << "Hello !" << std::endl << "World generating !" << std::endl;
 
     Terrain m = Terrain(1500, 1500, 250, 250);
     m.save("terrain.obj");

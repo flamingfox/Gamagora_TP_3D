@@ -16,7 +16,6 @@
 
 #include "noisegenerator.h"
 
-#include "zoneterrain.h"
 #include "terrain/terrain2.h"
 
 
@@ -24,7 +23,7 @@ class Mesh{
 
 protected:
     std::vector<Eigen::Vector3f> geom;
-    std::vector<Eigen::Vector3f> normals; //!!!! a ajouté !!!!
+    std::vector<Eigen::Vector3f> normals; // !!!! a ajouté !!!!
     std::vector<int> topo;
 
 public :

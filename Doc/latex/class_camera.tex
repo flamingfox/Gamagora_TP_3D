@@ -1,0 +1,119 @@
+\hypertarget{class_camera}{}\section{Référence de la classe Camera}
+\label{class_camera}\index{Camera@{Camera}}
+\subsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_camera_aceb44de96bb201d3343efeb3aeb8b5c4}{Camera} (const Vector3f \&p\+Or, const Vector3f \&p\+At, const float \&distance, int l, int h, const std\+::vector$<$ Terrain $\ast$ $>$ \&list\+Terrain)
+\item 
+\hypertarget{class_camera_a280e83aa370deae3f80ab7a9c010fe34}{}Vector3f {\bfseries vec\+Screen} (int i, int j) const \label{class_camera_a280e83aa370deae3f80ab7a9c010fe34}
+
+\item 
+\hypertarget{class_camera_ad725f4860f70e5b32388c3bc8e146fbf}{}Vector3f {\bfseries point\+Screen} (int i, int j) const \label{class_camera_ad725f4860f70e5b32388c3bc8e146fbf}
+
+\item 
+\hypertarget{class_camera_abb6590f67b5c34a74b0764767760f073}{}bool {\bfseries Set\+Pixel} (Q\+Image $\ast$img, int x, int y, const Q\+Color \&color)\label{class_camera_abb6590f67b5c34a74b0764767760f073}
+
+\item 
+\hypertarget{class_camera_a30920eb25ca55d97815e6494f4f80bae}{}int {\bfseries getrouge} (const Q\+Rgb \&couleur)\label{class_camera_a30920eb25ca55d97815e6494f4f80bae}
+
+\item 
+\hypertarget{class_camera_a0f82d365052df33d3e74ff14d2dc5091}{}bool {\bfseries rendu} ()\label{class_camera_a0f82d365052df33d3e74ff14d2dc5091}
+
+\item 
+\hypertarget{class_camera_a0f806695a53e62c391b474b0c642c9ad}{}Q\+Image $\ast$ {\bfseries antialiasing} (Q\+Image $\ast$img)\label{class_camera_a0f806695a53e62c391b474b0c642c9ad}
+
+\item 
+\hypertarget{class_camera_a9485cd013e5f55490cbe4b668d46a009}{}Q\+Image {\bfseries generate\+Image} (int largeur, int hauteur)\label{class_camera_a9485cd013e5f55490cbe4b668d46a009}
+
+\item 
+\hyperlink{class_camera_a073a52c602bcad47cd77c11215d884eb}{Camera} (const Vector3f \&p\+Or, const Vector3f \&p\+At, const float \&distance, int l, int h)
+\item 
+\hypertarget{class_camera_a280e83aa370deae3f80ab7a9c010fe34}{}Vector3f {\bfseries vec\+Screen} (int i, int j) const \label{class_camera_a280e83aa370deae3f80ab7a9c010fe34}
+
+\item 
+\hypertarget{class_camera_ad725f4860f70e5b32388c3bc8e146fbf}{}Vector3f {\bfseries point\+Screen} (int i, int j) const \label{class_camera_ad725f4860f70e5b32388c3bc8e146fbf}
+
+\item 
+\hypertarget{class_camera_a136044c6daf6dfd8617f1ed4d17db265}{}int {\bfseries get\+Lu} () const \label{class_camera_a136044c6daf6dfd8617f1ed4d17db265}
+
+\item 
+\hypertarget{class_camera_af22f296bdbe6b3705771ba8223d6bb3d}{}int {\bfseries get\+Lv} () const \label{class_camera_af22f296bdbe6b3705771ba8223d6bb3d}
+
+\item 
+\hypertarget{class_camera_a1e409a80ecbf59b62aa47e5759c0be9f}{}Vector3f {\bfseries get\+Origine} () const \label{class_camera_a1e409a80ecbf59b62aa47e5759c0be9f}
+
+\end{DoxyCompactItemize}
+\subsection*{Fonctions membres protégées}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_camera_a4f4834b66b9dee74cc368156956afc2a}{}Q\+Color {\bfseries render\+Hors} ()\label{class_camera_a4f4834b66b9dee74cc368156956afc2a}
+
+\item 
+\hypertarget{class_camera_acf88b7572e5963d5deba3fdfeae71afd}{}Q\+Color {\bfseries render} (const bool toucheoupas, const Eigen\+::\+Vector3f \&point\+Impact, const Terrain \&objleplusproche, const \hyperlink{class_rayon}{Rayon} \&ray)\label{class_camera_acf88b7572e5963d5deba3fdfeae71afd}
+
+\end{DoxyCompactItemize}
+\subsection*{Attributs protégés}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_camera_a1a6ee6428d4087c286f2443a1605cb16}{}Vector3f {\bfseries \+\_\+origine}\label{class_camera_a1a6ee6428d4087c286f2443a1605cb16}
+
+\item 
+\hypertarget{class_camera_a613c0f2daa3b5a8e3fecfd60967d3d4b}{}Vector3f {\bfseries \+\_\+u}\label{class_camera_a613c0f2daa3b5a8e3fecfd60967d3d4b}
+
+\item 
+\hypertarget{class_camera_a3b572603ea0aedb7c20acd8fd93c0a2a}{}Vector3f {\bfseries \+\_\+v}\label{class_camera_a3b572603ea0aedb7c20acd8fd93c0a2a}
+
+\item 
+\hypertarget{class_camera_a2b14e23c7d3b051b45164df1ade06592}{}Vector3f {\bfseries \+\_\+w}\label{class_camera_a2b14e23c7d3b051b45164df1ade06592}
+
+\item 
+\hypertarget{class_camera_af1074fd7009c6d72ab5ddaed9513b5a4}{}int {\bfseries \+\_\+lu}\label{class_camera_af1074fd7009c6d72ab5ddaed9513b5a4}
+
+\item 
+\hypertarget{class_camera_a38516b7c77ef5d99b47072290455fae7}{}int {\bfseries \+\_\+lv}\label{class_camera_a38516b7c77ef5d99b47072290455fae7}
+
+\item 
+\hypertarget{class_camera_ab07d1a06bc79f9e9b90296a326a84d18}{}float {\bfseries \+\_\+lw}\label{class_camera_ab07d1a06bc79f9e9b90296a326a84d18}
+
+\item 
+\hypertarget{class_camera_a74a74ef67d849163bf2a090533bc96f8}{}std\+::vector$<$ Terrain $\ast$ $>$ {\bfseries \+\_\+t}\label{class_camera_a74a74ef67d849163bf2a090533bc96f8}
+
+\item 
+\hypertarget{class_camera_a22b9c85b9b9a9c9bfaaebbf33224033a}{}Q\+Color {\bfseries colors} \mbox{[}5\mbox{]} =\{Q\+Color(154,205,50),Q\+Color(139,69,19),Q\+Color(205,183,158),Q\+Color(255,250,250),Q\+Color(255,250,250)\}\label{class_camera_a22b9c85b9b9a9c9bfaaebbf33224033a}
+
+\item 
+\hypertarget{class_camera_a84f4e1150c0f2588bc1cf530c8bfecd8}{}\hyperlink{class_color_gradient}{Color\+Gradient} {\bfseries heat\+Map\+Gradient}\label{class_camera_a84f4e1150c0f2588bc1cf530c8bfecd8}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Documentation des constructeurs et destructeur}
+\hypertarget{class_camera_aceb44de96bb201d3343efeb3aeb8b5c4}{}\index{Camera@{Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!Camera@{Camera}}
+\subsubsection[{Camera(const Vector3f \&p\+Or, const Vector3f \&p\+At, const float \&distance, int l, int h, const std\+::vector$<$ Terrain $\ast$ $>$ \&list\+Terrain)}]{\setlength{\rightskip}{0pt plus 5cm}Camera\+::\+Camera (
+\begin{DoxyParamCaption}
+\item[{const Vector3f \&}]{p\+Or, }
+\item[{const Vector3f \&}]{p\+At, }
+\item[{const float \&}]{distance, }
+\item[{int}]{l, }
+\item[{int}]{h, }
+\item[{const std\+::vector$<$ Terrain $\ast$ $>$ \&}]{list\+Terrain}
+\end{DoxyParamCaption}
+)}\label{class_camera_aceb44de96bb201d3343efeb3aeb8b5c4}
+origine de la caméra  vecteur direction de la caméra (comprenant distance) \hypertarget{class_camera_a073a52c602bcad47cd77c11215d884eb}{}\index{Camera@{Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!Camera@{Camera}}
+\subsubsection[{Camera(const Vector3f \&p\+Or, const Vector3f \&p\+At, const float \&distance, int l, int h)}]{\setlength{\rightskip}{0pt plus 5cm}Camera\+::\+Camera (
+\begin{DoxyParamCaption}
+\item[{const Vector3f \&}]{p\+Or, }
+\item[{const Vector3f \&}]{p\+At, }
+\item[{const float \&}]{distance, }
+\item[{int}]{l, }
+\item[{int}]{h}
+\end{DoxyParamCaption}
+)}\label{class_camera_a073a52c602bcad47cd77c11215d884eb}
+origine de la caméra  vecteur direction de la caméra (comprenant distance) 
+
+La documentation de cette classe a été générée à partir des fichiers suivants \+:\begin{DoxyCompactItemize}
+\item 
+camera.\+h\item 
+camera.\+cpp\end{DoxyCompactItemize}

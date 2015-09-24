@@ -4,7 +4,6 @@
 #include <QImage>
 #include <Eigen/Geometry>
 #include "rayon.h"
-#include "terrain.h"
 #include "qcolor.h"
 
 /*QImage renduImage(int nbWidth, int nbHeight)

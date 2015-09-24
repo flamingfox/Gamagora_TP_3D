@@ -1,0 +1,121 @@
+\hypertarget{class_terrain_noise}{}\section{Référence de la classe Terrain\+Noise}
+\label{class_terrain_noise}\index{Terrain\+Noise@{Terrain\+Noise}}
+
+
+Classe fille de \hyperlink{class_terrain2}{Terrain2}. Elle s\textquotesingle{}appuis sur l\textquotesingle{}utilisation de noise pour déterminer la forme du terrain.  
+
+
+
+
+{\ttfamily \#include $<$terrainnoise.\+h$>$}
+
+Graphe d\textquotesingle{}héritage de Terrain\+Noise\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_terrain_noise}
+\end{center}
+\end{figure}
+\subsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_terrain_noise_ade7285caeec8d121790159ad6b0af25f}{}{\bfseries Terrain\+Noise} (int \+\_\+longueur, int \+\_\+largeur)\label{class_terrain_noise_ade7285caeec8d121790159ad6b0af25f}
+
+\end{DoxyCompactItemize}
+\subsection*{Fonctions membres protégées}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{class_terrain_noise_a4173f17958ed358f9b4a6b005b0ed256}{get\+Hauteur\+X\+Y} (float x, float y) const 
+\begin{DoxyCompactList}\small\item\em Récupere la hauteur du terrain à un point donné. \end{DoxyCompactList}\item 
+float \hyperlink{class_terrain_noise_aa22eddb4730bc005cebc2d6d62c437d6}{noise} (int amplitude, float periode, float x, float y) const 
+\begin{DoxyCompactList}\small\item\em Récupération d\textquotesingle{}une valeur de noise suivant les paramétres donnés. \end{DoxyCompactList}\item 
+float \hyperlink{class_terrain_noise_ad3dc579820ae6931c246406f55bbe5b0}{ridge} (float hauteur, float seuil) const 
+\begin{DoxyCompactList}\small\item\em Application sur une valeur de hauteur d\textquotesingle{}un ridge (seuil avec rebond) suivant un seuil. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Membres hérités additionnels}
+
+
+\subsection{Description détaillée}
+Classe fille de \hyperlink{class_terrain2}{Terrain2}. Elle s\textquotesingle{}appuis sur l\textquotesingle{}utilisation de noise pour déterminer la forme du terrain. 
+
+\subsection{Documentation des fonctions membres}
+\hypertarget{class_terrain_noise_a4173f17958ed358f9b4a6b005b0ed256}{}\index{Terrain\+Noise@{Terrain\+Noise}!get\+Hauteur\+X\+Y@{get\+Hauteur\+X\+Y}}
+\index{get\+Hauteur\+X\+Y@{get\+Hauteur\+X\+Y}!Terrain\+Noise@{Terrain\+Noise}}
+\subsubsection[{get\+Hauteur\+X\+Y(float x, float y) const }]{\setlength{\rightskip}{0pt plus 5cm}float Terrain\+Noise\+::get\+Hauteur\+X\+Y (
+\begin{DoxyParamCaption}
+\item[{float}]{x, }
+\item[{float}]{y}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_terrain_noise_a4173f17958ed358f9b4a6b005b0ed256}
+
+
+Récupere la hauteur du terrain à un point donné. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em x} & la position en x du point. \\
+\hline
+{\em y} & la position en y du point. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la hauteur du terrain au point donné. 
+\end{DoxyReturn}
+
+
+Implémente \hyperlink{class_terrain2}{Terrain2}.
+
+\hypertarget{class_terrain_noise_aa22eddb4730bc005cebc2d6d62c437d6}{}\index{Terrain\+Noise@{Terrain\+Noise}!noise@{noise}}
+\index{noise@{noise}!Terrain\+Noise@{Terrain\+Noise}}
+\subsubsection[{noise(int amplitude, float periode, float x, float y) const }]{\setlength{\rightskip}{0pt plus 5cm}float Terrain\+Noise\+::noise (
+\begin{DoxyParamCaption}
+\item[{int}]{amplitude, }
+\item[{float}]{periode, }
+\item[{float}]{x, }
+\item[{float}]{y}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}}\label{class_terrain_noise_aa22eddb4730bc005cebc2d6d62c437d6}
+
+
+Récupération d\textquotesingle{}une valeur de noise suivant les paramétres donnés. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em amplitude} & Amplitude max que pourra atteindre le noise. \\
+\hline
+{\em periode} & Distance en metre pour que le noise atteigne un cycle. \\
+\hline
+{\em x} & Position en x d\textquotesingle{}un point donné au noise. \\
+\hline
+{\em y} & Position en y d\textquotesingle{}un point donné au noise. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+La valeur générée par le noise. 
+\end{DoxyReturn}
+\hypertarget{class_terrain_noise_ad3dc579820ae6931c246406f55bbe5b0}{}\index{Terrain\+Noise@{Terrain\+Noise}!ridge@{ridge}}
+\index{ridge@{ridge}!Terrain\+Noise@{Terrain\+Noise}}
+\subsubsection[{ridge(float hauteur, float seuil) const }]{\setlength{\rightskip}{0pt plus 5cm}float Terrain\+Noise\+::ridge (
+\begin{DoxyParamCaption}
+\item[{float}]{hauteur, }
+\item[{float}]{seuil}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}}\label{class_terrain_noise_ad3dc579820ae6931c246406f55bbe5b0}
+
+
+Application sur une valeur de hauteur d\textquotesingle{}un ridge (seuil avec rebond) suivant un seuil. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em hauteur} & La hauteur à soumettre au ridge. \\
+\hline
+{\em seuil} & Le seuil d\textquotesingle{}application du ridge. Si le seuil est au-\/dessus du maximum atteignable par la hauteur, aucun ridge ne pourra être appliqué dessus. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+La hauteur après avoir passé le ridge. 
+\end{DoxyReturn}
+
+
+La documentation de cette classe a été générée à partir des fichiers suivants \+:\begin{DoxyCompactItemize}
+\item 
+terrain/terrainnoise.\+h\item 
+terrain/terrainnoise.\+cpp\end{DoxyCompactItemize}
