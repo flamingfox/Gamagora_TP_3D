@@ -24,22 +24,29 @@ Scene::Scene()
 }*/
 
 bool Scene::rendu(){
-    int ic = 1;     //indice pour sauvegarder sur des images de noms différents
-    for(Camera* c : cameras)
+    //for(Camera* c : cameras)  //marche pas avec openMP
+    #pragma omp parallel for
+    for(unsigned int ic = 0;  ic < cameras.size(); ic++)
     {
+        Camera* c = cameras[ic];
         int _lu = c->getLu(), _lv = c->getLv();
         QImage *img = new QImage(_lu, _lv, QImage::Format_RGB888);
-        //img->fill(QColor(Qt::white).rgb());
-        for(int x = 0; x < _lu ; x++){
-            std::cerr << "\r" << ic << " Rendering: " << 100 * x / (_lu - 1) << "%";
-            for(int y = 0; y < _lv ; y++){
+
+        #pragma omp parallel for
+        for(int y = 0; y < _lv ; y++){      // pour chaque ligne de l'image
+            std::cerr << "\r" << ic+1 << " Rendering: " << 100 * y / (_lv - 1) << "%";  // barre de progression
+
+            //#pragma omp parallel for
+            for(int x = 0; x < _lu ; x++){  // pour chaque pixel de la ligne
+                Rayon r(c->getOrigine(),c->vecScreen(x,y));   //rayon correspondant au pixel
+
+                //boucle for pour l'antialiasing ici
                 bool touche = false;
-                Rayon r(c->getOrigine(),c->vecScreen(x,y));
-                float coefdisttmp = FLT_MAX;
+                float coefdisttmp = FLT_MAX;        //variables pour déterminer la distance du rayon le plus court
                 float coefdistfinal = FLT_MAX;
                 Vector3f zonetouchee;
                 const Object* objleplusproche;
-                for(const Object* obj: objects){
+                for(const Object* obj: objects){    //parcours tous les objets de la scene
                     if(obj->intersect(r,coefdisttmp)){//si on touche
                         touche = true;
                         if(coefdisttmp < coefdistfinal){//on sélectionne l'objet touché le plus proche
@@ -49,7 +56,6 @@ bool Scene::rendu(){
                         }
                     }
                 }
-                //for(const Mesh* mesh : meshs)
 
                 if(!touche)
                     img->setPixel(x, y, default_color.rgba());
@@ -57,13 +63,11 @@ bool Scene::rendu(){
                 {
                     QColor color = render(zonetouchee, *objleplusproche, r);
                     img->setPixel(x,y,color.rgba());
-                    //SetPixel(img, x, y, render(touche, zonetouchee, *objleplusproche, r));
                 }
             }
         }
-        //antialiasing(img)->save("testaliasing.png");
-        img->save(("test" + std::to_string(ic) + ".png").c_str());
-        std::cout << ("test" + std::to_string(ic) + ".png").c_str() << std::endl;
+        img->save(("test" + std::to_string(ic+1) + ".png").c_str());
+        std::cout << ("test" + std::to_string(ic+1) + ".png").c_str() << std::endl;
         ic++;
         delete img;
     }

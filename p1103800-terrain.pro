@@ -7,6 +7,9 @@ INCLUDEPATH += C:/librairie
 INCLUDEPATH += C:\lib
 INCLUDEPATH += C:\Users\Rudi\Desktop\eigen3
 
+QMAKE_CXXFLAGS += -fopenmp
+LIBS += -fopenmp
+
 SOURCES += main.cpp \
     mesh.cpp \
     noisegenerator.cpp \

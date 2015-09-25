@@ -23,7 +23,7 @@ public:
 private:
 
     float getHauteurXY(float x, float y) const;
-    //Eigen::Vector3f getNormalXY(float x, float y) const;
+    Eigen::Vector3f getNormalXY(float x, float y) const;
 
     void initGrille();
     void simpleInitImage(const QImage& img);

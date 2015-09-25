@@ -64,6 +64,46 @@ float TerrainTab::getHauteurXY(float x, float y) const
 }
 
 
+
+Eigen::Vector3f TerrainTab::getNormalXY(float x, float y) const
+{
+    float ha = getHauteurXY(x,y);
+    float   rx = 1/largeur,
+            ry = 1/longueur;
+    float   xg = std::max(x-rx, 0.f),
+            xd = std::min(x+rx, 1.f),
+            yb = std::min(y+ry, 1.f),
+            yh = std::max(y-ry, 0.f);
+    float   g = getHauteurXY(xg,y),
+            d = getHauteurXY(xd,y),
+            b = getHauteurXY(x,yb),
+            h = getHauteurXY(x,yh);
+    Eigen::Vector3f vg((xg-x)*largeur, 0, g-ha),
+                    vd((xd-x)*largeur, 0, d-ha),
+                    vb(0, (yb-y)*longueur, b-ha),
+                    vh(0, (yh-y)*longueur, h-ha);
+    float   distg = vg.norm(),
+            distd = vd.norm(),
+            distb = vb.norm(),
+            disth = vh.norm();
+    Eigen::Vector3f v1 = vg.cross(vh),
+                    v2 = vh.cross(vd),
+                    v3 = vd.cross(vb),
+                    v4 = vb.cross(vg);
+    Eigen::Vector3f normale(0,0,0);
+    if(distg*disth > 0)
+        normale += v1.normalized()*distg*disth;
+    if(disth*distd > 0)
+        normale += v2.normalized()*disth*distd;
+    if(distd*distb > 0)
+        normale += v3.normalized()*distd*distb;
+    if(distb*distg > 0)
+        normale += v4.normalized()*distb*distg;
+    normale.normalize();
+    return normale;
+}
+
+
 /*******************************Image********************************/
 
 

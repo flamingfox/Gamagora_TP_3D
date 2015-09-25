@@ -15,7 +15,8 @@ public:
 
 protected:
     float getHauteurXY(float x, float y) const;
-    //Eigen::Vector3f getNormalXY(float x, float y) const;
+    float getHauteurXYSansVerif(float x, float y) const;
+    Eigen::Vector3f getNormalXY(float x, float y) const;
 
 
     float noise(int amplitude, float periode, float x, float y)const;
