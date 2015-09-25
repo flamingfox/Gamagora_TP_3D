@@ -17,7 +17,7 @@ public :
 
 private :
 
-    static double findnoise2(double x, double y, int seed);
+    static double findnoise(double x, double y, int seed);
     static double interpolate(double a,double b,double x);
 };
 

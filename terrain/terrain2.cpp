@@ -30,7 +30,6 @@ float Terrain2::getHauteur(float x, float y) const
     return getHauteurXY(x,y);
 }
 
-
 float Terrain2::getHauteur(const Vector2f& pointXY) const
 {
     return getHauteur(pointXY(0), pointXY(1));
@@ -40,8 +39,6 @@ float Terrain2::getHauteur(const Vector3f& pointXYZ) const
 {
     return getHauteur(pointXYZ(0), pointXYZ(1));
 }
-
-
 
 bool Terrain2::inOut(const Eigen::Vector3f& pointXYZ) const
 {

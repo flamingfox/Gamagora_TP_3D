@@ -2,6 +2,8 @@ TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle
 CONFIG += c++11
+QMAKE_CXXFLAGS += -fopenmp
+LIBS += -fopenmp
 
 INCLUDEPATH += C:/librairie
 INCLUDEPATH += C:\lib
@@ -31,4 +33,5 @@ HEADERS +=  mesh.h \
     terrain.h \
     terrain/terrainnoise.h \
     terrain/terraintab.h \
-    terrain/terrain2.h
+    terrain/terrain2.h \
+    foutoir.h
