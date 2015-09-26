@@ -6,12 +6,12 @@
 
 namespace NoiseGenerator
 {
-    static double perlinNoise(double x, double y);
-    static double perlinNoise(double x, double y, int seed);
+    double perlinNoise(double x, double y);
+    double perlinNoise(double x, double y, int seed);
 
 
-    static double findnoise(double x, double y, int seed);
-    static double interpolate(double a,double b,double x);
+    double findnoise(double x, double y, int seed);
+    double interpolate(double a,double b,double x);
 }
 
 #endif // NOISEGENERATOR_H
