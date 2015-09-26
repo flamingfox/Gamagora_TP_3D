@@ -30,11 +30,16 @@ bool Scene::rendu(){
     {
         Camera* c = cameras[ic];
         int _lu = c->getLu(), _lv = c->getLv();
+        int pourcent2 = -1;
         QImage *img = new QImage(_lu, _lv, QImage::Format_RGB888);
 
         #pragma omp parallel for
         for(int y = 0; y < _lv ; y++){      // pour chaque ligne de l'image
-            std::cerr << "\r" << ic+1 << " Rendering: " << 100 * y / (_lv - 1) << "%";  // barre de progression
+            int pourcent = 100 * y / (_lv - 1);
+            if(pourcent != pourcent2)            {
+                pourcent2 = pourcent;
+                std::cout << "\r" << ic+1 << " Rendering: " << pourcent << "% ";  // barre de progression
+            }
 
             //#pragma omp parallel for
             for(int x = 0; x < _lu ; x++){  // pour chaque pixel de la ligne
@@ -108,7 +113,7 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Object& objleplus
         float r,g,b;
         objleplusproche.getColor(r,g,b, pointImpact(0), pointImpact(1));
 
-        float c = 255-(255*norm)/2;
+        float c = 255-(255*norm)/2;     //98    1.23
         return QColor(roundf(r*c),roundf(g*c), roundf(b*c)); // Grey
     }
 }

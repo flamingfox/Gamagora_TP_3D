@@ -7,7 +7,7 @@ coefficientNoiseY(coefficientNoiseY), amplitudeNoise(amplitudeNoise)
 
 ZoneTerrain::ZoneTerrain(Eigen::Vector2f centre, float altitude, float rayonAttenuation, int coefficientNoiseX, int coefficientNoiseY) :
 ZoneTerrain(centre, altitude, rayonAttenuation, 1, 1, 1)
-{}
+{   (void) coefficientNoiseX;   (void) coefficientNoiseY;   }
 
 ZoneTerrain::ZoneTerrain(Eigen::Vector2f centre, float altitude, float rayonAttenuation) :
     ZoneTerrain(centre, altitude, rayonAttenuation, 1, 1)

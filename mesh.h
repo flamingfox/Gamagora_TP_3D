@@ -85,5 +85,11 @@ protected:
     inline void addTopo(int i0, int i1, int i2);
 };
 
+inline void Mesh::addTopo(int i0, int i1, int i2)
+{
+    this->topo.push_back(i0);
+    this->topo.push_back(i1);
+    this->topo.push_back(i2);
+}
 
 #endif // MESH_H

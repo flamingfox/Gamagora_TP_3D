@@ -48,20 +48,20 @@ float TerrainNoise::getHauteurXY(float x, float y) const
 {
     if(x < 0    || y < 0 || x > 1 || y > 1)
         return HAUTEUR_HORS_MAP;
-    float h = noise(400,300,x*largeur,y*longueur);
+    return getHauteurXYSansVerif(x,y);
+    /*float h = noise(400,300,x*largeur,y*longueur);
     h = ridge(h, 250);
 
     float h2 = noise(100, 100, x*largeur, y*longueur);
     h -= h2*(h/250);
 
     float h3 = noise(50,30,x*largeur,y*longueur);
+    //h3 += NoiseGenerator::perlinNoiseGradiant2(x*largeur,y*longueur,100)*20;
     float div = h/250;
-    if(div> 1)
-        std::cout << "bizarre?" << std::endl;
-    h += h3*div*div;
-    //float h4 = ridge(h3, 160);
 
-    return h;
+    h += h3*div*div;
+
+    return h;*/
 }
 
 
@@ -98,10 +98,10 @@ Eigen::Vector3f TerrainNoise::getNormalXY(float x, float y) const
             d = getHauteurXYSansVerif(x+rx,y),
             b = getHauteurXYSansVerif(x,y+ry),
             h = getHauteurXYSansVerif(x,y-ry);
-    Eigen::Vector3f vg((x-rx)*largeur, 0, g-ha),
-                    vd((x+rx)*largeur, 0, d-ha),
-                    vb(0, (y+ry)*longueur, b-ha),
-                    vh(0, (y-ry)*longueur, h-ha);
+    Eigen::Vector3f vg(-1, 0, g-ha),
+                    vd(1, 0, d-ha),
+                    vb(0, 1, b-ha),
+                    vh(0, -1, h-ha);
     float   distg = vg.norm(),
             distd = vd.norm(),
             distb = vb.norm(),

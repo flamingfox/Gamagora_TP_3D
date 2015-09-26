@@ -334,12 +334,7 @@ size_t Mesh::nbTopo() const
     return this->topo.size();
 }
 
-inline void Mesh::addTopo(int i0, int i1, int i2)
-{
-    this->topo.push_back(i0);
-    this->topo.push_back(i1);
-    this->topo.push_back(i2);
-}
+
 
 Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, const int resolution)
 {

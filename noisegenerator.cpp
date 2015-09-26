@@ -91,17 +91,18 @@ double perlinNoiseGradiant(double x, double y, double res)
 double perlinNoiseGradiant2(double x, double y, double res)
 {
     double tempX,tempY;
-    unsigned int x0,y0,ii,jj,gi0,gi1,gi2,gi3;
+    unsigned int ii,jj,gi0,gi1,gi2,gi3;
+    int x0, y0;
     double tmp,s,t,u,v,Cx,Cy,Li1,Li2;
 
     //Adapter pour la résolution
-    res = 1.0/res;
-    x *= res;
-    y *= res;
+    double resDiv = 1.0/res;
+    x *= resDiv;
+    y *= resDiv;
 
     //On récupère les positions de la grille associée à (x,y)
-    x0 = (unsigned int)(x);
-    y0 = (unsigned int)(y);
+    x0 = floor(x);
+    y0 = floor(y);
 
     //Masquage
     ii = x0 & 255;  //le masquage par & est beaucoup plus rapide qu'avec un modulo
@@ -133,13 +134,13 @@ double perlinNoiseGradiant2(double x, double y, double res)
 
     //Lissage
     tmp = x-x0;
-    Cx = pow(tmp,2)*(3 - 2 * tmp);  //3t^2-2t^3
+    Cx = tmp*tmp*(3 - 2 * tmp);  //3t^2-2t^3
 
     Li1 = s + Cx*(t-s);
     Li2 = u + Cx*(v-u);
 
-    tmp = y - y0;
-    Cy = pow(tmp,2)*(3 - 2 * tmp);
+    tmp = y-y0;
+    Cy = tmp*tmp*(3 - 2 * tmp);
 
     return Li1 + Cy*(Li2-Li1);
 }
