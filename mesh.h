@@ -23,7 +23,7 @@ class Mesh{
 
 protected:
     std::vector<Eigen::Vector3f> geom;
-    std::vector<Eigen::Vector3f> normals; //!!!! a ajouté !!!!
+    std::vector<Eigen::Vector3f> normals;
     std::vector<int> topo;
 
 public :
@@ -65,6 +65,24 @@ public :
 
     void normalsTriangles();
     Eigen::Vector3f normalTriangle(int i) const;
+
+    //trieeee=============================================
+    inline const Vector3f& Mesh::getPoint(int i, int j) const{
+        return geom[i+j*nbPointLargeur];
+    }
+
+    inline const Vector3f& Mesh::getPoint(const Eigen::Vector2i& pos) const{
+        return getPoint(pos(0), pos(1));
+    }
+
+    inline const Vector3f& Mesh::getN(int i, int j) const{
+        return normalsPoints[i+j*nbPointLargeur];
+    }
+
+    inline const Vector3f& Mesh::getN(const Eigen::Vector2i& pos) const{
+        return getN(pos(0), pos(1));
+    }
+
 
     //std::pair<Eigen::Vector3f,Eigen::Vector3f> calculBoite();
 

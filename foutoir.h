@@ -39,7 +39,7 @@ void initFinal();
 
 /********************Terrain Image************************/
 
-Terrain::Terrain(const QImage &img, float _longueur, float _largeur, float amplitude):
+Mesh::Mesh(const QImage &img, float _longueur, float _largeur, float amplitude):
     longueur(_longueur), largeur(_largeur), nbPointLongueur(img.height()), nbPointLargeur(img.width())
 {
     simpleInitImage(img, _longueur, _largeur, amplitude);
@@ -79,7 +79,7 @@ Terrain::Terrain(const QImage& img, float _longueur, float _largeur, float _ampl
 }
 
 /**construit un terrain avec le même nombre de point que le nombre de pixel de l'image*/
-void Terrain::simpleInitImage(const QImage& img, float _longueur, float _largeur, float _amplitude)
+void Mesh::simpleInitImage(const QImage& img, float _longueur, float _largeur, float _amplitude)
 {
     int nbHeight = img.height(),
         nbWidth = img.width();
@@ -100,7 +100,7 @@ void Terrain::simpleInitImage(const QImage& img, float _longueur, float _largeur
     this->simpleInitTopo();
 }
 
-void Terrain::simpleInitTopo()
+void Mesh::simpleInitTopo()
 {
     this->topo.reserve((nbPointLongueur-1)*(nbPointLargeur-1)*6); //grille 5p x 7p = 35p => 24 carrés (4*6) = 48 triangles = 144 int = (5-1) * (7-1) * 2 * 3
 
@@ -120,7 +120,7 @@ void Terrain::simpleInitTopo()
     }
 }
 
-void Terrain::calculNormals()
+void Mesh::calculNormals()
 {
     normalsTriangles();   //reconstruit toutes les normales des triangles du terrain.
     //maintenant, on calcul les normales des points
@@ -158,7 +158,7 @@ void Terrain::calculNormals()
     }
 }
 
-float Terrain::getHauteur(float pointX, float pointY) const
+float Mesh::getHauteur(float pointX, float pointY) const
 {
     if(pointX < 0 || pointY < 0 || pointX > largeur || pointY > longueur)
         return HAUTEUR_HORS_MAP;
@@ -187,18 +187,18 @@ float Terrain::getHauteur(float pointX, float pointY) const
     }
 }
 
-Vector3f Terrain::getNormal(const Vector3f &pointXYZ) const
+Vector3f Mesh::getNormal(const Vector3f &pointXYZ) const
 {
    return getNormal(pointXYZ(0), pointXYZ(1));
 }
 
-Vector3f Terrain::getNormal(const Vector2f &pointXY) const
+Vector3f Mesh::getNormal(const Vector2f &pointXY) const
 {
     return getNormal(pointXY(0), pointXY(1));
 }
 
 
-void Terrain::initFinal()
+void Mesh::initFinal()
 {
     calculNormals();
     englobant = Box(geom);
@@ -207,13 +207,13 @@ void Terrain::initFinal()
 
 
 
-float Terrain::getHauteur(Vector2f &pointXY) const
+float Mesh::getHauteur(Vector2f &pointXY) const
 {
     return getHauteur(pointXY(0), pointXY(1));
 }
 
 
-void Terrain::generationTerrain(int width, int lenght, int nbPointLongueur, int nbPointLargeur)
+void Mesh::generationTerrain(int width, int lenght, int nbPointLongueur, int nbPointLargeur)
 {
     plan(lenght, width, nbPointLongueur, nbPointLargeur);
     applicationNoise(200, 1000);
@@ -228,7 +228,7 @@ void Terrain::generationTerrain(int width, int lenght, int nbPointLongueur, int 
     englobant = Box(geom);
 }
 
-bool Terrain::inOut(const Eigen::Vector3f& pointXYZ)
+bool Mesh::inOut(const Eigen::Vector3f& pointXYZ)
 {
     if(pointXYZ(2) > getHauteur(pointXYZ(0), pointXYZ(1))){
         return false;
@@ -236,7 +236,7 @@ bool Terrain::inOut(const Eigen::Vector3f& pointXYZ)
     return true;
 }
 
-bool Terrain::intersectWithMesh(const Rayon& rayon, float &coeffDistance) const{
+bool Mesh::intersectWithMesh(const Rayon& rayon, float &coeffDistance) const{
 
     float dmin = 0.0;
     float dmax = 3000.0;
@@ -269,7 +269,7 @@ bool Terrain::intersectWithMesh(const Rayon& rayon, float &coeffDistance) const{
     return false;
 }
 
-void Terrain::plan(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur)
+void Mesh::plan(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur)
 {
     geom.reserve(_nbPointLongueur*_nbPointLargeur);
 
@@ -279,7 +279,7 @@ void Terrain::plan(int _longueur, int _largeur, int _nbPointLongueur, int _nbPoi
     this->simpleInitTopo();
 }
 
-void Terrain::applicationNoise(int amplitude, int periode)
+void Mesh::applicationNoise(int amplitude, int periode)
 {
     /*************************************/
     /* Modification points */
@@ -297,7 +297,7 @@ void Terrain::applicationNoise(int amplitude, int periode)
 
 
 
-void Terrain::applicationRidge(float seuil, float amplitude, int periode)
+void Mesh::applicationRidge(float seuil, float amplitude, int periode)
 {
     for(Eigen::Vector3f& p: geom)
     {
@@ -309,7 +309,7 @@ void Terrain::applicationRidge(float seuil, float amplitude, int periode)
     }
 }
 
-void Terrain::applicationWarp(int amplitude, int periode)
+void Mesh::applicationWarp(int amplitude, int periode)
 {
     //for(size_t i = 0; i < geom.size(); i++)
     for(Eigen::Vector3f& p: geom)
@@ -321,7 +321,7 @@ void Terrain::applicationWarp(int amplitude, int periode)
     }
 }
 
-void Terrain::applicationSin(int amplitude, int periode)
+void Mesh::applicationSin(int amplitude, int periode)
 {
     //for(size_t i = 0; i < geom.size(); i++)
     for(Eigen::Vector3f& p: geom)
@@ -338,21 +338,7 @@ float Terrain::interpolation(float a, float b, float x){
     return (1. - x) * a + x * b;
 }
 
-inline const Vector3f& Terrain::getPoint(int i, int j) const{
-    return geom[i+j*nbPointLargeur];
-}
 
-inline const Vector3f& Terrain::getPoint(const Eigen::Vector2i& pos) const{
-    return getPoint(pos(0), pos(1));
-}
-
-inline const Vector3f& Terrain::getN(int i, int j) const{
-    return normalsPoints[i+j*nbPointLargeur];
-}
-
-inline const Vector3f& Terrain::getN(const Eigen::Vector2i& pos) const{
-    return getN(pos(0), pos(1));
-}
 
 
 
