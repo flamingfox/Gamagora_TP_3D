@@ -63,40 +63,26 @@ int Camera::getrouge(const QRgb& couleur){
     return tmp.red();
 }
 
-QImage* Camera::antialiasing(QImage *img){
-    QImage *img2 = new QImage(_lu, _lv, QImage::Format_RGB888);
-    img2->fill(QColor(Qt::white).rgb());
-    for(int i=1;i<img->width()-1;i++){
-        for(int y=1;y<img->height()-1;y++){
-            int newcolor;
-            newcolor = getrouge(img->pixel(i,y))-getrouge(img->pixel(i-1,y-1))/100-getrouge(img->pixel(i,y-1))/100-getrouge(img->pixel(i+1,y-1))/100
-                                           -getrouge(img->pixel(i-1,y))/100-getrouge(img->pixel(i+1,y))/100
-                                           -getrouge(img->pixel(i-1,y+1))/100-getrouge(img->pixel(i,y+1))/100-getrouge(img->pixel(i+1,y+1))/100;
-            if(newcolor<0)newcolor = 0;
-            QColor tutu(newcolor,newcolor,newcolor);
-            img2->setPixel(i,y,tutu.rgba());
-        }
-    }
-    return img2;
-}
-
+///
+/// \brief Camera::rendu
+/// \return
+///
 bool Camera::rendu(){
     QImage eric(_lu, _lv, QImage::Format_RGB888);
-
     QImage *img = new QImage(_lu, _lv, QImage::Format_RGB888);
-    img->fill(QColor(Qt::white).rgb());
-    for(int x = 0; x < _lu ; x++){
-        std::cerr << "\rRendering: " << 100 * x / (_lu - 1) << "%";
+    #pragma omp parallel for schedule(dynamic,1)
+    for(int x = 0; x < _lu ; x++){ // pour chaque pixel de l'image
+        std::cerr << "\rRendering: " << 100 * x / (_lu - 1) << "%"; // barre de progression
         for(int y = 0; y < _lv ; y++){
             bool touche = false;
-            Rayon r(_origine,vecScreen(x,y));
-            float coefdisttmp = FLT_MAX;
-            float coefdistfinal = FLT_MAX;
+            Rayon r(_origine,vecScreen(x,y));   //rayon correspondant au pixel
+            float coefdisttmp = FLT_MAX;        //variables pour déterminer la distance du rayon le plus court
+            float coefdistfinal = FLT_MAX;      //
             Vector3f zonetouchee;
             const Terrain* objleplusproche;
             int tmp;
-            for(const Terrain* terrain: _t){
-                if(terrain->intersect2(r,coefdisttmp, tmp)){//si on touche
+            for(const Terrain* terrain: _t){ //parcours les terrains de la scene
+                if(terrain->intersectWithFunction(r,coefdisttmp, tmp)){//si on touche
                     touche = true;
                     if(coefdisttmp < coefdistfinal){//on sélectionne l'objet touché le plus proche
                         coefdistfinal = coefdisttmp;
@@ -107,10 +93,8 @@ bool Camera::rendu(){
             }
             SetPixel(img, x, y, render(touche, zonetouchee, *objleplusproche, r));
             eric.setPixel(x,y,qRgb(tmp,tmp,tmp));
-
         }
     }
-    antialiasing(img)->save("testaliasing.png");
     img->save("test.png");  eric.save("eric.png");
     delete img;
     return true;
@@ -123,21 +107,20 @@ QColor Camera::renderHors()
 
 QColor Camera::render(const bool toucheoupas, const Eigen::Vector3f& pointImpact, const Terrain& objleplusproche, const Rayon& ray)
 {
-    if(!toucheoupas)
-        return renderHors();
+    if(!toucheoupas)return renderHors();
 
     Eigen::Vector3f dRay = ray.getDirection();
     dRay.normalize();
 
-    Eigen::Vector3f n = objleplusproche.getNormal2(pointImpact(0),pointImpact(1));
+    Eigen::Vector3f n = objleplusproche.getNormal(pointImpact(0),pointImpact(1));
 
     Eigen::Vector3f diff = dRay - n;
     double norm = diff.squaredNorm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
     norm = 4-norm;
     QColor color;
 
-    float hauteur = objleplusproche.getHauteur2(pointImpact(0),pointImpact(1));
-    hauteur = (hauteur/objleplusproche.maxelev);
+    float hauteur = objleplusproche.getHauteur(pointImpact(0),pointImpact(1));
+    hauteur = (hauteur/objleplusproche.getElevationMax());
 
     float r,g,b;
     heatMapGradient.getColorAtValue(hauteur, r,g,b);
@@ -159,17 +142,6 @@ QColor Camera::render(const bool toucheoupas, const Eigen::Vector3f& pointImpact
     return color;
 }
 
-
-QImage Camera::generateImage(int largeur, int hauteur){
-    QImage img(largeur, hauteur, QImage::Format_RGB888);
-    img.fill(QColor(Qt::white).rgb());
-    for (int x = 0; x < 100; ++x) {
-        for (int y = 0; y < 100; ++y) {
-          img.setPixel(x, y, qRgb(rand()%255,rand()%255,rand()%255));
-        }
-    }
-    return img;
-}
 
 
 

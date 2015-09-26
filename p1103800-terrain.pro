@@ -10,10 +10,8 @@ INCLUDEPATH += C:\Users\Rudi\Desktop\eigen3
 SOURCES += main.cpp \
     mesh.cpp \
     noisegenerator.cpp \
-    zoneterrain.cpp \
     interpolation.cpp \
     box.cpp \
-    terrain.cpp \
     terrain/terrainnoise.cpp \
     terrain/terraintab.cpp \
     terrain/terrain2.cpp \
@@ -26,11 +24,9 @@ SOURCES += main.cpp \
 
 HEADERS +=  mesh.h \
     noisegenerator.h \
-    zoneterrain.h \
     parametres.h \
     interpolation.h \
     box.h \
-    terrain.h \
     terrain/terrainnoise.h \
     terrain/terraintab.h \
     terrain/terrain2.h \

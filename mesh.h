@@ -27,10 +27,8 @@ protected:
     std::vector<int> topo;
 
 public :
-
     Mesh(){}
-    Mesh(const std::vector<Eigen::Vector3f> listGeom, const std::vector<int> listTopo): geom(listGeom), topo(listTopo)
-    {}
+    Mesh(const std::vector<Eigen::Vector3f> listGeom, const std::vector<int> listTopo): geom(listGeom), topo(listTopo){}
 
     Mesh(const Terrain2& terrain, int nbHeight, int nbWidth);
 

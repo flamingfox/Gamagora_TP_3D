@@ -35,7 +35,7 @@ public:
   //-- Inserts a new color point into its correct position:
   void addColorPoint(float red, float green, float blue, float value)
   {
-    for(int i=0; i<color.size(); i++)  {
+    for(unsigned int i=0; i<color.size(); i++)  {
       if(value < color[i].val) {
         color.insert(color.begin()+i, ColorPoint(red,green,blue, value));
         return;  }}
@@ -106,7 +106,6 @@ protected:
 public:
     Camera();
     Camera(const Vector3f& pOr, const Vector3f& pAt, const float& distance, int l, int h, const std::vector<Terrain*>& listTerrain);
-    //Camera(const Vector3f& pOr, const Vector3f& vAtUnit, const float& distance, int l, int h, const std::vector<Terrain*>& listTerrain);
 
     Vector3f vecScreen(int i, int j) const;
     Vector3f pointScreen(int i, int j) const;
