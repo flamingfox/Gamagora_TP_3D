@@ -62,11 +62,18 @@ const Object* Object::intersect(const Rayon& rayon, float &coeffDistance) const
 }
 
 
-void Object::getColor(float& r, float& g, float& b, float hauteur) const
+void Object::getColor(float& r, float& g, float& b, float hauteur, const Eigen::Vector3f& n) const
 {
     if(!objects.empty())
         std::cerr << "/!\\ l'object ne devrait pas contenir une liste d'objects /!\\" << std::endl;
     getColor2(r, g, b, hauteur);
+}
+
+void Object::getColor(float& r, float& g, float& b, float x, float y) const
+{
+    if(!objects.empty())
+        std::cerr << "/!\\ l'object ne devrait pas contenir une liste d'objects /!\\" << std::endl;
+    getColor3(r, g, b, x, y);
 }
 
 /******************************************************************/
@@ -131,10 +138,19 @@ bool Object::intersect2(const Rayon& rayon, float &coeffDistance) const
     coeffDistance = -9999;
     return false;
 }
-void Object::getColor2(float& r, float& g, float& b, float hauteur) const
+void Object::getColor2(float& r, float& g, float& b, float hauteur, const Vector3f& n) const
 {
     std::cerr << "/!\\ ne devrait pas entrer dans getColor2 virtual de Object /!\\" << std::endl;
-    (void) hauteur;
+    (void) hauteur; (void) n;
+    r=0;
+    g=0;
+    b=0;
+}
+
+void Object::getColor3(float& r, float& g, float& b, float x, float y) const
+{
+    std::cerr << "/!\\ ne devrait pas entrer dans getColor2 virtual de Object /!\\" << std::endl;
+    (void) x;   (void) y;
     r=0;
     g=0;
     b=0;

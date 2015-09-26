@@ -16,7 +16,8 @@ public:
 
     void translate(const Eigen::Vector3f& t);
     const Object* intersect(const Rayon& rayon, float &coeffDistance) const;
-    void getColor(float& r, float& g, float& b, float hauteur = 0) const;
+    void getColor(float& r, float& g, float& b, float hauteur = 0, const Eigen::Vector3f& n = Vector3f(0,0,1)) const;
+    void getColor(float& r, float& g, float& b, float x, float y) const;
 
 
     virtual float getVal(const Vector3f& p) const;
@@ -29,7 +30,8 @@ protected:
 
     virtual void translate2(const Eigen::Vector3f& t);
     virtual bool intersect2(const Rayon& rayon, float &coeffDistance) const;
-    virtual void getColor2(float& r, float& g, float& b, float hauteur = 0) const;
+    virtual void getColor2(float& r, float& g, float& b, float hauteur = 0, const Eigen::Vector3f& n = Vector3f(0,0,1)) const;
+    virtual void getColor3(float& r, float& g, float& b, float x, float y) const;
 
 
 private:

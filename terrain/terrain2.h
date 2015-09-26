@@ -4,6 +4,7 @@
 #include "./object.h"
 #include "./rendu/colorgradient.h"
 #include "./parametres.h"
+#include "./noisegenerator.h"
 
 class Terrain2: public Object
 {
@@ -37,7 +38,8 @@ protected:
 
     bool intersect2(const Rayon& rayon, float &coeffDistance) const;
     void translate2(const Vector3f& t);
-    void getColor2(float& r, float& g, float& b, float hauteur = 0) const;
+    void getColor2(float& r, float& g, float& b, float hauteur = 0, const Eigen::Vector3f& n = Eigen::Vector3f(0,0,1)) const;
+    void getColor3(float& r, float& g, float& b, float x, float y) const;
 
 };
 

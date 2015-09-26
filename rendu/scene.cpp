@@ -106,7 +106,7 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Object& objleplus
         hauteur /= objleplusproche.box.diffZ();
 
         float r,g,b;
-        objleplusproche.getColor(r,g,b, hauteur);
+        objleplusproche.getColor(r,g,b, pointImpact(0), pointImpact(1));
 
         float c = 255-(255*norm)/2;
         return QColor(roundf(r*c),roundf(g*c), roundf(b*c)); // Grey
