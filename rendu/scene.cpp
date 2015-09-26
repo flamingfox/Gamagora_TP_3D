@@ -38,7 +38,7 @@ bool Scene::rendu(){
             int pourcent = 100 * y / (_lv - 1);
             if(pourcent != pourcent2)            {
                 pourcent2 = pourcent;
-                std::cout << "\r" << ic+1 << " Rendering: " << pourcent << "% ";  // barre de progression
+                std::cout << "\r" << ic << " Rendering: " << pourcent << "% ";  // barre de progression
             }
 
             //#pragma omp parallel for
@@ -71,9 +71,22 @@ bool Scene::rendu(){
                 }
             }
         }
-        img->save(("test" + std::to_string(ic+1) + ".png").c_str());
-        std::cout << ("test" + std::to_string(ic+1) + ".png").c_str() << std::endl;
-        ic++;
+        if(ic<10)        {
+            img->save(("test000" + std::to_string(ic) + ".png").c_str());
+            std::cout << ("test000" + std::to_string(ic) + ".png").c_str() << std::endl;
+        }
+        else if(ic<100)        {
+            img->save(("test00" + std::to_string(ic) + ".png").c_str());
+            std::cout << ("test00" + std::to_string(ic) + ".png").c_str() << std::endl;
+        }
+        else if(ic<1000)        {
+            img->save(("test0" + std::to_string(ic) + ".png").c_str());
+            std::cout << ("test0" + std::to_string(ic) + ".png").c_str() << std::endl;
+        }
+        else    {
+            img->save(("test" + std::to_string(ic) + ".png").c_str());
+            std::cout << ("test" + std::to_string(ic) + ".png").c_str() << std::endl;
+        }
         delete img;
     }
     return true;
@@ -91,29 +104,24 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Object& objleplus
 
     Eigen::Vector3f n = objleplusproche.getNormal(pointImpact);
 
-    Eigen::Vector3f diff = dRay+ n;    //-n;   //mais dRay pointe vers le terrain et n vers le haut.
-    double norm = diff.squaredNorm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
-    //norm = 4-norm;
+    //Eigen::Vector3f diff = dRay+ n;    //-n;   //mais dRay pointe vers le terrain et n vers le haut.
+    double norm = dRay.dot(n);    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
 
-            //heatMapGradient.getColorAtValue(hauteur, r,g,b);
 
-    /*color.setRed(r*255);
-    color.setGreen(g*255);
-    color.setBlue(b*255);*/
-
-    if(norm >= 2)
+    if(norm >= 0)
         return QColor(0,0,0); //Black
-    else if(norm == 0)
-        return QColor(255,255,255); // White
+    //else if(norm == -1)
+        //return QColor(0,0,0); //Black
+    //    return QColor(255,255,255); // White
     else
     {
         float hauteur = objleplusproche.getVal(pointImpact);
-        hauteur /= objleplusproche.box.diffZ();
+        hauteur /= objleplusproche.getMaxElevation();
 
         float r,g,b;
         objleplusproche.getColor(r,g,b, pointImpact(0), pointImpact(1));
 
-        float c = 255-(255*norm)/2;     //98    1.23
+        float c = (-255)*norm;
         return QColor(roundf(r*c),roundf(g*c), roundf(b*c)); // Grey
     }
 }

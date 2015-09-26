@@ -26,12 +26,18 @@ public:
     Object* addObject(Object* obj);
     Object* addObjectStrict(Object* obj, bool verif = true);
 
+
+    float getMinElevation() const;
+    float getMaxElevation() const;
+
 protected:
 
     virtual void translate2(const Eigen::Vector3f& t);
     virtual bool intersect2(const Rayon& rayon, float &coeffDistance) const;
     virtual void getColor2(float& r, float& g, float& b, float hauteur = 0, const Eigen::Vector3f& n = Vector3f(0,0,1)) const;
     virtual void getColor3(float& r, float& g, float& b, float x, float y) const;
+    virtual float getMinElevation2() const;
+    virtual float getMaxElevation2() const;
 
 
 private:

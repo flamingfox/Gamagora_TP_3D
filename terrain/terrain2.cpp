@@ -140,15 +140,17 @@ void Terrain2::getColor3(float& r, float& g, float& b, float x, float y) const
     Vector3f normale = getNormal(x,y);
     float pente = 1-normale.dot(Vector3f(0,0,1));
 
-    float roche = 1 + NoiseGenerator::perlinNoiseGradiant2(x, y, 1000);// + NoiseGenerator::perlinNoiseGradiant2(x+30, y-60, 100);// + NoiseGenerator::perlinNoiseGradiant2(x,y, 46);
-    roche *= pente;
-    roche *= 2.f;
+    float roche = 3 + NoiseGenerator::perlinNoiseGradiant2(x, y, 1000) + NoiseGenerator::perlinNoiseGradiant2(x+30, y-60, 103) + NoiseGenerator::perlinNoiseGradiant2(x,y, 3);
+    roche *= 0.25f+pente*0.75f;
+    roche *= 0.3f;
 
-    float herbe = 1 + NoiseGenerator::perlinNoiseGradiant2(x+10100, y+10100, 1234);// + NoiseGenerator::perlinNoiseGradiant2(x-100,y-50, 123);// + NoiseGenerator::perlinNoiseGradiant2(x-1, y-30,39);
-    herbe *= (1-hauteur)*(1-hauteur);
+    float herbe = 3 + NoiseGenerator::perlinNoiseGradiant2(x+10100, y+10100, 1234) + NoiseGenerator::perlinNoiseGradiant2(x-100,y-50, 123) + NoiseGenerator::perlinNoiseGradiant2(x-1, y-30,2);
+    herbe *= 0.25f+(1-hauteur)*(1-hauteur)*0.75f;
+    herbe *= 0.25f;
 
-    float neige = 1 + NoiseGenerator::perlinNoiseGradiant2(x+555, y+1010, 1324);// + NoiseGenerator::perlinNoiseGradiant2(x-200,y-54, 223);// + NoiseGenerator::perlinNoiseGradiant2(x-10, y+12,91);
-    neige *= hauteur*hauteur;
+    float neige = 3 + NoiseGenerator::perlinNoiseGradiant2(x+555, y+1010, 1324) + NoiseGenerator::perlinNoiseGradiant2(x-200,y-54, 223) + NoiseGenerator::perlinNoiseGradiant2(x-10, y+12,0.5);
+    neige *= 0.1f+hauteur*hauteur*0.9f;
+    neige *= 0.25f;
 
     /*float   sr = roche*1/0.39f+neige,
             sg = roche*1/0.36f+herbe+neige,

@@ -66,7 +66,7 @@ void Object::getColor(float& r, float& g, float& b, float hauteur, const Eigen::
 {
     if(!objects.empty())
         std::cerr << "/!\\ l'object ne devrait pas contenir une liste d'objects /!\\" << std::endl;
-    getColor2(r, g, b, hauteur);
+    getColor2(r, g, b, hauteur, n);
 }
 
 void Object::getColor(float& r, float& g, float& b, float x, float y) const
@@ -74,6 +74,20 @@ void Object::getColor(float& r, float& g, float& b, float x, float y) const
     if(!objects.empty())
         std::cerr << "/!\\ l'object ne devrait pas contenir une liste d'objects /!\\" << std::endl;
     getColor3(r, g, b, x, y);
+}
+
+float Object::getMinElevation() const
+{
+    if(!objects.empty())
+        std::cerr << "/!\\ l'object ne devrait pas contenir une liste d'objects /!\\" << std::endl;
+    return getMinElevation2();
+}
+
+float Object::getMaxElevation() const
+{
+    if(!objects.empty())
+        std::cerr << "/!\\ l'object ne devrait pas contenir une liste d'objects /!\\" << std::endl;
+    return getMaxElevation2();
 }
 
 /******************************************************************/
@@ -149,9 +163,21 @@ void Object::getColor2(float& r, float& g, float& b, float hauteur, const Vector
 
 void Object::getColor3(float& r, float& g, float& b, float x, float y) const
 {
-    std::cerr << "/!\\ ne devrait pas entrer dans getColor2 virtual de Object /!\\" << std::endl;
+    std::cerr << "/!\\ ne devrait pas entrer dans getColor3 virtual de Object /!\\" << std::endl;
     (void) x;   (void) y;
     r=0;
     g=0;
     b=0;
+}
+
+
+float Object::getMinElevation2() const
+{
+    std::cerr << "/!\\ ne devrait pas entrer dans getMinElevation2 virtual de Object /!\\" << std::endl;
+    return 0;
+}
+float Object::getMaxElevation2() const
+{
+    std::cerr << "/!\\ ne devrait pas entrer dans getMaxElevation2 virtual de Object /!\\" << std::endl;
+    return 0;
 }

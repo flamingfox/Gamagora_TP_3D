@@ -49,19 +49,6 @@ float TerrainNoise::getHauteurXY(float x, float y) const
     if(x < 0    || y < 0 || x > 1 || y > 1)
         return HAUTEUR_HORS_MAP;
     return getHauteurXYSansVerif(x,y);
-    /*float h = noise(400,300,x*largeur,y*longueur);
-    h = ridge(h, 250);
-
-    float h2 = noise(100, 100, x*largeur, y*longueur);
-    h -= h2*(h/250);
-
-    float h3 = noise(50,30,x*largeur,y*longueur);
-    //h3 += NoiseGenerator::perlinNoiseGradiant2(x*largeur,y*longueur,100)*20;
-    float div = h/250;
-
-    h += h3*div*div;
-
-    return h;*/
 }
 
 
@@ -135,5 +122,13 @@ float Terrain::warp()
 }
 */
 
+
+
+float TerrainNoise::getMinElevation2() const{
+    return 0;
+}
+float TerrainNoise::getMaxElevation2() const{
+    return 300;
+}
 
 

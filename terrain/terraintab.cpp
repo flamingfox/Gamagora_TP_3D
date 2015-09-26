@@ -3,7 +3,7 @@
 
 
 TerrainTab::TerrainTab(const TerrainTab& copy):
-        height(copy.height),    width(copy.width),  amplitude(copy.amplitude)
+        height(copy.height),    width(copy.width),  amplitude(copy.amplitude), hauteurMin(copy.hauteurMin), hauteurMax(copy.hauteurMax)
 {
     longueur = copy.longueur;
     largeur = copy.largeur;
@@ -78,10 +78,10 @@ Eigen::Vector3f TerrainTab::getNormalXY(float x, float y) const
             d = getHauteurXY(xd,y),
             b = getHauteurXY(x,yb),
             h = getHauteurXY(x,yh);
-    Eigen::Vector3f vg((xg-x)*largeur, 0, g-ha),
-                    vd((xd-x)*largeur, 0, d-ha),
-                    vb(0, (yb-y)*longueur, b-ha),
-                    vh(0, (yh-y)*longueur, h-ha);
+    Eigen::Vector3f vg(-1, 0, g-ha),
+                    vd(1, 0, d-ha),
+                    vb(0, 1, b-ha),
+                    vh(0, -1, h-ha);
     float   distg = vg.norm(),
             distd = vd.norm(),
             distb = vb.norm(),
@@ -112,6 +112,7 @@ TerrainTab::TerrainTab(const QImage &img, float longueur, float largeur, float a
 {
     initGrille();
     simpleInitImage(img);
+    updateElevation();
 }
 
 
@@ -142,6 +143,7 @@ TerrainTab::TerrainTab(const QImage& img, int _nbHeight, int _nbWidth, float lon
             }
         }
     }
+    updateElevation();
 }
 
 /**construit un terrain avec le même nombre de point que le nombre de pixel de l'image*/
@@ -157,4 +159,17 @@ void TerrainTab::initGrille()
     grille2d = new float*[height];
     for(int j = 0;  j < height; j++)
         grille2d[j] = &grille[j*width];
+}
+
+/********************************************************************************************/
+
+
+
+
+
+float TerrainTab::getMinElevation2() const{
+    return hauteurMin;
+}
+float TerrainTab::getMaxElevation2() const{
+    return hauteurMax;
 }
