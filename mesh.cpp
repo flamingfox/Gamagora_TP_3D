@@ -1,44 +1,28 @@
 #include "mesh.h"
 
 
-Mesh::Mesh(const QImage &img, float _longueur, float _largeur, float amplitude):
-    longueur(_longueur), largeur(_largeur), nbPointLongueur(img.height()), nbPointLargeur(img.width())
-{
-    simpleInitImage(img, _longueur, _largeur, amplitude);
-}
 
-Mesh::Mesh(const QImage& img, float _longueur, float _largeur, float _amplitude, int _nbHeight, int _nbWidth):
-    longueur(_longueur), largeur(_largeur), nbPointLongueur(_nbHeight), nbPointLargeur(_nbWidth)
+Mesh::Mesh(const Terrain2 &terrain, int nbHeight, int nbWidth)
 {
-    if(_nbHeight == img.height() && _nbWidth == img.width())
-        simpleInitImage(img, _longueur, _largeur, _amplitude);
-    else
+    geom.reserve(nbHeight*nbWidth);
+    //faire un resize pour OpenMP et bien indiquer l'indice au lieu du push_back()
+
+    for(int j = 0;  j < nbHeight;   j++)
     {
-        geom.reserve(_nbHeight*_nbWidth);
-
-        for(int j = 0;  j < _nbHeight;   j++)
+        float y = j/(float)(nbHeight-1);
+        float y2 = y*terrain.longueur + terrain.box.min(1);
+        for(int i = 0;  i < nbWidth;   i++)
         {
-            float y = j*(float)(img.height()-1)/(_nbHeight-1);
-            int y1 = floorf(y), y2 = ceilf(y);
-            for(int i = 0;  i < _nbWidth;    i++)
-            {
-                float x = i*(float)(img.width()-1)/(_nbWidth-1);
-                int x1 = floorf(x), x2 = ceilf(x);
-                float z = interp::interp_hermite2D(x,y,
-                                                  x1,y1,x2,y2,
-                                                  (qGray(img.pixel(x1, y1))*_amplitude)/255.0,
-                                                  (qGray(img.pixel(x1, y2))*_amplitude)/255.0,
-                                                  (qGray(img.pixel(x2, y1))*_amplitude)/255.0,
-                                                  (qGray(img.pixel(x2, y2))*_amplitude)/255.0
-                                                  );
-                this->geom.push_back(Eigen::Vector3f(((float)i/(_nbWidth-1))*_largeur, ((float)j/(_nbHeight-1))*_longueur, z));
-            }
+            float x = i/(float)(nbWidth-1);
+            float x2 = x*terrain.largeur + terrain.box.min(0);
+            float h = terrain.getHauteurXY(x, y);
+            float h2 = h+terrain.box.min(2);
+
+            geom.push_back(Vector3f(x2, y2, h2));
         }
-
-        simpleInitTopo();
     }
+    this->simpleInitTopoTerrain(nbHeight, nbWidth);
 }
-
 
 void Mesh::Translation(const Eigen::Vector3f T){
     for(Eigen::Vector3f& p : geom)
@@ -123,33 +107,6 @@ Mesh Mesh::cylindre(const Eigen::Vector3f& centreCercleA, const Eigen::Vector3f&
     m.geom.push_back(centreCercleB); // 2 resolution+1
 
 
-    /*************************************/
-    /* Génération faces */
-    /*************************************/
-
-    /***** Poles ****/
-    /*for(int i=0; i<= resolution-1; i++){
-        t.push_back(i); t.push_back(i+1); t.push_back(2*resolution);
-    }
-    t.push_back(resolution-1); t.push_back(0); t.push_back(2*resolution);
-
-    for(int i=resolution ; i<= 2*resolution-1; i++){
-        t.push_back(i); t.push_back(i+1); t.push_back(2*resolution+1);
-    }
-    t.push_back(2*resolution-1); t.push_back(resolution); t.push_back(2*resolution+1);*/
-
-    /***** faces cylindre *****/
-    /*for(int i=0; i< resolution-1; i++){
-
-        t.push_back(i); t.push_back(i+1); t.push_back(resolution+i);
-        t.push_back(resolution+i+1); t.push_back(resolution+i); t.push_back(i+1);
-    }
-    t.push_back(resolution-1); t.push_back(0); t.push_back(resolution);
-    t.push_back(resolution); t.push_back(2*resolution-1); t.push_back(resolution-1);
-
-
-    Mesh retour(v,t);*/
-
     m.normalsTriangles();
     return m;
 }
@@ -191,26 +148,6 @@ Mesh Mesh::cone(const Eigen::Vector3f &centreCercle, const Eigen::Vector3f &poin
     m.geom.push_back(centreCercle); // resolution
     m.geom.push_back(pointe); // resolution+1
 
-
-    /*************************************/
-    /* Génération faces */
-    /*************************************/
-
-    /***** Poles ****/
-    /*for(int i=0; i< resolution-1; i++){
-        t.push_back(i); t.push_back(i+1); t.push_back(resolution);
-    }
-    t.push_back(resolution-1); t.push_back(0); t.push_back(resolution);*/
-
-    /***** faces cylindre *****/
-    /*for(int i=0; i< resolution-1; i++){
-
-        t.push_back(i); t.push_back(i+1); t.push_back(resolution+1);
-    }
-    t.push_back(resolution-1); t.push_back(0); t.push_back(resolution+1);
-
-
-    Mesh retour(v,t);*/
 
     m.normalsTriangles();
     return m;
@@ -356,12 +293,7 @@ size_t Mesh::nbTopo() const
     return this->topo.size();
 }
 
-inline void Mesh::addTopo(int i0, int i1, int i2)
-{
-    this->topo.push_back(i0);
-    this->topo.push_back(i1);
-    this->topo.push_back(i2);
-}
+
 
 Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, const int resolution)
 {
@@ -523,22 +455,6 @@ Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, co
     return m;
 }
 
-/*******************InOut********************/
-
-
-//std::pair<Eigen::Vector3f,Eigen::Vector3f> Mesh::calculBoite()
-//{
-    /*if(this->nbGeom() == 0)
-        return 0;*/
-    /*Eigen::Vector3f min(geom[0]), max(geom[0]);
-
-    std::vector<Eigen::Vector3f>::const_iterator it = geom.begin();
-    ++it;
-    for(    ;  it != geom.end();  ++it)
-    {
-        //pas fini.
-    }*/
-//}
 
 /*******************Normal******************/
 
@@ -564,15 +480,7 @@ Eigen::Vector3f Mesh::normalTriangle(int i) const
     return c;
 }
 
-void Mesh::plan(int _longueur, int _largeur, int _nbPointLongueur, int _nbPointLargeur)
-{
-    geom.reserve(_nbPointLongueur*_nbPointLargeur);
-
-    for(int j = 0;  j < _nbPointLongueur;   j++)
-        for(int i = 0;  i < _nbPointLargeur;    i++)
-            geom.push_back(Eigen::Vector3f(((float)i/(_nbPointLargeur-1))*_largeur, ((float)j/(_nbPointLongueur-1))*_longueur, 0));
-    this->simpleInitTopo();
-}
+/**********************************************************************************************/
 
 void Mesh::applicationNoise(int amplitude, int periode)
 {
@@ -580,7 +488,6 @@ void Mesh::applicationNoise(int amplitude, int periode)
     /* Modification points */
     /*************************************/
 
-    //for(size_t i = 0; i < geom.size(); i++)
     for(Eigen::Vector3f& p: geom)
     {
         float h = NoiseGenerator::perlinNoise( p(0)/periode, p(1)/periode );
@@ -606,7 +513,6 @@ void Mesh::applicationRidge(float seuil, float amplitude, int periode)
 
 void Mesh::applicationWarp(int amplitude, int periode)
 {
-    //for(size_t i = 0; i < geom.size(); i++)
     for(Eigen::Vector3f& p: geom)
     {
         float warp = amplitude * NoiseGenerator::perlinNoise( p(0)*(1.0/periode)+2.78, p(1)*(1.0/periode)+8.72);
@@ -628,200 +534,26 @@ void Mesh::applicationSin(int amplitude, int periode)
     }
 }
 
-void Mesh::simpleInitTopo()
-{
-    this->topo.reserve((nbPointLongueur-1)*(nbPointLargeur-1)*6); //grille 5p x 7p = 35p => 24 carrés (4*6) = 48 triangles = 144 int = (5-1) * (7-1) * 2 * 3
 
-    for(int j = 0; j < nbPointLongueur-1; j++){
-        for(int i = 0; i < nbPointLargeur-1; i++)
+
+/**************************************************************/
+
+void Mesh::simpleInitTopoTerrain(int nbHeight, int nbWidth)
+{
+    this->topo.reserve((nbHeight-1)*(nbWidth-1)*6); //grille 5p x 7p = 35p => 24 carrés (4*6) = 48 triangles = 144 int = (5-1) * (7-1) * 2 * 3
+
+    for(int j = 0; j < nbHeight-1; j++){
+        for(int i = 0; i < nbWidth-1; i++)
         {
             //triangle 1: 0,1,2
-            addTopo(i + j * nbPointLargeur,
-                    (i+1) + j * nbPointLargeur,
-                    i + (j+1) * nbPointLargeur);
+            addTopo(i + j * nbWidth,
+                    (i+1) + j * nbWidth,
+                    i + (j+1) * nbWidth);
 
             //triangle 2: 1,3,2
-            addTopo((i+1) + j * nbPointLargeur,
-                    (i+1) + (j+1) * nbPointLargeur,
-                    i + (j+1) * nbPointLargeur);
+            addTopo((i+1) + j * nbWidth,
+                    (i+1) + (j+1) * nbWidth,
+                    i + (j+1) * nbWidth);
         }
     }
-}
-
-void Mesh::calculNormals()
-{
-    normalsTriangles();   //reconstruit toutes les normales des triangles du terrain.
-    //maintenant, on calcul les normales des points
-    this->normalsPoints.reserve(nbGeom());
-
-    for(int j = 0;  j < nbPointLongueur;    j++)    {
-        for(int i = 0;  i < nbPointLargeur; i++)
-        {
-            Eigen::Vector3f n(0,0,0);
-
-            int t6 = ((i+ j*nbPointLargeur)-j)*2;   //pour 5x5, p12: 12 = ligne 2:  t6 = (12-2)*2 = 20
-
-            if(j < nbPointLongueur-1) {
-                if(i < nbPointLargeur-1)
-                    n += normalsPoints[t6];
-                if(i > 0) {
-                    n += normalsPoints[t6-1];
-                    n += normalsPoints[t6-2];
-                }
-            }
-
-            if(j > 0)
-            {
-                int t3 = t6-(nbPointLargeur-1)*2;   //p12:  t3 = 20 - 4*2 = 12;
-                if(i < nbPointLargeur-1)
-                    n += normalsPoints[t3];
-                if(i > 0)                {
-                    n += normalsPoints[t3-1];
-                    n += normalsPoints[t3-2];
-                }
-            }
-
-            normalsPoints.push_back(n.normalized());
-        }
-    }
-}
-
-
-
-float Mesh::getHauteur(float pointX, float pointY) const
-{
-    if(pointX < 0 || pointY < 0 || pointX > largeur || pointY > longueur)
-        return HAUTEUR_HORS_MAP;
-
-    float x = (pointX * (nbPointLargeur-1)) / largeur,    //largeur: 1m et 5 points: (1.0f*(5-1))/1 = 4.0f donc regarder l'indice 4
-          y = (pointY * (nbPointLongueur-1)) / longueur;
-
-    int x1 = floorf(x),
-        y1 = floorf(y),
-        x2 = ceilf(x),
-        y2 = ceilf(y);
-
-    const Eigen::Vector3f   & p11 = getPoint(x1, y1);
-
-    if(y1 == y2)    {
-        if(x1 == x2 )
-            return p11(2);
-        return interp::interp_linear1D(x, p11(2), getPoint(x2, y1)(2));
-    }
-    else    {
-        const Eigen::Vector3f   & p12 = getPoint(x1, y2);
-        if(x1 == x2 )
-            return interp::interp_linear1D(x, p11(2), p12(2));
-        return interp::interp_linear2D(x, y, x1, y1, x2, y2,
-                                       p11(2), p12(2), getPoint(x2, y1)(2), getPoint(x2, y2)(2));
-    }
-}
-
-float Mesh::getHauteur(Vector2f &pointXY) const
-{
-    return getHauteur(pointXY(0), pointXY(1));
-}
-
-
-Vector3f Mesh::getNormal(float pointX, float pointY) const
-{
-    float x = (pointX * (nbPointLargeur-1)) / largeur,    //largeur: 1m et 5 points: (1.0f*(5-1))/1 = 4.0f donc regarder l'indice 4
-          y = (pointY * (nbPointLongueur-1)) / longueur;
-
-    const Eigen::Vector3f   & p11 = getPoint(floorf(x), floorf(y)),
-                            & p22 = getPoint(ceilf(x), ceilf(y)),
-                            & normal11 = getN(floorf(x), floorf(y)),
-                            & normal12 = getN(floorf(x), ceilf(y)),
-                            & normal21 = getN(ceilf(x), floorf(y)),
-                            & normal22 = getN(ceilf(x), ceilf(y));
-
-    Eigen::Vector3f normal;
-    normal(0) = interp::interp_linear2D(pointX, pointY, p11(0), p11(1), p22(0), p22(1),
-                                   normal11(0), normal12(0), normal21(0), normal22(0));
-    normal(1) = interp::interp_linear2D(pointX, pointY, p11(0), p11(1), p22(0), p22(1),
-                                   normal11(1), normal12(1), normal21(1), normal22(1));
-    normal(2) = interp::interp_linear2D(pointX, pointY, p11(0), p11(1), p22(0), p22(1),
-                                   normal11(2), normal12(2), normal21(2), normal22(2));
-
-    normal.normalize();
-
-    return normal;
-}
-
-bool Mesh::intersectWithMesh(const Rayon& rayon, float &coeffDistance) const{
-
-    float dmin = 0.0;
-    float dmax = 3000.0;
-
-    /*if(!englobant.intersect(rayon, dmin, dmax ))
-        return false;
-    */
-    dmin = 0.0;
-    dmax = 3000.0;
-
-    coeffDistance = dmin;
-
-    for( int i=0; i<256; i++ )
-    {
-        Eigen::Vector3f pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
-        float h = getHauteur( pos(0), pos(1) );
-        if(h == HAUTEUR_HORS_MAP)
-            break;
-
-        h = pos(2) - h;
-
-        if( h <(0.002 * coeffDistance) ) {
-                return true;
-        }else if(coeffDistance > dmax )
-                break;
-
-        coeffDistance += 0.5*h;
-    }
-
-    return false;
-}
-
-void Mesh::generationTerrain(int width, int lenght, int nbPointLongueur, int nbPointLargeur)
-{
-    plan(lenght, width, nbPointLongueur, nbPointLargeur);
-    applicationNoise(200, 1000);
-    applicationRidge(150, 50, 500);
-
-    applicationNoise(20, 100);
-    applicationRidge(150, 50, 400);
-
-    applicationNoise(5, 50);
-
-    calculNormals();
-    //englobant = Box(geom);
-}
-
-bool Mesh::inOut(const Eigen::Vector3f& pointXYZ)
-{
-    if(pointXYZ(2) > getHauteur(pointXYZ(0), pointXYZ(1))){
-        return false;
-    }
-    return true;
-}
-
-/**construit un terrain avec le même nombre de point que le nombre de pixel de l'image*/
-void Mesh::simpleInitImage(const QImage& img, float _longueur, float _largeur, float _amplitude)
-{
-    int nbHeight = img.height(),
-        nbWidth = img.width();
-    float espX = _largeur/(nbWidth-1),
-          espY = _longueur/(nbHeight-1);
-
-    this->geom.resize(nbHeight*nbWidth);
-
-    for(int j = 0;  j < nbHeight;   j++)
-        for(int i = 0;  i < nbWidth;    i++)
-        {
-            Eigen::Vector3f& p = this->geom[i+j*nbWidth];
-            p(0) = i * espX;
-            p(1) = j * espY;
-            p(2) = (qGray(img.pixel(i, j))*_amplitude)/255.0;
-        }
-
-    this->simpleInitTopo();
 }

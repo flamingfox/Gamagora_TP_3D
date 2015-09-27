@@ -4,21 +4,13 @@
 #include "math.h"
 #include "parametres.h"
 
-class NoiseGenerator
+namespace NoiseGenerator
 {
-protected :
+    double perlinNoise(double x, double y);
+    double perlinNoise(double x, double y, int seed);
 
-
-public :
-    NoiseGenerator();
-
-    static double perlinNoise(double x, double y);
-    static double perlinNoise(double x, double y, int seed);
-
-private :
-
-    static double findnoise(double x, double y, int seed);
-    static double interpolate(double a,double b,double x);
-};
+    double perlinNoiseGradiant(double x, double y, double res);
+    double perlinNoiseGradiant2(double x, double y, double res);
+}
 
 #endif // NOISEGENERATOR_H

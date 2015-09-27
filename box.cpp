@@ -9,10 +9,10 @@ Box::Box(const Vector3f& _min, const Vector3f& _max)    :   min(_min),  max(_max
 {
 }
 
-Box::Box(const Mesh& mesh)
+/*Box::Box(const Mesh& mesh)
 {
     parcourtPoints(mesh.getGeom());
-}
+}*/
 
 Box::Box(const std::vector<Vector3f>& points)
 {
@@ -26,7 +26,7 @@ void Box::updatePoint(const Vector3f& p)
 }
 
 
-bool Box::isIn(const Vector3f& p)
+bool Box::isIn(const Vector3f& p) const
 {
     for(int i = 0;  i < 3;  i++)
     {
@@ -38,7 +38,7 @@ bool Box::isIn(const Vector3f& p)
     return true;
 }
 
-bool Box::intersect(const Rayon &r, float &distanceMin, float &distanceMax) const
+/*bool Box::intersect(const Rayon &r, float &distanceMin, float &distanceMax) const
 {
     float tmin, tmax, tymin, tymax, tzmin, tzmax;
 
@@ -116,10 +116,136 @@ bool Box::intersect(const Rayon &r, float &distanceMin, float &distanceMax) cons
     if(tmin>0)
         distanceMin = tmin;
 
+    distanceMin += 0.002;
+
     if(tmax>0)
         distanceMax = tmax;
 
     return true;
+}*/
+
+
+bool Box::intersect(const Rayon &r, float &distanceMin, float &distanceMax) const
+{
+    if(this->isIn(r.getOrigine()))  {
+        distanceMin = 0;
+        distanceMax = intersectIn(r);
+        return true;
+    }
+
+    float tmin, tmax, tymin, tymax, tzmin, tzmax;
+    float div;
+
+    if(r.getDirection()(0) == 0)    {
+        tmin = FLT_MIN;
+        tmax = FLT_MAX;
+    }
+    else if(r.getDirection()(0) > 0)    {
+        div = 1 / r.getDirection()(0);
+        tmin = (min(0) - r.getOrigine()(0)) * div;
+        tmax = (max(0) - r.getOrigine()(0)) * div;
+    }
+    else    {
+        div = 1 / r.getDirection()(0);
+        tmin = (max(0) - r.getOrigine()(0)) * div;
+        tmax = (min(0) - r.getOrigine()(0)) * div;
+    }
+
+    if(r.getDirection()(1) == 0)    {
+        tymin = FLT_MIN;
+        tymax = FLT_MAX;
+    }
+    else if(r.getDirection()(1) >= 0)    {
+        div = 1 / r.getDirection()(1);
+        tymin = (min(1) - r.getOrigine()(1)) * div;
+        tymax = (max(1) - r.getOrigine()(1)) * div;
+    }
+    else    {
+        div = 1 / r.getDirection()(1);
+        tymin = (max(1) - r.getOrigine()(1)) * div;
+        tymax = (min(1) - r.getOrigine()(1)) * div;
+    }
+
+    if( (tmin > tymax) || (tymin > tmax) )
+        return false;
+
+    if(tymin > tmin)
+        tmin = tymin;
+
+    if(tymax < tmax)
+        tmax = tymax;
+
+
+    if(r.getDirection()(2) == 0)    {
+        tzmin = FLT_MIN;
+        tzmax = FLT_MAX;
+    }
+    else if(r.getDirection()(2) > 0)    {
+        div = 1 / r.getDirection()(2);
+        tzmin = (min(2) - r.getOrigine()(2)) * div;
+        tzmax = (max(2) - r.getOrigine()(2)) * div;
+    }
+    else    {
+        div = 1 / r.getDirection()(2);
+        tzmin = (max(2) - r.getOrigine()(2)) * div;
+        tzmax = (min(2) - r.getOrigine()(2)) * div;
+    }
+
+    if( (tmin > tzmax) || (tzmin > tmax) )
+        return false;
+
+    if(tzmin > tmin)
+        tmin = tzmin;
+
+    if(tzmax < tmax)
+        tmax = tzmax;
+
+    if(tmin>=0)
+        distanceMin = tmin;
+    //else
+    //    return false; //inutile apparament
+    //distanceMin += 0.002;
+
+    if(tmax>0)
+        distanceMax = tmax;
+
+    return true;
+}
+
+
+
+inline float Box::intersectIn(const Rayon& r) const
+{
+    float tmax, tymax, tzmax;
+
+    if(r.getDirection()(0) == 0)
+        tmax = FLT_MAX;
+    else if(r.getDirection()(0) > 0)
+        tmax = (max(0) - r.getOrigine()(0)) / r.getDirection()(0);
+    else
+        tmax = (min(0) - r.getOrigine()(0)) / r.getDirection()(0);
+
+    if(r.getDirection()(1) == 0)
+        tymax = FLT_MAX;
+    else if(r.getDirection()(1) >= 0)
+        tymax = (max(1) - r.getOrigine()(1)) / r.getDirection()(1);
+    else
+        tymax = (min(1) - r.getOrigine()(1)) / r.getDirection()(1);
+
+    if(tymax < tmax)
+        tmax = tymax;
+
+
+    if(r.getDirection()(2) == 0)
+        return tmax;
+    else if(r.getDirection()(2) > 0)
+        tzmax = (max(2) - r.getOrigine()(2)) / r.getDirection()(2);
+    else
+        tzmax = (min(2) - r.getOrigine()(2)) / r.getDirection()(2);
+
+    if(tzmax < tmax)
+        return tzmax;
+    return tmax;
 }
 
 
@@ -171,4 +297,22 @@ inline void Box::parcourtPoints(const std::vector<Vector3f>& points)
         for(;  it != points.end()-1; ++it)
             update(*it);
     }
+}
+
+float Box::diffZ() const
+{
+    return max(2)-min(2);
+}
+
+void Box::merge(const Box& box2)
+{
+    updateMin(box2.min);
+    updateMax(box2.max);
+}
+
+
+void Box::operator+=(const Vector3f& t)
+{
+    min += t;
+    max += t;
 }
