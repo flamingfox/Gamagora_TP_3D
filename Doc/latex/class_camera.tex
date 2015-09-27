@@ -1,0 +1,148 @@
+\hypertarget{class_camera}{}\section{Référence de la classe Camera}
+\label{class_camera}\index{Camera@{Camera}}
+
+
+Une caméra utilisé pour visualiser la scène.  
+
+
+
+
+{\ttfamily \#include $<$camera.\+h$>$}
+
+\subsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_camera_a073a52c602bcad47cd77c11215d884eb}{Camera} (const Vector3f \&p\+Or, const Vector3f \&p\+At, const float \&distance, int l, int h)
+\begin{DoxyCompactList}\small\item\em Constructeur de la classe caméra avec des paramètres. \end{DoxyCompactList}\item 
+Vector3f \hyperlink{class_camera_a280e83aa370deae3f80ab7a9c010fe34}{vec\+Screen} (int i, int j) const 
+\begin{DoxyCompactList}\small\item\em Calcul le vecteur direction entre l\textquotesingle{}origine de la caméra et le pixel (i,j) de l\textquotesingle{}écran.~\newline
+Utilise la méthode \hyperlink{class_camera_ad725f4860f70e5b32388c3bc8e146fbf}{point\+Screen()}. \end{DoxyCompactList}\item 
+Vector3f \hyperlink{class_camera_ad725f4860f70e5b32388c3bc8e146fbf}{point\+Screen} (int i, int j) const 
+\begin{DoxyCompactList}\small\item\em Calcul la position du pixel (i,j) de l\textquotesingle{}écran. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_a136044c6daf6dfd8617f1ed4d17db265}{}int {\bfseries get\+Lu} () const \label{class_camera_a136044c6daf6dfd8617f1ed4d17db265}
+
+\item 
+\hypertarget{class_camera_af22f296bdbe6b3705771ba8223d6bb3d}{}int {\bfseries get\+Lv} () const \label{class_camera_af22f296bdbe6b3705771ba8223d6bb3d}
+
+\item 
+\hypertarget{class_camera_a1e409a80ecbf59b62aa47e5759c0be9f}{}Vector3f {\bfseries get\+Origine} () const \label{class_camera_a1e409a80ecbf59b62aa47e5759c0be9f}
+
+\end{DoxyCompactItemize}
+\subsection*{Attributs protégés}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_camera_a1a6ee6428d4087c286f2443a1605cb16}{}Vector3f \hyperlink{class_camera_a1a6ee6428d4087c286f2443a1605cb16}{\+\_\+origine}\label{class_camera_a1a6ee6428d4087c286f2443a1605cb16}
+
+\begin{DoxyCompactList}\small\item\em Point d\textquotesingle{}origine de la caméra. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_a613c0f2daa3b5a8e3fecfd60967d3d4b}{}Vector3f \hyperlink{class_camera_a613c0f2daa3b5a8e3fecfd60967d3d4b}{\+\_\+u}\label{class_camera_a613c0f2daa3b5a8e3fecfd60967d3d4b}
+
+\begin{DoxyCompactList}\small\item\em Vecteur direction en \char`\"{}x\char`\"{} du plan écran. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_a3b572603ea0aedb7c20acd8fd93c0a2a}{}Vector3f \hyperlink{class_camera_a3b572603ea0aedb7c20acd8fd93c0a2a}{\+\_\+v}\label{class_camera_a3b572603ea0aedb7c20acd8fd93c0a2a}
+
+\begin{DoxyCompactList}\small\item\em Vecteur direction en \char`\"{}y\char`\"{} du plan écran. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_a2b14e23c7d3b051b45164df1ade06592}{}Vector3f \hyperlink{class_camera_a2b14e23c7d3b051b45164df1ade06592}{\+\_\+w}\label{class_camera_a2b14e23c7d3b051b45164df1ade06592}
+
+\begin{DoxyCompactList}\small\item\em Vecteur direction en \char`\"{}z\char`\"{} du plan écran. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_af1074fd7009c6d72ab5ddaed9513b5a4}{}int \hyperlink{class_camera_af1074fd7009c6d72ab5ddaed9513b5a4}{\+\_\+lu}\label{class_camera_af1074fd7009c6d72ab5ddaed9513b5a4}
+
+\begin{DoxyCompactList}\small\item\em Largeur en pixel de l\textquotesingle{}écran. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_a38516b7c77ef5d99b47072290455fae7}{}int \hyperlink{class_camera_a38516b7c77ef5d99b47072290455fae7}{\+\_\+lv}\label{class_camera_a38516b7c77ef5d99b47072290455fae7}
+
+\begin{DoxyCompactList}\small\item\em Hauteur en pixel de l\textquotesingle{}écran. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_ab07d1a06bc79f9e9b90296a326a84d18}{}float \hyperlink{class_camera_ab07d1a06bc79f9e9b90296a326a84d18}{\+\_\+lw}\label{class_camera_ab07d1a06bc79f9e9b90296a326a84d18}
+
+\begin{DoxyCompactList}\small\item\em Distance du plan de l\textquotesingle{}écran par rapport \hyperlink{class_camera_a1a6ee6428d4087c286f2443a1605cb16}{\+\_\+origine}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Une caméra utilisé pour visualiser la scène. 
+
+\subsection{Documentation des constructeurs et destructeur}
+\hypertarget{class_camera_a073a52c602bcad47cd77c11215d884eb}{}\index{Camera@{Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!Camera@{Camera}}
+\subsubsection[{Camera(const Vector3f \&p\+Or, const Vector3f \&p\+At, const float \&distance, int l, int h)}]{\setlength{\rightskip}{0pt plus 5cm}Camera\+::\+Camera (
+\begin{DoxyParamCaption}
+\item[{const Vector3f \&}]{p\+Or, }
+\item[{const Vector3f \&}]{p\+At, }
+\item[{const float \&}]{distance, }
+\item[{int}]{l, }
+\item[{int}]{h}
+\end{DoxyParamCaption}
+)}\label{class_camera_a073a52c602bcad47cd77c11215d884eb}
+
+
+Constructeur de la classe caméra avec des paramètres. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em p\+Or} & Point d\textquotesingle{}origine de la caméra. \\
+\hline
+\mbox{\tt in}  & {\em p\+At} & Point cible de la caméra. Détermine la direction de la caméra. \\
+\hline
+\mbox{\tt in}  & {\em distance} & Distance entre l\textquotesingle{}origine de la caméra et le plan de l\textquotesingle{}écran. \\
+\hline
+\mbox{\tt in}  & {\em l} & Largeur en pixel de l\textquotesingle{}écran. \\
+\hline
+\mbox{\tt in}  & {\em h} & Hauteur en pixel de l\textquotesingle{}écran.\\
+\hline
+\end{DoxyParams}
+origine de la caméra  vecteur direction de la caméra (comprenant distance) 
+
+\subsection{Documentation des fonctions membres}
+\hypertarget{class_camera_ad725f4860f70e5b32388c3bc8e146fbf}{}\index{Camera@{Camera}!point\+Screen@{point\+Screen}}
+\index{point\+Screen@{point\+Screen}!Camera@{Camera}}
+\subsubsection[{point\+Screen(int i, int j) const }]{\setlength{\rightskip}{0pt plus 5cm}Vector3f Camera\+::point\+Screen (
+\begin{DoxyParamCaption}
+\item[{int}]{i, }
+\item[{int}]{j}
+\end{DoxyParamCaption}
+) const}\label{class_camera_ad725f4860f70e5b32388c3bc8e146fbf}
+
+
+Calcul la position du pixel (i,j) de l\textquotesingle{}écran. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em i} & Indice du pixel en largeur de l\textquotesingle{}écran. \\
+\hline
+\mbox{\tt in}  & {\em j} & Indice du pixel en longueur de l\textquotesingle{}écran. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+La position du pixel (i,j). 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Avertissement}
+Si i ou j sont hors écran, le programme s\textquotesingle{}arretera. 
+\end{DoxyWarning}
+\hypertarget{class_camera_a280e83aa370deae3f80ab7a9c010fe34}{}\index{Camera@{Camera}!vec\+Screen@{vec\+Screen}}
+\index{vec\+Screen@{vec\+Screen}!Camera@{Camera}}
+\subsubsection[{vec\+Screen(int i, int j) const }]{\setlength{\rightskip}{0pt plus 5cm}Vector3f Camera\+::vec\+Screen (
+\begin{DoxyParamCaption}
+\item[{int}]{i, }
+\item[{int}]{j}
+\end{DoxyParamCaption}
+) const}\label{class_camera_a280e83aa370deae3f80ab7a9c010fe34}
+
+
+Calcul le vecteur direction entre l\textquotesingle{}origine de la caméra et le pixel (i,j) de l\textquotesingle{}écran.~\newline
+Utilise la méthode \hyperlink{class_camera_ad725f4860f70e5b32388c3bc8e146fbf}{point\+Screen()}. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em i} & Indice du pixel en largeur de l\textquotesingle{}écran. \\
+\hline
+\mbox{\tt in}  & {\em j} & Indice du pixel en longueur de l\textquotesingle{}écran. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Le vecteur direction entre \hyperlink{class_camera_a1a6ee6428d4087c286f2443a1605cb16}{\+\_\+origine} et le pixel (i,j). 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Avertissement}
+Si i ou j sont hors écran, le programme s\textquotesingle{}arretera. 
+\end{DoxyWarning}
+
+
+La documentation de cette classe a été générée à partir des fichiers suivants \+:\begin{DoxyCompactItemize}
+\item 
+rendu/camera.\+h\item 
+rendu/camera.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,8 @@
+programme en ligne de commande.
+
+Dans console faire :
+
+doxygen
+
+
+Fichier doxyFile déja générer et paramétrer. Utilisation automatique de ce fichier.

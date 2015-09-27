@@ -126,11 +126,13 @@ void Terrain::translate2(const Vector3f& t)
     (void) t;   //rien faire
 }
 
-void Terrain::getColor2(float& r, float& g, float& b, float hauteur, const Eigen::Vector3f& n) const
+
+/*void Terrain::getColor2(float& r, float& g, float& b, float hauteur, const Eigen::Vector3f& n) const
 {
     (void) n;
     heatMapGradient.getColorAtValue(hauteur, r,g,b);
-}
+}*/
+
 
 void Terrain::getColor(float& r, float& g, float& b, float x, float y) const
 {
@@ -184,12 +186,6 @@ void Terrain::getColor(float& r, float& g, float& b, float x, float y) const
         g = neige;
         b = neige;
     }
-}
-
-
-float Terrain::getVal(const Vector3f& p) const
-{
-    return getHauteur(p(0), p(1));
 }
 
 /***********************************************************************/

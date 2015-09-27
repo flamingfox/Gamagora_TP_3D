@@ -2,9 +2,6 @@
 #include <sstream>
 
 #include "mesh.h"
-//#include "arbre.h"
-
-
 #include "terrain/terrainnoise.h"
 #include "terrain/terraintab.h"
 #include "rendu/scene.h"

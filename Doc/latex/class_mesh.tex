@@ -1,0 +1,164 @@
+\hypertarget{class_mesh}{}\section{Référence de la classe Mesh}
+\label{class_mesh}\index{Mesh@{Mesh}}
+\subsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_mesh_a7ed6cd1a888646d805303d537416da0e}{}{\bfseries Mesh} (const std\+::vector$<$ Eigen\+::\+Vector3f $>$ list\+Geom, const std\+::vector$<$ int $>$ list\+Topo)\label{class_mesh_a7ed6cd1a888646d805303d537416da0e}
+
+\item 
+\hypertarget{class_mesh_a8cd4ad19c82725e6397e30bb983f404a}{}{\bfseries Mesh} (const Q\+Image \&img, float \+\_\+longueur, float \+\_\+largeur, float amplitude)\label{class_mesh_a8cd4ad19c82725e6397e30bb983f404a}
+
+\item 
+\hypertarget{class_mesh_a40f919a47e17b7822bbda0a665064c49}{}{\bfseries Mesh} (const Q\+Image \&img, float \+\_\+longueur, float \+\_\+largeur, float \+\_\+amplitude, int \+\_\+nb\+Height, int \+\_\+nb\+Width)\label{class_mesh_a40f919a47e17b7822bbda0a665064c49}
+
+\item 
+\hypertarget{class_mesh_a48a89492a84da25302d08a66adc3f0fa}{}{\bfseries Mesh} (const \hyperlink{class_terrain}{Terrain} \&terrain, int nb\+Height, int nb\+Width)\label{class_mesh_a48a89492a84da25302d08a66adc3f0fa}
+
+\item 
+\hypertarget{class_mesh_abd4c622a1db5d219778e69e6eb9edd31}{}void {\bfseries Translation} (const Eigen\+::\+Vector3f T)\label{class_mesh_abd4c622a1db5d219778e69e6eb9edd31}
+
+\item 
+\hypertarget{class_mesh_abdb59782fb5bd09ae504796f2a62032a}{}void {\bfseries Translation} (const float x, const float y, const float z)\label{class_mesh_abdb59782fb5bd09ae504796f2a62032a}
+
+\item 
+\hypertarget{class_mesh_a755af0bedd07e7d36e9ad6321ca037b5}{}void {\bfseries Rotation} (const Eigen\+::\+Vector3f T)\label{class_mesh_a755af0bedd07e7d36e9ad6321ca037b5}
+
+\item 
+\hypertarget{class_mesh_ab9233fd2b1023b6c6f28dfe6810214ae}{}void {\bfseries Rotation} (const float r\+X, const float r\+Y, const float r\+Z)\label{class_mesh_ab9233fd2b1023b6c6f28dfe6810214ae}
+
+\item 
+\hypertarget{class_mesh_a6cdf793d9395cb3a0c339d72021d6aff}{}void {\bfseries save} (const std\+::string name)\label{class_mesh_a6cdf793d9395cb3a0c339d72021d6aff}
+
+\item 
+\hypertarget{class_mesh_a8ba5369aea36e244ec1e64421ea6c72e}{}void {\bfseries merge} (const \hyperlink{class_mesh}{Mesh} \&delta)\label{class_mesh_a8ba5369aea36e244ec1e64421ea6c72e}
+
+\item 
+\hypertarget{class_mesh_a02ddb78cd282aaa1aee3c5be3714110d}{}void {\bfseries rescale} (float scale)\label{class_mesh_a02ddb78cd282aaa1aee3c5be3714110d}
+
+\item 
+\hypertarget{class_mesh_aadb1a8eb73e41bc00ce79914073c83f5}{}std\+::vector$<$ Eigen\+::\+Vector3f $>$ {\bfseries get\+Geom} () const \label{class_mesh_aadb1a8eb73e41bc00ce79914073c83f5}
+
+\item 
+\hypertarget{class_mesh_a4bde57428f9650ced96c8d12e8125981}{}std\+::vector$<$ int $>$ {\bfseries get\+Topo} () const \label{class_mesh_a4bde57428f9650ced96c8d12e8125981}
+
+\item 
+\hypertarget{class_mesh_af6f08830a650970c6d824fe63856c599}{}void {\bfseries set\+Geom} (std\+::vector$<$ Eigen\+::\+Vector3f $>$ geom)\label{class_mesh_af6f08830a650970c6d824fe63856c599}
+
+\item 
+\hypertarget{class_mesh_afd7c08ccd98c9d0efd2b8a126fec89a1}{}void {\bfseries set\+Topo} (std\+::vector$<$ int $>$ topo)\label{class_mesh_afd7c08ccd98c9d0efd2b8a126fec89a1}
+
+\item 
+\hypertarget{class_mesh_ae55ff3af33692f3f186f64a57fb0ab63}{}size\+\_\+t {\bfseries nb\+Geom} () const \label{class_mesh_ae55ff3af33692f3f186f64a57fb0ab63}
+
+\item 
+\hypertarget{class_mesh_acacb677fdee9a8af20b9065b9a0e9499}{}size\+\_\+t {\bfseries nb\+Topo} () const \label{class_mesh_acacb677fdee9a8af20b9065b9a0e9499}
+
+\item 
+\hypertarget{class_mesh_acd306b83f9a484d90307d40f1f54659d}{}void {\bfseries normals\+Triangles} ()\label{class_mesh_acd306b83f9a484d90307d40f1f54659d}
+
+\item 
+\hypertarget{class_mesh_aa4b69ad68d61cb6acd383f6fc70220fa}{}Eigen\+::\+Vector3f {\bfseries normal\+Triangle} (int i) const \label{class_mesh_aa4b69ad68d61cb6acd383f6fc70220fa}
+
+\item 
+\hypertarget{class_mesh_a704686a9be93522a1b689f3efd2bf3d4}{}void {\bfseries application\+Sin} (int amplitude, int periode)\label{class_mesh_a704686a9be93522a1b689f3efd2bf3d4}
+
+\item 
+\hypertarget{class_mesh_a84c4915e502ef96f7612809e9eb1a7bd}{}void {\bfseries application\+Warp} (int amplitude, int periode)\label{class_mesh_a84c4915e502ef96f7612809e9eb1a7bd}
+
+\item 
+\hypertarget{class_mesh_a6fec1967d38a3cbe57991013aed0a8a3}{}void {\bfseries application\+Ridge} (float seuil, float amplitude, int periode)\label{class_mesh_a6fec1967d38a3cbe57991013aed0a8a3}
+
+\item 
+\hypertarget{class_mesh_ae8ddd801334b35b12b988f0b4ecdc578}{}void {\bfseries application\+Noise} (int amplitude, int periode)\label{class_mesh_ae8ddd801334b35b12b988f0b4ecdc578}
+
+\item 
+\hypertarget{class_mesh_a3e17a5eb0812e045c14ec54b4b161c77}{}const Vector3f \& {\bfseries get\+Point} (int i, int j) const \label{class_mesh_a3e17a5eb0812e045c14ec54b4b161c77}
+
+\item 
+\hypertarget{class_mesh_ad9ad10e9b7e9e80a0854d72ac4dd0bad}{}const Vector3f \& {\bfseries get\+Point} (const Eigen\+::\+Vector2i \&pos) const \label{class_mesh_ad9ad10e9b7e9e80a0854d72ac4dd0bad}
+
+\item 
+\hypertarget{class_mesh_a51190fa546b8330e228d9d03584dfccf}{}const Vector3f \& {\bfseries get\+N} (int i, int j) const \label{class_mesh_a51190fa546b8330e228d9d03584dfccf}
+
+\item 
+\hypertarget{class_mesh_a58b2de27bca11a60a5030b3b81987d46}{}const Vector3f \& {\bfseries get\+N} (const Eigen\+::\+Vector2i \&pos) const \label{class_mesh_a58b2de27bca11a60a5030b3b81987d46}
+
+\item 
+\hypertarget{class_mesh_aff70dcab51bb85910d2d2c0200421e18}{}Vector3f {\bfseries get\+Normal} (float point\+X, float point\+Y) const \label{class_mesh_aff70dcab51bb85910d2d2c0200421e18}
+
+\item 
+\hypertarget{class_mesh_a6ad91e73f1ee8e856f78232375b0109e}{}Vector3f {\bfseries get\+Normal} (const Vector2f \&point\+X\+Y) const \label{class_mesh_a6ad91e73f1ee8e856f78232375b0109e}
+
+\item 
+\hypertarget{class_mesh_a74b52ba5f2cafbd198aeb0c174f94702}{}void {\bfseries simple\+Init\+Topo\+Terrain} (int nb\+Height, int nb\+Width)\label{class_mesh_a74b52ba5f2cafbd198aeb0c174f94702}
+
+\end{DoxyCompactItemize}
+\subsection*{Fonctions membres publiques statiques}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_mesh_a161e2b2eb141f0bd51d586a85faa004b}{}static \hyperlink{class_mesh}{Mesh} {\bfseries cylindre} (const Eigen\+::\+Vector3f \&centre\+Cercle\+A, const Eigen\+::\+Vector3f \&centre\+Cercle\+B, const float rayon, int resolution=D\+E\+F\+A\+U\+L\+T\+\_\+\+R\+E\+S\+O\+L\+U\+T\+I\+O\+N)\label{class_mesh_a161e2b2eb141f0bd51d586a85faa004b}
+
+\item 
+\hypertarget{class_mesh_a51c1471abac6ed9afd5dd9299a45815e}{}static \hyperlink{class_mesh}{Mesh} {\bfseries cone} (const Eigen\+::\+Vector3f \&centre\+Cercle, const Eigen\+::\+Vector3f \&pointe, const float rayon, int resolution=D\+E\+F\+A\+U\+L\+T\+\_\+\+R\+E\+S\+O\+L\+U\+T\+I\+O\+N)\label{class_mesh_a51c1471abac6ed9afd5dd9299a45815e}
+
+\item 
+\hypertarget{class_mesh_a5838a1b71351b4e2e54b20fe105a3da2}{}static \hyperlink{class_mesh}{Mesh} {\bfseries sphere} (const Eigen\+::\+Vector3f \&centre, const float rayon, int resolution=D\+E\+F\+A\+U\+L\+T\+\_\+\+R\+E\+S\+O\+L\+U\+T\+I\+O\+N)\label{class_mesh_a5838a1b71351b4e2e54b20fe105a3da2}
+
+\item 
+\hypertarget{class_mesh_a8c76f28752255113eeef0df2866168dd}{}static \hyperlink{class_mesh}{Mesh} {\bfseries galette} (const Eigen\+::\+Vector3f \&centre, const float rayon, int resolution=D\+E\+F\+A\+U\+L\+T\+\_\+\+R\+E\+S\+O\+L\+U\+T\+I\+O\+N)\label{class_mesh_a8c76f28752255113eeef0df2866168dd}
+
+\item 
+\hypertarget{class_mesh_ae3ecd907f70111019bb9ef4a00a5fdfa}{}static \hyperlink{class_mesh}{Mesh} {\bfseries arbre\+Galette} (const Eigen\+::\+Vector3f \&centre\+Cercle\+A, const Eigen\+::\+Vector3f \&centre\+Cercle\+B, const float rayon1, const Eigen\+::\+Vector3f \&centre\+Cercle\+C, const float rayon2)\label{class_mesh_ae3ecd907f70111019bb9ef4a00a5fdfa}
+
+\item 
+\hypertarget{class_mesh_a8e987e2f3cc971b984d7ca52e7a92b06}{}static \hyperlink{class_mesh}{Mesh} {\bfseries arbre\+Spherique} (const Eigen\+::\+Vector3f \&centre\+Cercle\+A, const Eigen\+::\+Vector3f \&centre\+Cercle\+B, const float rayon1, const Eigen\+::\+Vector3f \&centre\+Cercle\+C, const float rayon2)\label{class_mesh_a8e987e2f3cc971b984d7ca52e7a92b06}
+
+\item 
+\hypertarget{class_mesh_a5006a9bdbbb9e7675b2f309ef5c23ab2}{}static \hyperlink{class_mesh}{Mesh} {\bfseries arbre\+Conique} (const Eigen\+::\+Vector3f \&centre\+Cercle\+A, const Eigen\+::\+Vector3f \&centre\+Cercle\+B, const float rayon1, const Eigen\+::\+Vector3f \&centre\+Cercle\+C, const Eigen\+::\+Vector3f \&pointe, const float rayon2)\label{class_mesh_a5006a9bdbbb9e7675b2f309ef5c23ab2}
+
+\item 
+\hypertarget{class_mesh_a9f879433df5f8264105d832f37d47e9f}{}static \hyperlink{class_mesh}{Mesh} {\bfseries generation\+Arbre} ()\label{class_mesh_a9f879433df5f8264105d832f37d47e9f}
+
+\end{DoxyCompactItemize}
+\subsection*{Fonctions membres protégées}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_mesh_aa671274e8450902dd8f08f6efae18589}{}void {\bfseries add\+Topo} (int i0, int i1, int i2)\label{class_mesh_aa671274e8450902dd8f08f6efae18589}
+
+\end{DoxyCompactItemize}
+\subsection*{Attributs protégés}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_mesh_a1560e73fd9881dc165885de0aadfcdc2}{}std\+::vector$<$ Eigen\+::\+Vector3f $>$ {\bfseries geom}\label{class_mesh_a1560e73fd9881dc165885de0aadfcdc2}
+
+\item 
+\hypertarget{class_mesh_ac979277bfe1f58be9e68cb288cd67ebe}{}std\+::vector$<$ Eigen\+::\+Vector3f $>$ {\bfseries normals\+Points}\label{class_mesh_ac979277bfe1f58be9e68cb288cd67ebe}
+
+\item 
+\hypertarget{class_mesh_a98e6ea69c9c4d5c60a5eced9dbac5147}{}std\+::vector$<$ int $>$ {\bfseries topo}\label{class_mesh_a98e6ea69c9c4d5c60a5eced9dbac5147}
+
+\item 
+\hypertarget{class_mesh_a2cd0699ab767418db3aea3027d6522a9}{}int {\bfseries nb\+Point\+Longueur}\label{class_mesh_a2cd0699ab767418db3aea3027d6522a9}
+
+\item 
+\hypertarget{class_mesh_a5323b83b4f9df2d911baffa57f0d93b8}{}int {\bfseries nb\+Point\+Largeur}\label{class_mesh_a5323b83b4f9df2d911baffa57f0d93b8}
+
+\item 
+\hypertarget{class_mesh_a6f6207f781ebba4a127022133935f6a1}{}int {\bfseries longueur}\label{class_mesh_a6f6207f781ebba4a127022133935f6a1}
+
+\item 
+\hypertarget{class_mesh_afd2da1422f179cd809ccc865389c69a3}{}int {\bfseries largeur}\label{class_mesh_afd2da1422f179cd809ccc865389c69a3}
+
+\end{DoxyCompactItemize}
+\subsection*{Fonctions membres privées statiques}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_mesh_a4ea59cab672813e564076bd296a5d8ea}{}static \hyperlink{class_mesh}{Mesh} {\bfseries generation\+Sphere} (const Eigen\+::\+Vector3f \&centre, const float rayon, const int resolution=D\+E\+F\+A\+U\+L\+T\+\_\+\+R\+E\+S\+O\+L\+U\+T\+I\+O\+N)\label{class_mesh_a4ea59cab672813e564076bd296a5d8ea}
+
+\end{DoxyCompactItemize}
+
+
+La documentation de cette classe a été générée à partir des fichiers suivants \+:\begin{DoxyCompactItemize}
+\item 
+mesh.\+h\item 
+mesh.\+cpp\end{DoxyCompactItemize}

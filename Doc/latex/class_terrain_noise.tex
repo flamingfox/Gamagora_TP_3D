@@ -1,0 +1,168 @@
+\hypertarget{class_terrain_noise}{}\section{Référence de la classe Terrain\+Noise}
+\label{class_terrain_noise}\index{Terrain\+Noise@{Terrain\+Noise}}
+
+
+Classe fille de \hyperlink{class_terrain}{Terrain}. Elle s\textquotesingle{}appuis sur l\textquotesingle{}utilisation de noise pour déterminer la forme du terrain.  
+
+
+
+
+{\ttfamily \#include $<$terrainnoise.\+h$>$}
+
+Graphe d\textquotesingle{}héritage de Terrain\+Noise\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_terrain_noise}
+\end{center}
+\end{figure}
+\subsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_terrain_noise_ade7285caeec8d121790159ad6b0af25f}{Terrain\+Noise} (int \+\_\+longueur, int \+\_\+largeur)
+\begin{DoxyCompactList}\small\item\em Constructeur de \hyperlink{class_terrain_noise}{Terrain\+Noise}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Fonctions membres protégées}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{class_terrain_noise_a4173f17958ed358f9b4a6b005b0ed256}{get\+Hauteur\+X\+Y} (float x, float y) const 
+\begin{DoxyCompactList}\small\item\em Récupere la hauteur du terrain à un point donné. ~\newline
+Redéfinition de la methode. (cf. \hyperlink{class_terrain}{Terrain}) \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3f \hyperlink{class_terrain_noise_af50426bd1451cec938411d6bb5f82ac0}{get\+Normal\+X\+Y} (float x, float y) const 
+\begin{DoxyCompactList}\small\item\em Calcul la normale d\textquotesingle{}un point sur le terrain. \end{DoxyCompactList}\item 
+float \hyperlink{class_terrain_noise_abb3e61d20aaccdb513355b59b7b02af4}{min\+Elevation} () const 
+\begin{DoxyCompactList}\small\item\em Calcul l\textquotesingle{}élévation minimum du terrain. \end{DoxyCompactList}\item 
+float \hyperlink{class_terrain_noise_a3ce920d78a9e4e86e50c7244f8deb055}{max\+Elevation} () const 
+\begin{DoxyCompactList}\small\item\em Calcul l\textquotesingle{}élévation maximum du terrain. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Membres hérités additionnels}
+
+
+\subsection{Description détaillée}
+Classe fille de \hyperlink{class_terrain}{Terrain}. Elle s\textquotesingle{}appuis sur l\textquotesingle{}utilisation de noise pour déterminer la forme du terrain. 
+
+\subsection{Documentation des constructeurs et destructeur}
+\hypertarget{class_terrain_noise_ade7285caeec8d121790159ad6b0af25f}{}\index{Terrain\+Noise@{Terrain\+Noise}!Terrain\+Noise@{Terrain\+Noise}}
+\index{Terrain\+Noise@{Terrain\+Noise}!Terrain\+Noise@{Terrain\+Noise}}
+\subsubsection[{Terrain\+Noise(int \+\_\+longueur, int \+\_\+largeur)}]{\setlength{\rightskip}{0pt plus 5cm}Terrain\+Noise\+::\+Terrain\+Noise (
+\begin{DoxyParamCaption}
+\item[{int}]{\+\_\+longueur, }
+\item[{int}]{\+\_\+largeur}
+\end{DoxyParamCaption}
+)}\label{class_terrain_noise_ade7285caeec8d121790159ad6b0af25f}
+
+
+Constructeur de \hyperlink{class_terrain_noise}{Terrain\+Noise}. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em \+\_\+longueur} & Distance du terrain en metre sur l\textquotesingle{}axe y \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+largeur} & Distance du terrain en metre sur l\textquotesingle{}axe x \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Documentation des fonctions membres}
+\hypertarget{class_terrain_noise_a4173f17958ed358f9b4a6b005b0ed256}{}\index{Terrain\+Noise@{Terrain\+Noise}!get\+Hauteur\+X\+Y@{get\+Hauteur\+X\+Y}}
+\index{get\+Hauteur\+X\+Y@{get\+Hauteur\+X\+Y}!Terrain\+Noise@{Terrain\+Noise}}
+\subsubsection[{get\+Hauteur\+X\+Y(float x, float y) const }]{\setlength{\rightskip}{0pt plus 5cm}float Terrain\+Noise\+::get\+Hauteur\+X\+Y (
+\begin{DoxyParamCaption}
+\item[{float}]{x, }
+\item[{float}]{y}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_terrain_noise_a4173f17958ed358f9b4a6b005b0ed256}
+
+
+Récupere la hauteur du terrain à un point donné. ~\newline
+Redéfinition de la methode. (cf. \hyperlink{class_terrain}{Terrain}) 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em x} & abscisse du terrain (entre 0 et 1). \\
+\hline
+\mbox{\tt in}  & {\em y} & ordonnée du terrain (entre 0 et 1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la hauteur du terrain au point donné.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Paramètres}
+{\em x} & abscisse du terrain (entre 0 et 1) \\
+\hline
+{\em y} & ordonnée du terrain (entre 0 et 1) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la hauteur du terrain à ses coordonnées x, y 
+\end{DoxyReturn}
+
+
+Implémente \hyperlink{class_terrain_a63c855275f8270ccc0203bde0776a08f}{Terrain}.
+
+\hypertarget{class_terrain_noise_af50426bd1451cec938411d6bb5f82ac0}{}\index{Terrain\+Noise@{Terrain\+Noise}!get\+Normal\+X\+Y@{get\+Normal\+X\+Y}}
+\index{get\+Normal\+X\+Y@{get\+Normal\+X\+Y}!Terrain\+Noise@{Terrain\+Noise}}
+\subsubsection[{get\+Normal\+X\+Y(float x, float y) const }]{\setlength{\rightskip}{0pt plus 5cm}Eigen\+::\+Vector3f Terrain\+Noise\+::get\+Normal\+X\+Y (
+\begin{DoxyParamCaption}
+\item[{float}]{x, }
+\item[{float}]{y}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_terrain_noise_af50426bd1451cec938411d6bb5f82ac0}
+
+
+Calcul la normale d\textquotesingle{}un point sur le terrain. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em x} & abscisse du terrain (entre 0 et 1). \\
+\hline
+\mbox{\tt in}  & {\em y} & ordonnée du terrain (entre 0 et 1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la hauteur du terrain à ses coordonnées x, y. 
+\end{DoxyReturn}
+
+
+Implémente \hyperlink{class_terrain_a8b666ed9d5f948734b0d1c49adb6b535}{Terrain}.
+
+\hypertarget{class_terrain_noise_a3ce920d78a9e4e86e50c7244f8deb055}{}\index{Terrain\+Noise@{Terrain\+Noise}!max\+Elevation@{max\+Elevation}}
+\index{max\+Elevation@{max\+Elevation}!Terrain\+Noise@{Terrain\+Noise}}
+\subsubsection[{max\+Elevation() const }]{\setlength{\rightskip}{0pt plus 5cm}float Terrain\+Noise\+::max\+Elevation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_terrain_noise_a3ce920d78a9e4e86e50c7244f8deb055}
+
+
+Calcul l\textquotesingle{}élévation maximum du terrain. 
+
+\begin{DoxyReturn}{Renvoie}
+L\textquotesingle{}élévation maximum du terrain. 
+\end{DoxyReturn}
+
+
+Implémente \hyperlink{class_terrain}{Terrain}.
+
+\hypertarget{class_terrain_noise_abb3e61d20aaccdb513355b59b7b02af4}{}\index{Terrain\+Noise@{Terrain\+Noise}!min\+Elevation@{min\+Elevation}}
+\index{min\+Elevation@{min\+Elevation}!Terrain\+Noise@{Terrain\+Noise}}
+\subsubsection[{min\+Elevation() const }]{\setlength{\rightskip}{0pt plus 5cm}float Terrain\+Noise\+::min\+Elevation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_terrain_noise_abb3e61d20aaccdb513355b59b7b02af4}
+
+
+Calcul l\textquotesingle{}élévation minimum du terrain. 
+
+\begin{DoxyReturn}{Renvoie}
+L\textquotesingle{}élévation minimim du terrain. 
+\end{DoxyReturn}
+
+
+Implémente \hyperlink{class_terrain}{Terrain}.
+
+
+
+La documentation de cette classe a été générée à partir des fichiers suivants \+:\begin{DoxyCompactItemize}
+\item 
+terrain/terrainnoise.\+h\item 
+terrain/terrainnoise.\+cpp\end{DoxyCompactItemize}
