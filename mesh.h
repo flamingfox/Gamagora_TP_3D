@@ -91,8 +91,6 @@ public :
     inline const Vector3f& getN(int i, int j) const;
     inline const Vector3f& getN(const Eigen::Vector2i& pos) const;
 
-
-
     Vector3f getNormal(float pointX, float pointY) const;
 
     inline Vector3f getNormal(const Vector2f &pointXY) const;
@@ -122,9 +120,5 @@ inline void Mesh::addTopo(int i0, int i1, int i2)
     this->topo.push_back(i1);
     this->topo.push_back(i2);
 }
-
-
-
-
 
 #endif // MESH_H

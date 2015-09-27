@@ -38,14 +38,6 @@ float TerrainNoise::getHauteurXY(float x, float y) const
     return h;
 }
 
-/**
- * utile pour le calcul de normal sur terrain avec noise
- * @param x abscisse du terrain (entre 0 et 1)
- * @param y ordonnée du terrain (entre 0 et 1)
- * @return la hauteur du terrain à ses coordonnées x, y
-*/
-
-
 Eigen::Vector3f TerrainNoise::getNormalXY(float x, float y) const
 {
     float   ha = getHauteurXY(x,y);
@@ -74,7 +66,6 @@ Eigen::Vector3f TerrainNoise::getNormalXY(float x, float y) const
     Eigen::Vector3f normale = v1*distg*disth + v2*disth*distd + v3*distd*distb + v4*distb*distg;
     return normale.normalized();
 }
-
 
 
 

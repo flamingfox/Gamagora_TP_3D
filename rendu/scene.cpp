@@ -42,6 +42,7 @@ bool Scene::rendu(){
             for(int x = 0; x < _lu ; x++){  // pour chaque pixel de la ligne
                 Rayon r(c->getOrigine(),c->vecScreen(x,y));   //rayon correspondant au pixel
                 int tmp = 0;
+
                 bool touche = false;
                 float coefdisttmp = FLT_MAX;        //variables pour déterminer la distance du rayon le plus court
                 float coefdistfinal = FLT_MAX;
@@ -70,6 +71,7 @@ bool Scene::rendu(){
         if(ic<10)        {
             img->save(("test000" + std::to_string(ic) + ".png").c_str());
             eric.save(("eric" + std::to_string(ic) + ".png").c_str());
+
             std::cout << ("test000" + std::to_string(ic) + ".png").c_str() << std::endl;
         }
         else if(ic<100)        {
@@ -96,11 +98,10 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Terrain& objleplu
     Eigen::Vector3f dRay = ray.getDirection();
     dRay.normalize();
 
-    Eigen::Vector3f n = objleplusproche.getNormal(pointImpact);
+    Eigen::Vector3f n = objleplusproche.getNormal(pointImpact(0),pointImpact(1));
 
     //Eigen::Vector3f diff = dRay+ n;    //-n;   //mais dRay pointe vers le terrain et n vers le haut.
     double norm = dRay.dot(n);    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
-
 
     if(norm >= 0)
         return QColor(0,0,0); //Black
@@ -109,7 +110,7 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Terrain& objleplu
     //    return QColor(255,255,255); // White
     else
     {
-        float hauteur = objleplusproche.getVal(pointImpact);
+        float hauteur = objleplusproche.getHauteur(pointImpact);
         hauteur /= objleplusproche.getMaxElevation();
 
         float r,g,b;
@@ -119,6 +120,7 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Terrain& objleplu
         return QColor(roundf(r*c),roundf(g*c), roundf(b*c)); // Grey
     }
 }
+
 
 /**simule le parcours d'une camera sur le terrain de la scène*/
 void Scene::addParcoursCamera(Terrain* noise)
