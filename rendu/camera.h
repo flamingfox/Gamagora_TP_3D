@@ -58,27 +58,27 @@ public:
     Camera();
     /**
      * @brief Constructeur de la classe caméra avec des paramètres.
-     * @param pOr Point d'origine de la caméra.
-     * @param pAt Point cible de la caméra. Détermine la direction de la caméra.
-     * @param distance Distance entre l'origine de la caméra et le plan de l'écran.
-     * @param l Largeur en pixel de l'écran.
-     * @param h Hauteur en pixel de l'écran.
+     * @param[in] pOr Point d'origine de la caméra.
+     * @param[in] pAt Point cible de la caméra. Détermine la direction de la caméra.
+     * @param[in] distance Distance entre l'origine de la caméra et le plan de l'écran.
+     * @param[in] l Largeur en pixel de l'écran.
+     * @param[in] h Hauteur en pixel de l'écran.
      */
     Camera(const Vector3f& pOr, const Vector3f& pAt, const float& distance, int l, int h);
 
     /**
      * @brief Calcul le vecteur direction entre l'origine de la caméra et le pixel (i,j) de l'écran.\n
      * Utilise la méthode pointScreen().
-     * @param i Indice du pixel en largeur de l'écran.
-     * @param j Indice du pixel en longueur de l'écran.
+     * @param[in] i Indice du pixel en largeur de l'écran.
+     * @param[in] j Indice du pixel en longueur de l'écran.
      * @return Le vecteur direction entre #_origine et le pixel (i,j).
      * @warning Si i ou j sont hors écran, le programme s'arretera.
      */
     Vector3f vecScreen(int i, int j) const;
     /**
      * @brief Calcul la position du pixel (i,j) de l'écran.
-     * @param i Indice du pixel en largeur de l'écran.
-     * @param j Indice du pixel en longueur de l'écran.
+     * @param[in] i Indice du pixel en largeur de l'écran.
+     * @param[in] j Indice du pixel en longueur de l'écran.
      * @return La position du pixel (i,j).
      * @warning Si i ou j sont hors écran, le programme s'arretera.
      */
