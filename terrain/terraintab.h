@@ -39,24 +39,30 @@ public:
 
     ~TerrainTab();
 
+private:
+
     /**
      * @brief height Distance du terrain en metre sur l'axe y.
+     */
+    int height;
+    /**
      * @brief width Distance du terrain en metre sur l'axe x.
      */
-    int height, width;
+    int width;
 
     /**
      * @brief grille
+     */
+    float *grille = nullptr;
+    /**
      * @brief grille2d
      */
-    float *grille = nullptr, **grille2d = nullptr;
+    float **grille2d = nullptr;
 
     /**
      * @brief amplitude Amplitude max attegnable par le terrain.
      */
     float amplitude;
-
-private:
 
     /**
      * @brief Récupere la hauteur du terrain à un point donné. Si le point donné n'existe physiquement pas sur le terrain, une approximation sera faite grace au points alentours.
@@ -65,7 +71,6 @@ private:
      * @return la hauteur du terrain au point donné.
      */
     float getHauteurXY(float x, float y) const;
-    //Eigen::Vector3f getNormalXY(float x, float y) const;
 
     /**
      * @brief Initialise et remplis la grille topographique avec l'image donnée dans le constructeur. Deplus les indications complémentaire : _nbHeight et _nbWidth sont utilisées dans le processus.
