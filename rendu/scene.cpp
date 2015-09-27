@@ -92,10 +92,7 @@ bool Scene::rendu(){
     return true;
 }
 
-/*QColor Scene::renderHors()
-{
-    return default_color;
-}*/
+
 
 QColor Scene::render(const Eigen::Vector3f& pointImpact, const Object& objleplusproche, const Rayon& ray)
 {
@@ -126,17 +123,19 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Object& objleplus
     }
 }
 
+/*****************************************************************************************/
+
 
 /**simule le parcours d'une camera sur le terrain de la scène*/
 void Scene::addParcoursCamera(Terrain2* noise)
 {
-    int x = NoiseGenerator::perlinNoiseGradiant(rand()&255,rand()&255,1+(rand()&255))*noise->largeur;
-    int y = NoiseGenerator::perlinNoiseGradiant(rand()&255,rand()&255,1+(rand()&255))*noise->longueur;
+    int x = rand()%(int)noise->largeur;
+    int y = rand()%(int)noise->longueur;
 
     int dirMax = 10;
     int dMax = 2;
-    Vector2f dir(NoiseGenerator::perlinNoiseGradiant(rand()&255,rand()&255,1+(rand()&255))*dirMax,
-                 NoiseGenerator::perlinNoiseGradiant(rand()&255,rand()&255,1+(rand()&255))*dirMax);
+    Vector2f dir(rand()%(dirMax*2)-dirMax,
+                 rand()%(dirMax*2)-dirMax);
     float d = dir.norm();
     if(d > dirMax){
         dir /= d;
@@ -144,8 +143,8 @@ void Scene::addParcoursCamera(Terrain2* noise)
     }
 
     for(int i = 0;  i < 120;    i++)    {
-        Vector2f dev(NoiseGenerator::perlinNoiseGradiant2(rand()&255,rand()&255,1+(rand()&255))*dMax,
-                     NoiseGenerator::perlinNoiseGradiant2(rand()&255,rand()&255,1+(rand()&255))*dMax);
+        Vector2f dev(((float)rand()/INT_MAX)*dMax*2-dMax,
+                     ((float)rand()/INT_MAX)*dMax*2-dMax);
 
         d = dev.norm();
         if(d > dMax)   {
@@ -165,10 +164,7 @@ void Scene::addParcoursCamera(Terrain2* noise)
         float x2 = x + dir(0),
               y2 = y + dir(1);
 
-        //if(i == 21)
-        {
-            Camera* cam = new Camera(Vector3f(x,y,noise->getHauteur(x,y)+10), Vector3f(x2,y2,noise->getHauteur(x2,y2)+10), 300, 720, 400);
-            addC(cam);
-        }
+        Camera* cam = new Camera(Vector3f(x,y,noise->getHauteur(x,y)+10), Vector3f(x2,y2,noise->getHauteur(x2,y2)+10), 300, 720, 400);
+        addC(cam);
     }
 }

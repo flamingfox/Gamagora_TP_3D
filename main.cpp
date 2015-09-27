@@ -37,13 +37,13 @@ void testScene()
     TerrainNoise* noise = new TerrainNoise(10000,10000);
     //Mesh m(*noise, 200, 200);
     //m.save("terrainNoiseTest.obj");
-    //Camera* cam = new Camera(Vector3f(350,350,500), Vector3f(750,750,0), 600, 1200, 800);
+    Camera* cam = new Camera(Vector3f(350,350,500), Vector3f(750,750,0), 600, 1200, 800);
                             //Vector3f(1000,1000,-100),Vector3f(900,900,-1000), 700, 1200, 800);
 
     Scene scene;
     scene.addO(noise);
-    /*scene.addC(cam);
-    Camera* cam2 = new Camera(Vector3f(1350,1350,500), Vector3f(1750,1750,0), 600, 1200, 800);
+    scene.addC(cam);
+    /*Camera* cam2 = new Camera(Vector3f(1350,1350,500), Vector3f(1750,1750,0), 600, 1200, 800);
     scene.addC(cam2);
     Camera* cam3 = new Camera(Vector3f(4350,4350,500), Vector3f(4750,4750,0), 600, 1200, 800);
     scene.addC(cam3);
@@ -51,7 +51,7 @@ void testScene()
     scene.addC(cam4);
     Camera* cam5 = new Camera(Vector3f(-350,-350,1000), Vector3f(750,750,0), 700, 1200, 800);
     scene.addC(cam5);*/
-    scene.addParcoursCamera(noise);
+    //scene.addParcoursCamera(noise);
 
     scene.rendu();
     delete noise;
