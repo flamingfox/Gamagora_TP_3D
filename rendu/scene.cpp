@@ -24,7 +24,6 @@ Scene::Scene()
 }*/
 
 bool Scene::rendu(){
-    //for(Camera* c : cameras)  //marche pas avec openMP
     for(unsigned int ic = 0;  ic < cameras.size(); ic++)
     {
         Camera* c = cameras[ic];
@@ -70,7 +69,7 @@ bool Scene::rendu(){
         }
         if(ic<10)        {
             img->save(("test000" + std::to_string(ic) + ".png").c_str());
-            eric.save("eric.png");
+            eric.save(("eric" + std::to_string(ic) + ".png").c_str());
             std::cout << ("test000" + std::to_string(ic) + ".png").c_str() << std::endl;
         }
         else if(ic<100)        {
