@@ -78,6 +78,18 @@ Vector3f Terrain2::getNormal(const Vector3f& pointXYZ) const
 
 bool Terrain2::inOut(const Eigen::Vector3f& pointXYZ) const
 {
+    float x = pointXYZ(0);
+    x -= box.min(0);
+    x /= largeur;
+
+    float y = pointXYZ(1);
+    y -= box.min(1);
+    y /= longueur;
+
+    //met les coordonnées entre 0 et 1.
+    if(x < 0 || y < 0 || x > 1 || y > 1)
+        return false;
+
     return (pointXYZ(2) <= getHauteur(pointXYZ(0), pointXYZ(1)));
 }
 
@@ -88,10 +100,6 @@ bool Terrain2::intersect2(const Rayon& rayon, float &coeffDistance) const
 
     if(!box.intersect(rayon, dmin, dmax ))
         return false;
-
-    //à modifier à cause de la précision des floats, mais c'est bizarre que ça marche comme un gant. faire attention que le point de départ ne soit pas en dehors de la box.
-    //dmin = 0.0;
-    //dmax = 3000.0;
 
     coeffDistance = dmin;
 
@@ -123,10 +131,10 @@ bool Terrain2::intersect2(const Rayon& rayon, float &coeffDistance) const
 
 /************************************************************************/
 
-void Terrain2::translate2(const Vector3f& t)
+/*void Terrain2::translate2(const Vector3f& t)
 {
     (void) t;   //rien faire
-}
+}*/
 
 void Terrain2::getColor2(float& r, float& g, float& b, float hauteur) const
 {
