@@ -59,8 +59,6 @@ float TerrainTab::getHauteurXY(float x, float y) const
         return interp::interp_linear2D(x, y, x1, y1, x2, y2,
                                        h11, h12, get(x2, y1), get(x2, y2))*amplitude;
     }
-
-    getNormal(x,y);
 }
 
 
@@ -149,8 +147,9 @@ TerrainTab::TerrainTab(const QImage& img, int _nbHeight, int _nbWidth, float lon
 /**construit un terrain avec le même nombre de point que le nombre de pixel de l'image*/
 void TerrainTab::simpleInitImage(const QImage& img)
 {
-    for(int i = 0;  i < height*width; i++)
-        grille[i] = qGray(img.color(i))/255.0;
+    for(int j = 0;  j < height; j++)
+        for(int i = 0;  i < width; i++)
+            grille2d[j][i] = qGray(img.pixel(i,j))/255.0;
 }
 
 void TerrainTab::initGrille()

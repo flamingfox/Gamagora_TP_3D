@@ -148,7 +148,7 @@ void Scene::addParcoursCamera(Terrain* noise)
         }
         dir += dev;
 
-        d = dev.norm();
+        d = dir.norm();
         if(d > dirMax) {
             dir /= d;
             dir *= dirMax;

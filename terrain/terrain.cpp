@@ -1,4 +1,4 @@
-#include "terrain.h"
+﻿#include "terrain.h"
 
 Terrain::Terrain():
     Terrain(0,0)
@@ -13,6 +13,7 @@ Terrain::Terrain(float longueur, float largeur):
 Terrain::Terrain(float longueur, float largeur, float amplitude):
     longueur(longueur), largeur(largeur)
 {
+    box = Box(Vector3f(0,0,0),Vector3f(largeur,longueur,amplitude));
     heatMapGradient.createDefaultHeatMapGradient();
 }
 
@@ -112,6 +113,7 @@ bool Terrain::intersect(const Rayon& rayon, float &coeffDistance, int &i) const
                 break;
 
         coeffDistance += 0.3*h;
+
     }
 
     return false;
