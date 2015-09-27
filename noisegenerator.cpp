@@ -36,9 +36,8 @@ double perlinNoise(double x,double y, int seed)
 
 double perlinNoise(double x, double y)
 {
-    double tmp = perlinNoise(x, y, SEED);
-    return tmp;
-    //return (tmp+1)/2;
+    double value = perlinNoise(x, y, SEED);
+    return value;
 }
 
 

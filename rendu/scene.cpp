@@ -50,7 +50,7 @@ bool Scene::rendu(){
                 float coefdisttmp = FLT_MAX;        //variables pour déterminer la distance du rayon le plus court
                 float coefdistfinal = FLT_MAX;
                 Vector3f zonetouchee;
-                const Object* objleplusproche;
+                const Object* objleplusproche = nullptr;
                 for(const Object* obj: objects){    //parcours tous les objets de la scene
                     if(obj->intersect(r,coefdisttmp)){//si on touche
                         touche = true;
@@ -123,5 +123,52 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Object& objleplus
 
         float c = (-255)*norm;
         return QColor(roundf(r*c),roundf(g*c), roundf(b*c)); // Grey
+    }
+}
+
+
+/**simule le parcours d'une camera sur le terrain de la scène*/
+void Scene::addParcoursCamera(Terrain2* noise)
+{
+    int x = NoiseGenerator::perlinNoiseGradiant(rand()&255,rand()&255,1+(rand()&255))*noise->largeur;
+    int y = NoiseGenerator::perlinNoiseGradiant(rand()&255,rand()&255,1+(rand()&255))*noise->longueur;
+
+    int dirMax = 10;
+    int dMax = 2;
+    Vector2f dir(NoiseGenerator::perlinNoiseGradiant(rand()&255,rand()&255,1+(rand()&255))*dirMax,
+                 NoiseGenerator::perlinNoiseGradiant(rand()&255,rand()&255,1+(rand()&255))*dirMax);
+    float d = dir.norm();
+    if(d > dirMax){
+        dir /= d;
+        dir *= dirMax;
+    }
+
+    for(int i = 0;  i < 120;    i++)    {
+        Vector2f dev(NoiseGenerator::perlinNoiseGradiant2(rand()&255,rand()&255,1+(rand()&255))*dMax,
+                     NoiseGenerator::perlinNoiseGradiant2(rand()&255,rand()&255,1+(rand()&255))*dMax);
+
+        d = dev.norm();
+        if(d > dMax)   {
+            dev /= d;
+            dev *= dMax;
+        }
+        dir += dev;
+
+        d = dev.norm();
+        if(d > dirMax) {
+            dir /= d;
+            dir *= dirMax;
+        }
+        x += dir(0);
+        y += dir(1);
+
+        float x2 = x + dir(0),
+              y2 = y + dir(1);
+
+        //if(i == 21)
+        {
+            Camera* cam = new Camera(Vector3f(x,y,noise->getHauteur(x,y)+10), Vector3f(x2,y2,noise->getHauteur(x2,y2)+10), 300, 720, 400);
+            addC(cam);
+        }
     }
 }

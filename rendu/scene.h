@@ -2,8 +2,9 @@
 #define SCENE_H
 
 #include "camera.h"
-#include "lumiere/lumiere.h"
+#include "./lumiere/lumiere.h"
 #include "./object.h"
+#include "./terrain/terrain2.h"
 
 /**
     @author Aurelien Argoud
@@ -27,6 +28,8 @@ public:
 
     bool rendu();
     QColor render(const Eigen::Vector3f& pointImpact, const Object& objleplusproche, const Rayon& ray);
+
+    void addParcoursCamera(Terrain2* noise);
 
 
 

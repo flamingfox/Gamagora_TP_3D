@@ -11,7 +11,6 @@ namespace NoiseGenerator
 
     double perlinNoiseGradiant(double x, double y, double res);
     double perlinNoiseGradiant2(double x, double y, double res);
-
 }
 
 #endif // NOISEGENERATOR_H

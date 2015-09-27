@@ -20,21 +20,6 @@ TerrainNoise::TerrainNoise(int _longueur, int _largeur) :
 
 
 
-float TerrainNoise::noise(int amplitude, float periode, float x, float y)const{
-    float h = NoiseGenerator::perlinNoise( x/periode, y/periode);
-    h = (h+1)/2;
-    return amplitude * h;
-}
-
-/**
- * @param hauteur hauteur que l'on veut modifier par un ridge
- * @param seuil hauteur max et de découpe du terrain
- * @return la nouvelle hauteur < seuil
-*/
-float TerrainNoise::ridge(float hauteur, float seuil)const{
-    if(hauteur > seuil)return (2*seuil - hauteur);
-    else return hauteur;
-}
 
 
 /***************************************************************/
@@ -60,13 +45,13 @@ float TerrainNoise::getHauteurXY(float x, float y) const
 */
 float TerrainNoise::getHauteurXYSansVerif(float x, float y) const
 {
-    float h = noise(400,300,x*largeur,y*longueur);
-    h = ridge(h, 250);
+    float h = nrw::noise(400,300,x*largeur,y*longueur);
+    h = nrw::ridge(h, 250);
 
-    float h2 = noise(100, 100, x*largeur, y*longueur);
+    float h2 = nrw::noise(100, 100, x*largeur, y*longueur);
     h -= h2*(h/250);
 
-    float h3 = noise(50,30,x*largeur,y*longueur);
+    float h3 = nrw::noise(50,30,x*largeur,y*longueur);
     float div = h/250;
     if(div> 1)
         std::cout << "bizarre?" << std::endl;
@@ -105,22 +90,6 @@ Eigen::Vector3f TerrainNoise::getNormalXY(float x, float y) const
     return normale.normalized();
 }
 
-/*
-float Terrain::warp()
-*/
-
-/*void TerrainNoise::applicationWarp(int amplitude, int periode)
-{
-    //for(size_t i = 0; i < geom.size(); i++)
-    for(Eigen::Vector3f& p: geom)
-    {
-        float warp = amplitude * NoiseGenerator::perlinNoise( p(0)*(1.0/periode)+2.78, p(1)*(1.0/periode)+8.72);
-
-        p(0) += warp;
-        p(1) += warp;
-    }
-}
-*/
 
 
 

@@ -4,6 +4,7 @@
 #include "parametres.h"
 #include "terrain2.h"
 #include "noisegenerator.h"
+#include "nrw.h"
 
 class TerrainNoise: public Terrain2
 {
@@ -28,8 +29,6 @@ protected:
     /// \param x
     /// \param y
     /// \return return a random controlled value from a perlin noise
-    float noise(int amplitude, float periode, float x, float y)const;
-    float ridge(float hauteur, float seuil)const;
 
     float getMinElevation2() const;
     float getMaxElevation2() const;

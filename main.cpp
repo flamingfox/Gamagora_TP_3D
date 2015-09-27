@@ -18,12 +18,6 @@
 
 using namespace Eigen;
 
-void testTotal();
-void testImage(const QImage& img);
-void testSphere();
-void testNormals();
-void testBox();
-void testCamera();
 void testIntersect();
 void testScene();
 
@@ -36,52 +30,7 @@ int main(int, char **)
 
 /***********************************************************************************************/
 
-/**simule le parcours d'une camera sur le terrain de la scène*/
-void addParcoursCamera(Scene& scene, TerrainNoise* noise)
-{
-    int t = 10000;
-    int x = NoiseGenerator::perlinNoiseGradiant(rand()%t,rand()%t,rand()%t)*t;
-    int y = NoiseGenerator::perlinNoiseGradiant(rand()%t,rand()%t,rand()%t)*t;
 
-    int dirMax = 10;
-    int dMax = 2;
-    Vector2f dir(NoiseGenerator::perlinNoiseGradiant(rand()&255,rand()&255,1+(rand()&255))*dirMax,
-                 NoiseGenerator::perlinNoiseGradiant(rand()&255,rand()&255,1+(rand()&255))*dirMax);
-    float d = dir.norm();
-    if(d > dirMax){
-        dir /= d;
-        dir *= dirMax;
-    }
-
-    for(int i = 0;  i < 120;    i++)    {
-        Vector2f dev(NoiseGenerator::perlinNoiseGradiant2(rand()&255,rand()&255,1+(rand()&255))*dMax,
-                     NoiseGenerator::perlinNoiseGradiant2(rand()&255,rand()&255,1+(rand()&255))*dMax);
-
-        d = dev.norm();
-        if(d > dMax)   {
-            dev /= d;
-            dev *= dMax;
-        }
-        dir += dev;
-
-        d = dev.norm();
-        if(d > dirMax) {
-            dir /= d;
-            dir *= dirMax;
-        }
-        x += dir(0);
-        y += dir(1);
-
-        float x2 = x + dir(0),
-              y2 = y + dir(1);
-
-        //if(i == 21)
-        {
-            Camera* cam = new Camera(Vector3f(x,y,noise->getHauteur(x,y)+10), Vector3f(x2,y2,noise->getHauteur(x2,y2)+10), 300, 720, 400);
-            scene.addC(cam);
-        }
-    }
-}
 
 void testScene()
 {
@@ -102,7 +51,7 @@ void testScene()
     scene.addC(cam4);
     Camera* cam5 = new Camera(Vector3f(-350,-350,1000), Vector3f(750,750,0), 700, 1200, 800);
     scene.addC(cam5);*/
-    addParcoursCamera(scene, noise);
+    scene.addParcoursCamera(noise);
 
     scene.rendu();
     delete noise;

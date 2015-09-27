@@ -34,7 +34,6 @@ float Terrain2::getHauteur(float x, float y) const
     return getHauteurXY(x,y);
 }
 
-
 float Terrain2::getHauteur(const Vector2f& pointXY) const
 {
     return getHauteur(pointXY(0), pointXY(1));
@@ -195,4 +194,38 @@ float Terrain2::getVal(const Vector3f& p) const
 
 /***********************************************************************/
 
+
+
+/*bool Mesh::intersectWithMesh(const Rayon& rayon, float &coeffDistance) const{
+
+    float dmin = 0.0;
+    float dmax = 3000.0;
+
+    if(!englobant.intersect(rayon, dmin, dmax ))
+        return false;
+
+    dmin = 0.0;
+    dmax = 3000.0;
+
+    coeffDistance = dmin;
+
+    for( int i=0; i<256; i++ )
+    {
+        Eigen::Vector3f pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
+        float h = getHauteur( pos(0), pos(1) );
+        if(h == HAUTEUR_HORS_MAP)
+            break;
+
+        h = pos(2) - h;
+
+        if( h <(0.002 * coeffDistance) ) {
+                return true;
+        }else if(coeffDistance > dmax )
+                break;
+
+        coeffDistance += 0.5*h;
+    }
+
+    return false;
+}*/
 

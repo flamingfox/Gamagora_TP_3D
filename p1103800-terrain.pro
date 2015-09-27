@@ -2,6 +2,8 @@ TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle
 CONFIG += c++11
+QMAKE_CXXFLAGS += -fopenmp
+LIBS += -fopenmp
 
 INCLUDEPATH += C:/librairie
 INCLUDEPATH += C:\lib
@@ -16,7 +18,6 @@ SOURCES += main.cpp \
     zoneterrain.cpp \
     interpolation.cpp \
     box.cpp \
-    terrain.cpp \
     terrain/terrainnoise.cpp \
     terrain/terraintab.cpp \
     terrain/terrain2.cpp \
@@ -25,7 +26,8 @@ SOURCES += main.cpp \
     rendu/camera.cpp \
     lumiere/lumiere.cpp \
     object.cpp \
-    rendu/colorgradient.cpp
+    rendu/colorgradient.cpp \
+    nrw.cpp
 
 HEADERS +=  mesh.h \
     noisegenerator.h \
@@ -33,13 +35,14 @@ HEADERS +=  mesh.h \
     parametres.h \
     interpolation.h \
     box.h \
-    terrain.h \
     terrain/terrainnoise.h \
     terrain/terraintab.h \
     terrain/terrain2.h \
+    foutoir.h \
     rendu/scene.h \
     rendu/rayon.h \
     rendu/camera.h \
     lumiere/lumiere.h \
     object.h \
-    rendu/colorgradient.h
+    rendu/colorgradient.h \
+    nrw.h
