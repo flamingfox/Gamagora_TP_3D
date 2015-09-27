@@ -42,12 +42,15 @@ bool Scene::rendu(){
             for(int x = 0; x < _lu ; x++){  // pour chaque pixel de la ligne
                 Rayon r(c->getOrigine(),c->vecScreen(x,y));   //rayon correspondant au pixel
                 int tmp = 0;
-                bool touche = false;
+                bool touche = false, touche2 = true;
                 float coefdisttmp = FLT_MAX;        //variables pour déterminer la distance du rayon le plus court
                 float coefdistfinal = FLT_MAX;
                 Vector3f zonetouchee;
                 const Terrain* objleplusproche = nullptr;
                 for(const Terrain* obj: objects){    //parcours tous les objets de la scene
+                    float tmp1, tmp2;
+                    if(!obj->box.intersect(r,tmp1,tmp2))
+                        touche2 = false;
                     if(obj->intersect(r,coefdisttmp, tmp)){//si on touche
                         touche = true;
                         if(coefdisttmp < coefdistfinal){//on sélectionne l'objet touché le plus proche
@@ -58,7 +61,9 @@ bool Scene::rendu(){
                     }
                 }
 
-                if(!touche)
+                if(!touche2)
+                    img->setPixel(x, y, (QColor(255, 0, 0)).rgba());
+                else if(!touche)
                     img->setPixel(x, y, default_color.rgba());
                 else
                 {

@@ -21,7 +21,7 @@ TerrainNoise::TerrainNoise(int _longueur, int _largeur) :
 */
 float TerrainNoise::getHauteurXY(float x, float y) const
 {
-    if(x < 0 || y < 0 || x > largeur || y > longueur)
+    if(x < 0 || y < 0 || x > 1 || y > 1)
             return HAUTEUR_HORS_MAP;
 
     float h = nrw::noise(400,300,x*largeur,y*longueur);
