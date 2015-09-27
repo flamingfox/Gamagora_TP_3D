@@ -1,0 +1,546 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>Terrain tracing: Référence de la classe Box</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Terrain tracing
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.10 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="namespaces.html"><span>Espaces&#160;de&#160;nommage</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Liste&#160;des&#160;classes</span></a></li>
+      <li><a href="classes.html"><span>Index&#160;des&#160;classes</span></a></li>
+      <li><a href="hierarchy.html"><span>Hiérarchie&#160;des&#160;classes</span></a></li>
+      <li><a href="functions.html"><span>Membres&#160;de&#160;classe</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Fonctions membres publiques</a> &#124;
+<a href="#pub-attribs">Attributs publics</a> &#124;
+<a href="#pri-methods">Fonctions membres privées</a> &#124;
+<a href="class_box-members.html">Liste de tous les membres</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence de la classe Box</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Classe d'un objet géométrique de type boite. <br />
+ Il sert de boite englobante pour les objets.  
+ <a href="class_box.html#details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="box_8h_source.html">box.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr class="memitem:aa232abb63b2b72d93791c74a96ac7de9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa232abb63b2b72d93791c74a96ac7de9"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Box</b> (const Vector3f &amp;_min, const Vector3f &amp;_max)</td></tr>
+<tr class="separator:aa232abb63b2b72d93791c74a96ac7de9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2353559b5ce40e7edcc85daddd86f292"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_box.html#a2353559b5ce40e7edcc85daddd86f292">Box</a> (const std::vector&lt; Vector3f &gt; &amp;points)</td></tr>
+<tr class="memdesc:a2353559b5ce40e7edcc85daddd86f292"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur qui utilisera un ensemble de points pour calculer la boite englobante correspondante. <br />
+Le constructeur passe le relai à la fonction <a class="el" href="class_box.html#a8ffb517da2017677041941e1b2f60f1f" title="Détermine la positions de min et max pour englober tous les points de points. ">parcourtPoints()</a>.  <a href="#a2353559b5ce40e7edcc85daddd86f292">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a2353559b5ce40e7edcc85daddd86f292"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4ee0fca654414f2f9f5092f70ab92e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_box.html#ad4ee0fca654414f2f9f5092f70ab92e7">updatePoint</a> (const Vector3f &amp;p)</td></tr>
+<tr class="memdesc:ad4ee0fca654414f2f9f5092f70ab92e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Détermine si la boite englobante doit être modifiée pour comprendre le point <em>p</em>. <br />
+Si c'est le cas la boite s'adapte pour contenir le point. <br />
+Passe le relai à la méthode <a class="el" href="class_box.html#a13162f123f21923c3b22ba02a2211143" title="Détermine si la boite englobante doit être modifiée pour comprendre le point p.  Si c&#39;est le cas la b...">update()</a>.  <a href="#ad4ee0fca654414f2f9f5092f70ab92e7">Plus de détails...</a><br /></td></tr>
+<tr class="separator:ad4ee0fca654414f2f9f5092f70ab92e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d6c41818d3d77ba71866528f5e6ccac"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_box.html#a2d6c41818d3d77ba71866528f5e6ccac">isIn</a> (const Vector3f &amp;p) const </td></tr>
+<tr class="memdesc:a2d6c41818d3d77ba71866528f5e6ccac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test si le point <em>p</em> est dans l'espace compris de la boite.  <a href="#a2d6c41818d3d77ba71866528f5e6ccac">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a2d6c41818d3d77ba71866528f5e6ccac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ce97deba91479b4fa66c260c1a37c8a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_box.html#a6ce97deba91479b4fa66c260c1a37c8a">intersect</a> (const <a class="el" href="class_rayon.html">Rayon</a> &amp;r, float &amp;distanceMin, float &amp;distanceMax) const </td></tr>
+<tr class="memdesc:a6ce97deba91479b4fa66c260c1a37c8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test si un rayon traverse la boite. <br />
+Si c'est le cas, la methode retournera les distance d'intersection sur la boite. (cf. <a class="el" href="class_rayon.html" title="Classe représentant un rayon lumineux. ">Rayon</a>) <br />
+Utilise la méthode <a class="el" href="class_box.html#a54e436e7e487b4a9c75eaf342d430b64" title="Test si le rayon r traverse la boite. ">intersectIn()</a>.  <a href="#a6ce97deba91479b4fa66c260c1a37c8a">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a6ce97deba91479b4fa66c260c1a37c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a173e401890b2cb5af0ba69d78c9df413"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_box.html#a173e401890b2cb5af0ba69d78c9df413">diffZ</a> () const </td></tr>
+<tr class="memdesc:a173e401890b2cb5af0ba69d78c9df413"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcul la hauteur en <em>z</em> de la boite.  <a href="#a173e401890b2cb5af0ba69d78c9df413">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a173e401890b2cb5af0ba69d78c9df413"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5aebe0463a5c45d1cf966fbccabef94f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_box.html#a5aebe0463a5c45d1cf966fbccabef94f">merge</a> (const <a class="el" href="class_box.html">Box</a> &amp;box2)</td></tr>
+<tr class="memdesc:a5aebe0463a5c45d1cf966fbccabef94f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fait l'union entre deux boites, et redéfini min et max pour englober les deux boites.  <a href="#a5aebe0463a5c45d1cf966fbccabef94f">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a5aebe0463a5c45d1cf966fbccabef94f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b1ad9cb82546788f3ad6001429b5c5f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_box.html#a8b1ad9cb82546788f3ad6001429b5c5f">operator+=</a> (const Vector3f &amp;t)</td></tr>
+<tr class="memdesc:a8b1ad9cb82546788f3ad6001429b5c5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opère un translation rectiligne de la boite.  <a href="#a8b1ad9cb82546788f3ad6001429b5c5f">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a8b1ad9cb82546788f3ad6001429b5c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr class="memitem:a4b5893565a3e2b26361338b19af0671a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b5893565a3e2b26361338b19af0671a"></a>
+Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_box.html#a4b5893565a3e2b26361338b19af0671a">min</a></td></tr>
+<tr class="memdesc:a4b5893565a3e2b26361338b19af0671a"><td class="mdescLeft">&#160;</td><td class="mdescRight">min Position d'un des points de la boite. <br /></td></tr>
+<tr class="separator:a4b5893565a3e2b26361338b19af0671a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7d2365a0645043a21a055942019cd74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7d2365a0645043a21a055942019cd74"></a>
+Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_box.html#ac7d2365a0645043a21a055942019cd74">max</a></td></tr>
+<tr class="memdesc:ac7d2365a0645043a21a055942019cd74"><td class="mdescLeft">&#160;</td><td class="mdescRight">max Position du point opposé au point <em>min</em> sur la boite. <br /></td></tr>
+<tr class="separator:ac7d2365a0645043a21a055942019cd74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Fonctions membres privées</h2></td></tr>
+<tr class="memitem:a411b56ce2f6a9c29e83ce8c16d99adae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a411b56ce2f6a9c29e83ce8c16d99adae"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_box.html#a411b56ce2f6a9c29e83ce8c16d99adae">setDefaultBox</a> ()</td></tr>
+<tr class="memdesc:a411b56ce2f6a9c29e83ce8c16d99adae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise la boite avec des valeurs par defaut. <br /></td></tr>
+<tr class="separator:a411b56ce2f6a9c29e83ce8c16d99adae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13162f123f21923c3b22ba02a2211143"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_box.html#a13162f123f21923c3b22ba02a2211143">update</a> (const Vector3f &amp;p)</td></tr>
+<tr class="memdesc:a13162f123f21923c3b22ba02a2211143"><td class="mdescLeft">&#160;</td><td class="mdescRight">Détermine si la boite englobante doit être modifiée pour comprendre le point <em>p</em>. <br />
+Si c'est le cas la boite s'adapte pour contenir le point. <br />
+Passe le relai à la méthode <a class="el" href="class_box.html#a3aafcee14e1e0ea4a6fe1b61d463fbd5" title="Détermine si le point min doit être modifiée pour comprendre le point p.  Si c&#39;est le cas le point mi...">updateMin()</a> et <a class="el" href="class_box.html#ab637f4c06fd3359557445917f18d4f1f" title="Détermine si le point max doit être modifiée pour comprendre le point p.  Si c&#39;est le cas le point ma...">updateMax()</a>.  <a href="#a13162f123f21923c3b22ba02a2211143">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a13162f123f21923c3b22ba02a2211143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aafcee14e1e0ea4a6fe1b61d463fbd5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_box.html#a3aafcee14e1e0ea4a6fe1b61d463fbd5">updateMin</a> (const Vector3f &amp;p)</td></tr>
+<tr class="memdesc:a3aafcee14e1e0ea4a6fe1b61d463fbd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Détermine si le point min doit être modifiée pour comprendre le point <em>p</em>. <br />
+Si c'est le cas le point min s'adapte pour contenir le point. <br />
+.  <a href="#a3aafcee14e1e0ea4a6fe1b61d463fbd5">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a3aafcee14e1e0ea4a6fe1b61d463fbd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab637f4c06fd3359557445917f18d4f1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_box.html#ab637f4c06fd3359557445917f18d4f1f">updateMax</a> (const Vector3f &amp;p)</td></tr>
+<tr class="memdesc:ab637f4c06fd3359557445917f18d4f1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Détermine si le point max doit être modifiée pour comprendre le point <em>p</em>. <br />
+Si c'est le cas le point max s'adapte pour contenir le point. <br />
+.  <a href="#ab637f4c06fd3359557445917f18d4f1f">Plus de détails...</a><br /></td></tr>
+<tr class="separator:ab637f4c06fd3359557445917f18d4f1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ffb517da2017677041941e1b2f60f1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_box.html#a8ffb517da2017677041941e1b2f60f1f">parcourtPoints</a> (const std::vector&lt; Vector3f &gt; &amp;points)</td></tr>
+<tr class="memdesc:a8ffb517da2017677041941e1b2f60f1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Détermine la positions de min et max pour englober tous les points de <em>points</em>.  <a href="#a8ffb517da2017677041941e1b2f60f1f">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a8ffb517da2017677041941e1b2f60f1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54e436e7e487b4a9c75eaf342d430b64"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_box.html#a54e436e7e487b4a9c75eaf342d430b64">intersectIn</a> (const <a class="el" href="class_rayon.html">Rayon</a> &amp;r) const </td></tr>
+<tr class="memdesc:a54e436e7e487b4a9c75eaf342d430b64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test si le rayon r traverse la boite.  <a href="#a54e436e7e487b4a9c75eaf342d430b64">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a54e436e7e487b4a9c75eaf342d430b64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Classe d'un objet géométrique de type boite. <br />
+ Il sert de boite englobante pour les objets. </p>
+</div><h2 class="groupheader">Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="a2353559b5ce40e7edcc85daddd86f292"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Box::Box </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; Vector3f &gt; &amp;&#160;</td>
+          <td class="paramname"><em>points</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructeur qui utilisera un ensemble de points pour calculer la boite englobante correspondante. <br />
+Le constructeur passe le relai à la fonction <a class="el" href="class_box.html#a8ffb517da2017677041941e1b2f60f1f" title="Détermine la positions de min et max pour englober tous les points de points. ">parcourtPoints()</a>. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">points</td><td>Tableau de position de points d'un objet. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des fonctions membres</h2>
+<a class="anchor" id="a173e401890b2cb5af0ba69d78c9df413"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Box::diffZ </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calcul la hauteur en <em>z</em> de la boite. </p>
+<dl class="section return"><dt>Renvoie</dt><dd>la hauteur en <em>z</em>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6ce97deba91479b4fa66c260c1a37c8a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Box::intersect </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_rayon.html">Rayon</a> &amp;&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;&#160;</td>
+          <td class="paramname"><em>distanceMin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;&#160;</td>
+          <td class="paramname"><em>distanceMax</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test si un rayon traverse la boite. <br />
+Si c'est le cas, la methode retournera les distance d'intersection sur la boite. (cf. <a class="el" href="class_rayon.html" title="Classe représentant un rayon lumineux. ">Rayon</a>) <br />
+Utilise la méthode <a class="el" href="class_box.html#a54e436e7e487b4a9c75eaf342d430b64" title="Test si le rayon r traverse la boite. ">intersectIn()</a>. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">r</td><td>Un rayon quelconque. (cf. <a class="el" href="class_rayon.html" title="Classe représentant un rayon lumineux. ">Rayon</a>) </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">distanceMin</td><td>coefficient de distance du premier impacte sur la boite par rapport à l'origine du rayon. <br />
+Le coefficient est dependant de la norme du vecteur direction du rayon. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">distanceMax</td><td>coefficient de distance du second impacte sur la boite par rapport à l'origine du rayon. <br />
+Le coefficient est dependant de la norme du vecteur direction du rayon. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le resultat du test. True = intersection, false = pas d'intersection. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a54e436e7e487b4a9c75eaf342d430b64"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Box::intersectIn </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_rayon.html">Rayon</a> &amp;&#160;</td>
+          <td class="paramname"><em>r</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Test si le rayon r traverse la boite. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">r</td><td>Un rayon quelconque. (cf. <a class="el" href="class_rayon.html" title="Classe représentant un rayon lumineux. ">Rayon</a>) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le test d'intersection entre la boite et <em>r</em>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2d6c41818d3d77ba71866528f5e6ccac"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Box::isIn </td>
+          <td>(</td>
+          <td class="paramtype">const Vector3f &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test si le point <em>p</em> est dans l'espace compris de la boite. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td>un point dans l'espace x, y, z. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le resultat du test. True = dedans, false = dehors. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5aebe0463a5c45d1cf966fbccabef94f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Box::merge </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_box.html">Box</a> &amp;&#160;</td>
+          <td class="paramname"><em>box2</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fait l'union entre deux boites, et redéfini min et max pour englober les deux boites. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">box2</td><td>Une seconde boite. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8b1ad9cb82546788f3ad6001429b5c5f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Box::operator+= </td>
+          <td>(</td>
+          <td class="paramtype">const Vector3f &amp;&#160;</td>
+          <td class="paramname"><em>t</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opère un translation rectiligne de la boite. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">t</td><td>Vecteur de translation de la boite. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8ffb517da2017677041941e1b2f60f1f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Box::parcourtPoints </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; Vector3f &gt; &amp;&#160;</td>
+          <td class="paramname"><em>points</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Détermine la positions de min et max pour englober tous les points de <em>points</em>. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">Un</td><td>ensemble de points. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a13162f123f21923c3b22ba02a2211143"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Box::update </td>
+          <td>(</td>
+          <td class="paramtype">const Vector3f &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Détermine si la boite englobante doit être modifiée pour comprendre le point <em>p</em>. <br />
+Si c'est le cas la boite s'adapte pour contenir le point. <br />
+Passe le relai à la méthode <a class="el" href="class_box.html#a3aafcee14e1e0ea4a6fe1b61d463fbd5" title="Détermine si le point min doit être modifiée pour comprendre le point p.  Si c&#39;est le cas le point mi...">updateMin()</a> et <a class="el" href="class_box.html#ab637f4c06fd3359557445917f18d4f1f" title="Détermine si le point max doit être modifiée pour comprendre le point p.  Si c&#39;est le cas le point ma...">updateMax()</a>. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td>un point dans l'espace x, y, z. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ab637f4c06fd3359557445917f18d4f1f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Box::updateMax </td>
+          <td>(</td>
+          <td class="paramtype">const Vector3f &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Détermine si le point max doit être modifiée pour comprendre le point <em>p</em>. <br />
+Si c'est le cas le point max s'adapte pour contenir le point. <br />
+. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td>un point dans l'espace x, y, z. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a3aafcee14e1e0ea4a6fe1b61d463fbd5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Box::updateMin </td>
+          <td>(</td>
+          <td class="paramtype">const Vector3f &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Détermine si le point min doit être modifiée pour comprendre le point <em>p</em>. <br />
+Si c'est le cas le point min s'adapte pour contenir le point. <br />
+. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td>un point dans l'espace x, y, z. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad4ee0fca654414f2f9f5092f70ab92e7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Box::updatePoint </td>
+          <td>(</td>
+          <td class="paramtype">const Vector3f &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Détermine si la boite englobante doit être modifiée pour comprendre le point <em>p</em>. <br />
+Si c'est le cas la boite s'adapte pour contenir le point. <br />
+Passe le relai à la méthode <a class="el" href="class_box.html#a13162f123f21923c3b22ba02a2211143" title="Détermine si la boite englobante doit être modifiée pour comprendre le point p.  Si c&#39;est le cas la b...">update()</a>. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td>un point dans l'espace x, y, z. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li><a class="el" href="box_8h_source.html">box.h</a></li>
+<li>box.cpp</li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>

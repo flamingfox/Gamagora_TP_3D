@@ -1,0 +1,106 @@
+\hypertarget{class_scene}{}\section{Référence de la classe Scene}
+\label{class_scene}\index{Scene@{Scene}}
+
+
+Correspond à un scène dans sa globalité.  
+
+
+
+
+{\ttfamily \#include $<$scene.\+h$>$}
+
+\subsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_scene_a24aafd995cbb2ab79cc2486651c58583}{}void {\bfseries add\+O} (\hyperlink{class_terrain}{Terrain} $\ast$obj)\label{class_scene_a24aafd995cbb2ab79cc2486651c58583}
+
+\item 
+\hypertarget{class_scene_ac4b0bd6c6ce0e166a6e24e45b8b016cc}{}void {\bfseries add\+C} (\hyperlink{class_camera}{Camera} $\ast$c)\label{class_scene_ac4b0bd6c6ce0e166a6e24e45b8b016cc}
+
+\item 
+bool \hyperlink{class_scene_a5ca5f4203a0dfa959379b978214659ce}{rendu} ()
+\begin{DoxyCompactList}\small\item\em Créer la visualisation de la scène dans une image. Utilise le procédé de lancé de rayons. ~\newline
+Utilise \hyperlink{class_scene_a1759ca5e74f8bde251720107609d5a69}{render()}. \end{DoxyCompactList}\item 
+void \hyperlink{class_scene_af3d56161ec47c25d1bc4eef4c24f8a13}{add\+Parcours\+Camera} (\hyperlink{class_terrain}{Terrain} $\ast$noise)
+\end{DoxyCompactItemize}
+\subsection*{Fonctions membres privées}
+\begin{DoxyCompactItemize}
+\item 
+Q\+Color \hyperlink{class_scene_a1759ca5e74f8bde251720107609d5a69}{render} (const Eigen\+::\+Vector3f \&point\+Impact, const \hyperlink{class_terrain}{Terrain} \&objleplusproche, const \hyperlink{class_rayon}{Rayon} \&ray)
+\begin{DoxyCompactList}\small\item\em Détermine la couleur d\textquotesingle{}un pixel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Attributs privés}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_scene_abc636ebd2381044849a525ff1c4c3131}{}std\+::vector$<$ \hyperlink{class_terrain}{Terrain} $\ast$ $>$ \hyperlink{class_scene_abc636ebd2381044849a525ff1c4c3131}{objects}\label{class_scene_abc636ebd2381044849a525ff1c4c3131}
+
+\begin{DoxyCompactList}\small\item\em Liste des objets dans la scène. \end{DoxyCompactList}\item 
+\hypertarget{class_scene_a766a660b1b9d851b14157a6d9373f719}{}std\+::vector$<$ \hyperlink{class_camera}{Camera} $\ast$ $>$ \hyperlink{class_scene_a766a660b1b9d851b14157a6d9373f719}{cameras}\label{class_scene_a766a660b1b9d851b14157a6d9373f719}
+
+\begin{DoxyCompactList}\small\item\em Liste des caméras dans la scène. \end{DoxyCompactList}\item 
+\hypertarget{class_scene_aff17f04cf8feffb105795466c3789197}{}const Q\+Color \hyperlink{class_scene_aff17f04cf8feffb105795466c3789197}{default\+\_\+color} = Q\+Color(116, 208, 241)\label{class_scene_aff17f04cf8feffb105795466c3789197}
+
+\begin{DoxyCompactList}\small\item\em Couleur de fond. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Correspond à un scène dans sa globalité. 
+
+\begin{DoxyAuthor}{Auteur}
+Aurelien Argoud 
+\end{DoxyAuthor}
+
+
+\subsection{Documentation des fonctions membres}
+\hypertarget{class_scene_af3d56161ec47c25d1bc4eef4c24f8a13}{}\index{Scene@{Scene}!add\+Parcours\+Camera@{add\+Parcours\+Camera}}
+\index{add\+Parcours\+Camera@{add\+Parcours\+Camera}!Scene@{Scene}}
+\subsubsection[{add\+Parcours\+Camera(\+Terrain $\ast$noise)}]{\setlength{\rightskip}{0pt plus 5cm}void Scene\+::add\+Parcours\+Camera (
+\begin{DoxyParamCaption}
+\item[{{\bf Terrain} $\ast$}]{noise}
+\end{DoxyParamCaption}
+)}\label{class_scene_af3d56161ec47c25d1bc4eef4c24f8a13}
+simule le parcours d\textquotesingle{}une camera sur le terrain de la scène \hypertarget{class_scene_a1759ca5e74f8bde251720107609d5a69}{}\index{Scene@{Scene}!render@{render}}
+\index{render@{render}!Scene@{Scene}}
+\subsubsection[{render(const Eigen\+::\+Vector3f \&point\+Impact, const Terrain \&objleplusproche, const Rayon \&ray)}]{\setlength{\rightskip}{0pt plus 5cm}Q\+Color Scene\+::render (
+\begin{DoxyParamCaption}
+\item[{const Eigen\+::\+Vector3f \&}]{point\+Impact, }
+\item[{const {\bf Terrain} \&}]{objleplusproche, }
+\item[{const {\bf Rayon} \&}]{ray}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_scene_a1759ca5e74f8bde251720107609d5a69}
+
+
+Détermine la couleur d\textquotesingle{}un pixel. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em point\+Impact} & Position d\textquotesingle{}un point d\textquotesingle{}impact entre un rayon (ray) et un objet (objleplusproche). \\
+\hline
+{\em objleplusproche} & Premier objet touché par le rayon ray. (cf. Object) \\
+\hline
+{\em ray} & un rayon. (cf. \hyperlink{class_rayon}{Rayon}) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+
+\end{DoxyReturn}
+\hypertarget{class_scene_a5ca5f4203a0dfa959379b978214659ce}{}\index{Scene@{Scene}!rendu@{rendu}}
+\index{rendu@{rendu}!Scene@{Scene}}
+\subsubsection[{rendu()}]{\setlength{\rightskip}{0pt plus 5cm}bool Scene\+::rendu (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_scene_a5ca5f4203a0dfa959379b978214659ce}
+
+
+Créer la visualisation de la scène dans une image. Utilise le procédé de lancé de rayons. ~\newline
+Utilise \hyperlink{class_scene_a1759ca5e74f8bde251720107609d5a69}{render()}. 
+
+\begin{DoxyReturn}{Renvoie}
+Si le rendu c\textquotesingle{}est bien déroulé. 
+\end{DoxyReturn}
+
+
+La documentation de cette classe a été générée à partir des fichiers suivants \+:\begin{DoxyCompactItemize}
+\item 
+rendu/scene.\+h\item 
+rendu/scene.\+cpp\end{DoxyCompactItemize}

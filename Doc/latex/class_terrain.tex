@@ -1,0 +1,402 @@
+\hypertarget{class_terrain}{}\section{Référence de la classe Terrain}
+\label{class_terrain}\index{Terrain@{Terrain}}
+
+
+Classe virtuelle de terrain. Sert de modèle pour les classes files \hyperlink{class_terrain_noise}{Terrain\+Noise} et \hyperlink{class_terrain_tab}{Terrain\+Tab}.  
+
+
+
+
+{\ttfamily \#include $<$terrain.\+h$>$}
+
+Graphe d\textquotesingle{}héritage de Terrain\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_terrain}
+\end{center}
+\end{figure}
+\subsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_terrain_acebfe49e26563a8c2ca49e44a74fb40f}{Terrain} (float \hyperlink{class_terrain_ae25fe0ac0800f0e1c57c9b33f38f5a37}{longueur}, float \hyperlink{class_terrain_a1153a4642fd691e7fe25f9af1faba132}{largeur})
+\begin{DoxyCompactList}\small\item\em Constructeur de \hyperlink{class_terrain_noise}{Terrain\+Noise}. \end{DoxyCompactList}\item 
+\hyperlink{class_terrain_aeae81c7f546cae03d468363b558f5beb}{Terrain} (float \hyperlink{class_terrain_ae25fe0ac0800f0e1c57c9b33f38f5a37}{longueur}, float \hyperlink{class_terrain_a1153a4642fd691e7fe25f9af1faba132}{largeur}, float amplitude)
+\begin{DoxyCompactList}\small\item\em Constructeur de \hyperlink{class_terrain_noise}{Terrain\+Noise}. \end{DoxyCompactList}\item 
+float \hyperlink{class_terrain_a8892842d80a9737a1aabd9505a0fb49f}{get\+Hauteur} (float x, float y) const 
+\begin{DoxyCompactList}\small\item\em Détermine la hauteur du terrain à la position {\itshape x}, {\itshape y}. ~\newline
+Regarde si la position est sur ou en dehors du terrain. ~\newline
+Passe le relai à \hyperlink{class_terrain_a63c855275f8270ccc0203bde0776a08f}{get\+Hauteur\+X\+Y()}. \end{DoxyCompactList}\item 
+float \hyperlink{class_terrain_aadd802c62f67a5cfbbf820d31b45f87c}{get\+Hauteur} (const Vector2f \&point\+X\+Y) const 
+\begin{DoxyCompactList}\small\item\em Surchage de la methode get\+Hauteur(float x, float y). \end{DoxyCompactList}\item 
+float \hyperlink{class_terrain_a53105ed5f4b2dceadf432b52c7dbb5a3}{get\+Hauteur} (const Vector3f \&point\+X\+Y\+Z) const 
+\begin{DoxyCompactList}\small\item\em Surchage de la methode get\+Hauteur(const Vector2f\& point\+X\+Y). \end{DoxyCompactList}\item 
+void \hyperlink{class_terrain_a0a1bdaf1c083c94f8abb0cf28c14ae94}{get\+Color} (float \&r, float \&g, float \&b, float x, float y) const 
+\begin{DoxyCompactList}\small\item\em Détermine la couleur de texture suivant une hauteur. \end{DoxyCompactList}\item 
+bool \hyperlink{class_terrain_a732fa3071315926ba8f65f2fdf3acd23}{intersect} (const \hyperlink{class_rayon}{Rayon} \&rayon, float \&coeff\+Distance, int \&i) const 
+\begin{DoxyCompactList}\small\item\em Test si un rayon traverse le terrain. ~\newline
+Si c\textquotesingle{}est le cas, la methode retournera la distance d\textquotesingle{}intersection la plus proche sur le terrain. (cf. \hyperlink{class_rayon}{Rayon}) ~\newline
+Utilise la méthode \hyperlink{class_terrain_a732fa3071315926ba8f65f2fdf3acd23}{intersect()} de \hyperlink{class_box}{Box}. \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_a50ed0e99f87cf87404c32c437cc6e20f}{}float {\bfseries get\+Min\+Elevation} () const \label{class_terrain_a50ed0e99f87cf87404c32c437cc6e20f}
+
+\item 
+\hypertarget{class_terrain_af50861f0e70b46e4bead8714f9e00c03}{}float {\bfseries get\+Max\+Elevation} () const \label{class_terrain_af50861f0e70b46e4bead8714f9e00c03}
+
+\item 
+Eigen\+::\+Vector3f \hyperlink{class_terrain_a60758bba8c5f1cfefe60498dab2b571d}{get\+Normal} (float x, float y) const 
+\begin{DoxyCompactList}\small\item\em Détermine la normal du terrain à la position {\itshape x}, {\itshape y}. ~\newline
+Regarde si les positions sont sur ou en dehors du terrain. ~\newline
+Passe le relai à \hyperlink{class_terrain_a8b666ed9d5f948734b0d1c49adb6b535}{get\+Normal\+X\+Y()}. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3f \hyperlink{class_terrain_a7c232e0d5b97f497e37229c8927dc112}{get\+Normal} (const Vector2f \&point\+X\+Y) const 
+\begin{DoxyCompactList}\small\item\em Surchage de la methode get\+Normal(float x, float y). \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3f \hyperlink{class_terrain_a885582cef2dfe1133db04045725f73bd}{get\+Normal} (const Vector3f \&point\+X\+Y\+Z) const 
+\begin{DoxyCompactList}\small\item\em Surchage de la methode get\+Hauteur(const Vector2f\& point\+X\+Y). \end{DoxyCompactList}\item 
+bool \hyperlink{class_terrain_a75b8699997d2aff3eb461cf8a9220bb4}{in\+Out} (const Eigen\+::\+Vector3f \&point\+X\+Y\+Z) const 
+\begin{DoxyCompactList}\small\item\em Test si le point {\itshape point\+X\+Y\+Z} est sous le terrain. \end{DoxyCompactList}\item 
+virtual float \hyperlink{class_terrain_a63c855275f8270ccc0203bde0776a08f}{get\+Hauteur\+X\+Y} (float x, float y) const  =0
+\begin{DoxyCompactList}\small\item\em Methode virtuel pour déterminer la hauteur du terrain à un point. ~\newline
+A redéfinir dans les classes filles. (cf. \hyperlink{class_terrain_noise}{Terrain\+Noise} et \hyperlink{class_terrain_tab}{Terrain\+Tab}) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Attributs publics}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_terrain_ab31cb1bf848ab141c994897ee15858f5}{}\hyperlink{class_box}{Box} \hyperlink{class_terrain_ab31cb1bf848ab141c994897ee15858f5}{box}\label{class_terrain_ab31cb1bf848ab141c994897ee15858f5}
+
+\begin{DoxyCompactList}\small\item\em La boite englobante du terrain. (cf. \hyperlink{class_box}{Box}) \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_ae25fe0ac0800f0e1c57c9b33f38f5a37}{}float \hyperlink{class_terrain_ae25fe0ac0800f0e1c57c9b33f38f5a37}{longueur}\label{class_terrain_ae25fe0ac0800f0e1c57c9b33f38f5a37}
+
+\begin{DoxyCompactList}\small\item\em Distance du terrain en metre sur l\textquotesingle{}axe y. \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_a1153a4642fd691e7fe25f9af1faba132}{}float \hyperlink{class_terrain_a1153a4642fd691e7fe25f9af1faba132}{largeur}\label{class_terrain_a1153a4642fd691e7fe25f9af1faba132}
+
+\begin{DoxyCompactList}\small\item\em Distance du terrain en metre sur l\textquotesingle{}axe x. \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_ab03b1edc97dc5d468eae0779bfcb805a}{}\hyperlink{class_color_gradient}{Color\+Gradient} \hyperlink{class_terrain_ab03b1edc97dc5d468eae0779bfcb805a}{heat\+Map\+Gradient}\label{class_terrain_ab03b1edc97dc5d468eae0779bfcb805a}
+
+\begin{DoxyCompactList}\small\item\em Conteneur de tableau de couleur. (cf. \hyperlink{class_color_gradient}{Color\+Gradient}) \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_aad0e8c34a758f963efb3e4a89ba10cbc}{}float \hyperlink{class_terrain_aad0e8c34a758f963efb3e4a89ba10cbc}{hauteur\+Max}\label{class_terrain_aad0e8c34a758f963efb3e4a89ba10cbc}
+
+\begin{DoxyCompactList}\small\item\em hauteur\+Max Altitude max du terrain. \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_ac89016fab6410586b08877b5c9790f27}{}float \hyperlink{class_terrain_ac89016fab6410586b08877b5c9790f27}{hauteur\+Min}\label{class_terrain_ac89016fab6410586b08877b5c9790f27}
+
+\begin{DoxyCompactList}\small\item\em hauteur\+Min Altitude min du terrain. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Fonctions membres protégées}
+\begin{DoxyCompactItemize}
+\item 
+virtual Eigen\+::\+Vector3f \hyperlink{class_terrain_a8b666ed9d5f948734b0d1c49adb6b535}{get\+Normal\+X\+Y} (float x, float y) const  =0
+\begin{DoxyCompactList}\small\item\em Methode virtuel pour déterminer la normal du terrain à un point. ~\newline
+. \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_a43f84c68d70b49af90637150c30e6f8b}{}void {\bfseries translate2} (const Vector3f \&t)\label{class_terrain_a43f84c68d70b49af90637150c30e6f8b}
+
+\item 
+\hypertarget{class_terrain_a9d8a4b5fabf8b8840a623ddf070cd866}{}virtual float {\bfseries min\+Elevation} () const  =0\label{class_terrain_a9d8a4b5fabf8b8840a623ddf070cd866}
+
+\item 
+\hypertarget{class_terrain_abd5ed37d041486bb06e7fedd5fa964a4}{}virtual float {\bfseries max\+Elevation} () const  =0\label{class_terrain_abd5ed37d041486bb06e7fedd5fa964a4}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Classe virtuelle de terrain. Sert de modèle pour les classes files \hyperlink{class_terrain_noise}{Terrain\+Noise} et \hyperlink{class_terrain_tab}{Terrain\+Tab}. 
+
+\subsection{Documentation des constructeurs et destructeur}
+\hypertarget{class_terrain_acebfe49e26563a8c2ca49e44a74fb40f}{}\index{Terrain@{Terrain}!Terrain@{Terrain}}
+\index{Terrain@{Terrain}!Terrain@{Terrain}}
+\subsubsection[{Terrain(float longueur, float largeur)}]{\setlength{\rightskip}{0pt plus 5cm}Terrain\+::\+Terrain (
+\begin{DoxyParamCaption}
+\item[{float}]{longueur, }
+\item[{float}]{largeur}
+\end{DoxyParamCaption}
+)}\label{class_terrain_acebfe49e26563a8c2ca49e44a74fb40f}
+
+
+Constructeur de \hyperlink{class_terrain_noise}{Terrain\+Noise}. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em longueur} & Distance du terrain en metre sur l\textquotesingle{}axe y \\
+\hline
+\mbox{\tt in}  & {\em largeur} & Distance du terrain en metre sur l\textquotesingle{}axe x \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_terrain_aeae81c7f546cae03d468363b558f5beb}{}\index{Terrain@{Terrain}!Terrain@{Terrain}}
+\index{Terrain@{Terrain}!Terrain@{Terrain}}
+\subsubsection[{Terrain(float longueur, float largeur, float amplitude)}]{\setlength{\rightskip}{0pt plus 5cm}Terrain\+::\+Terrain (
+\begin{DoxyParamCaption}
+\item[{float}]{longueur, }
+\item[{float}]{largeur, }
+\item[{float}]{amplitude}
+\end{DoxyParamCaption}
+)}\label{class_terrain_aeae81c7f546cae03d468363b558f5beb}
+
+
+Constructeur de \hyperlink{class_terrain_noise}{Terrain\+Noise}. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em longueur} & Distance du terrain en metre sur l\textquotesingle{}axe y \\
+\hline
+\mbox{\tt in}  & {\em largeur} & Distance du terrain en metre sur l\textquotesingle{}axe x \\
+\hline
+\mbox{\tt in}  & {\em amplitude} & Amplitude Max que pourra atteindre la terrain. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Documentation des fonctions membres}
+\hypertarget{class_terrain_a0a1bdaf1c083c94f8abb0cf28c14ae94}{}\index{Terrain@{Terrain}!get\+Color@{get\+Color}}
+\index{get\+Color@{get\+Color}!Terrain@{Terrain}}
+\subsubsection[{get\+Color(float \&r, float \&g, float \&b, float x, float y) const }]{\setlength{\rightskip}{0pt plus 5cm}void Terrain\+::get\+Color (
+\begin{DoxyParamCaption}
+\item[{float \&}]{r, }
+\item[{float \&}]{g, }
+\item[{float \&}]{b, }
+\item[{float}]{x, }
+\item[{float}]{y}
+\end{DoxyParamCaption}
+) const}\label{class_terrain_a0a1bdaf1c083c94f8abb0cf28c14ae94}
+
+
+Détermine la couleur de texture suivant une hauteur. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt out}  & {\em r} & La valeur rouge de la couleur. \\
+\hline
+\mbox{\tt out}  & {\em g} & La valeur vert de la couleur. \\
+\hline
+\mbox{\tt out}  & {\em b} & La valeur bleu de la couleur. \\
+\hline
+\mbox{\tt in}  & {\em x} & Position en {\itshape x} du point de couleur à déterminer. \\
+\hline
+\mbox{\tt in}  & {\em y} & Position en {\itshape y} du point de couleur à déterminer. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_terrain_a8892842d80a9737a1aabd9505a0fb49f}{}\index{Terrain@{Terrain}!get\+Hauteur@{get\+Hauteur}}
+\index{get\+Hauteur@{get\+Hauteur}!Terrain@{Terrain}}
+\subsubsection[{get\+Hauteur(float x, float y) const }]{\setlength{\rightskip}{0pt plus 5cm}float Terrain\+::get\+Hauteur (
+\begin{DoxyParamCaption}
+\item[{float}]{x, }
+\item[{float}]{y}
+\end{DoxyParamCaption}
+) const}\label{class_terrain_a8892842d80a9737a1aabd9505a0fb49f}
+
+
+Détermine la hauteur du terrain à la position {\itshape x}, {\itshape y}. ~\newline
+Regarde si la position est sur ou en dehors du terrain. ~\newline
+Passe le relai à \hyperlink{class_terrain_a63c855275f8270ccc0203bde0776a08f}{get\+Hauteur\+X\+Y()}. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em x} & position en {\itshape x} de la hauteur à déterminer. \\
+\hline
+\mbox{\tt in}  & {\em y} & position en {\itshape y} de la hauteur à déterminer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la hauteur du terrain à la position {\itshape x}, {\itshape y}. Si la position est hors map, la valeur sera H\+A\+U\+T\+E\+U\+R\+\_\+\+H\+O\+R\+S\+\_\+\+M\+A\+P. 
+\end{DoxyReturn}
+\hypertarget{class_terrain_aadd802c62f67a5cfbbf820d31b45f87c}{}\index{Terrain@{Terrain}!get\+Hauteur@{get\+Hauteur}}
+\index{get\+Hauteur@{get\+Hauteur}!Terrain@{Terrain}}
+\subsubsection[{get\+Hauteur(const Vector2f \&point\+X\+Y) const }]{\setlength{\rightskip}{0pt plus 5cm}float Terrain\+::get\+Hauteur (
+\begin{DoxyParamCaption}
+\item[{const Vector2f \&}]{point\+X\+Y}
+\end{DoxyParamCaption}
+) const}\label{class_terrain_aadd802c62f67a5cfbbf820d31b45f87c}
+
+
+Surchage de la methode get\+Hauteur(float x, float y). 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em point\+X\+Y} & Un point comprenant uniquement les axes {\itshape x}, {\itshape y}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la hauteur du terrain au point {\itshape point\+X\+Y}. 
+\end{DoxyReturn}
+\hypertarget{class_terrain_a53105ed5f4b2dceadf432b52c7dbb5a3}{}\index{Terrain@{Terrain}!get\+Hauteur@{get\+Hauteur}}
+\index{get\+Hauteur@{get\+Hauteur}!Terrain@{Terrain}}
+\subsubsection[{get\+Hauteur(const Vector3f \&point\+X\+Y\+Z) const }]{\setlength{\rightskip}{0pt plus 5cm}float Terrain\+::get\+Hauteur (
+\begin{DoxyParamCaption}
+\item[{const Vector3f \&}]{point\+X\+Y\+Z}
+\end{DoxyParamCaption}
+) const}\label{class_terrain_a53105ed5f4b2dceadf432b52c7dbb5a3}
+
+
+Surchage de la methode get\+Hauteur(const Vector2f\& point\+X\+Y). 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em point\+X\+Y\+Z} & Un point comprenant uniquement les axes {\itshape x}, {\itshape y}, {\itshape z}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la hauteur du terrain au point {\itshape point\+X\+Y\+Z}. 
+\end{DoxyReturn}
+\hypertarget{class_terrain_a63c855275f8270ccc0203bde0776a08f}{}\index{Terrain@{Terrain}!get\+Hauteur\+X\+Y@{get\+Hauteur\+X\+Y}}
+\index{get\+Hauteur\+X\+Y@{get\+Hauteur\+X\+Y}!Terrain@{Terrain}}
+\subsubsection[{get\+Hauteur\+X\+Y(float x, float y) const  =0}]{\setlength{\rightskip}{0pt plus 5cm}virtual float Terrain\+::get\+Hauteur\+X\+Y (
+\begin{DoxyParamCaption}
+\item[{float}]{x, }
+\item[{float}]{y}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{class_terrain_a63c855275f8270ccc0203bde0776a08f}
+
+
+Methode virtuel pour déterminer la hauteur du terrain à un point. ~\newline
+A redéfinir dans les classes filles. (cf. \hyperlink{class_terrain_noise}{Terrain\+Noise} et \hyperlink{class_terrain_tab}{Terrain\+Tab}) 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em x} & la position en x du point. \\
+\hline
+\mbox{\tt in}  & {\em y} & la position en y du point. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la hauteur du terrain au point donné. 
+\end{DoxyReturn}
+
+
+Implémenté dans \hyperlink{class_terrain_tab_a076546e6958b6b2edd94366976e21c78}{Terrain\+Tab}, et \hyperlink{class_terrain_noise_a4173f17958ed358f9b4a6b005b0ed256}{Terrain\+Noise}.
+
+\hypertarget{class_terrain_a60758bba8c5f1cfefe60498dab2b571d}{}\index{Terrain@{Terrain}!get\+Normal@{get\+Normal}}
+\index{get\+Normal@{get\+Normal}!Terrain@{Terrain}}
+\subsubsection[{get\+Normal(float x, float y) const }]{\setlength{\rightskip}{0pt plus 5cm}Vector3f Terrain\+::get\+Normal (
+\begin{DoxyParamCaption}
+\item[{float}]{x, }
+\item[{float}]{y}
+\end{DoxyParamCaption}
+) const}\label{class_terrain_a60758bba8c5f1cfefe60498dab2b571d}
+
+
+Détermine la normal du terrain à la position {\itshape x}, {\itshape y}. ~\newline
+Regarde si les positions sont sur ou en dehors du terrain. ~\newline
+Passe le relai à \hyperlink{class_terrain_a8b666ed9d5f948734b0d1c49adb6b535}{get\+Normal\+X\+Y()}. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em x} & position en {\itshape x} de la normal à déterminer. \\
+\hline
+\mbox{\tt in}  & {\em y} & position en {\itshape y} de la normal à déterminer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la hauteur du terrain à la position {\itshape x}, {\itshape y}. Si la position est hors map, la valeur sera un vecteur nul. 
+\end{DoxyReturn}
+\hypertarget{class_terrain_a7c232e0d5b97f497e37229c8927dc112}{}\index{Terrain@{Terrain}!get\+Normal@{get\+Normal}}
+\index{get\+Normal@{get\+Normal}!Terrain@{Terrain}}
+\subsubsection[{get\+Normal(const Vector2f \&point\+X\+Y) const }]{\setlength{\rightskip}{0pt plus 5cm}Vector3f Terrain\+::get\+Normal (
+\begin{DoxyParamCaption}
+\item[{const Vector2f \&}]{point\+X\+Y}
+\end{DoxyParamCaption}
+) const}\label{class_terrain_a7c232e0d5b97f497e37229c8927dc112}
+
+
+Surchage de la methode get\+Normal(float x, float y). 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em point\+X\+Y} & Un point comprenant uniquement les axes {\itshape x}, {\itshape y}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la normal du terrain au point {\itshape point\+X\+Y}. 
+\end{DoxyReturn}
+\hypertarget{class_terrain_a885582cef2dfe1133db04045725f73bd}{}\index{Terrain@{Terrain}!get\+Normal@{get\+Normal}}
+\index{get\+Normal@{get\+Normal}!Terrain@{Terrain}}
+\subsubsection[{get\+Normal(const Vector3f \&point\+X\+Y\+Z) const }]{\setlength{\rightskip}{0pt plus 5cm}Vector3f Terrain\+::get\+Normal (
+\begin{DoxyParamCaption}
+\item[{const Vector3f \&}]{point\+X\+Y\+Z}
+\end{DoxyParamCaption}
+) const}\label{class_terrain_a885582cef2dfe1133db04045725f73bd}
+
+
+Surchage de la methode get\+Hauteur(const Vector2f\& point\+X\+Y). 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em point\+X\+Y\+Z} & Un point comprenant uniquement les axes {\itshape x}, {\itshape y}, {\itshape z}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la normal du terrain au point {\itshape point\+X\+Y\+Z}. 
+\end{DoxyReturn}
+\hypertarget{class_terrain_a8b666ed9d5f948734b0d1c49adb6b535}{}\index{Terrain@{Terrain}!get\+Normal\+X\+Y@{get\+Normal\+X\+Y}}
+\index{get\+Normal\+X\+Y@{get\+Normal\+X\+Y}!Terrain@{Terrain}}
+\subsubsection[{get\+Normal\+X\+Y(float x, float y) const  =0}]{\setlength{\rightskip}{0pt plus 5cm}virtual Eigen\+::\+Vector3f Terrain\+::get\+Normal\+X\+Y (
+\begin{DoxyParamCaption}
+\item[{float}]{x, }
+\item[{float}]{y}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}\label{class_terrain_a8b666ed9d5f948734b0d1c49adb6b535}
+
+
+Methode virtuel pour déterminer la normal du terrain à un point. ~\newline
+. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em x} & la position en x du point. \\
+\hline
+\mbox{\tt in}  & {\em y} & la position en y du point. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+La normale à la position {\itshape x},{\itshape y}. 
+\end{DoxyReturn}
+
+
+Implémenté dans \hyperlink{class_terrain_tab_aaf94ed8b78c53bb798f7879c9249f3b3}{Terrain\+Tab}, et \hyperlink{class_terrain_noise_af50426bd1451cec938411d6bb5f82ac0}{Terrain\+Noise}.
+
+\hypertarget{class_terrain_a75b8699997d2aff3eb461cf8a9220bb4}{}\index{Terrain@{Terrain}!in\+Out@{in\+Out}}
+\index{in\+Out@{in\+Out}!Terrain@{Terrain}}
+\subsubsection[{in\+Out(const Eigen\+::\+Vector3f \&point\+X\+Y\+Z) const }]{\setlength{\rightskip}{0pt plus 5cm}bool Terrain\+::in\+Out (
+\begin{DoxyParamCaption}
+\item[{const Eigen\+::\+Vector3f \&}]{point\+X\+Y\+Z}
+\end{DoxyParamCaption}
+) const}\label{class_terrain_a75b8699997d2aff3eb461cf8a9220bb4}
+
+
+Test si le point {\itshape point\+X\+Y\+Z} est sous le terrain. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em point\+X\+Y\+Z} & un point quelconque. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Le resultat du test. Si le point point\+X\+Y\+Z est en dehors de la carte, la valeur sera false. 
+\end{DoxyReturn}
+\hypertarget{class_terrain_a732fa3071315926ba8f65f2fdf3acd23}{}\index{Terrain@{Terrain}!intersect@{intersect}}
+\index{intersect@{intersect}!Terrain@{Terrain}}
+\subsubsection[{intersect(const Rayon \&rayon, float \&coeff\+Distance, int \&i) const }]{\setlength{\rightskip}{0pt plus 5cm}bool Terrain\+::intersect (
+\begin{DoxyParamCaption}
+\item[{const {\bf Rayon} \&}]{rayon, }
+\item[{float \&}]{coeff\+Distance, }
+\item[{int \&}]{i}
+\end{DoxyParamCaption}
+) const}\label{class_terrain_a732fa3071315926ba8f65f2fdf3acd23}
+
+
+Test si un rayon traverse le terrain. ~\newline
+Si c\textquotesingle{}est le cas, la methode retournera la distance d\textquotesingle{}intersection la plus proche sur le terrain. (cf. \hyperlink{class_rayon}{Rayon}) ~\newline
+Utilise la méthode \hyperlink{class_terrain_a732fa3071315926ba8f65f2fdf3acd23}{intersect()} de \hyperlink{class_box}{Box}. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em rayon} & Un rayon quelconque. (cf. \hyperlink{class_rayon}{Rayon}) \\
+\hline
+\mbox{\tt out}  & {\em coeff\+Distance} & coefficient de distance de l\textquotesingle{}impacte sur le terrain par rapport à l\textquotesingle{}origine du rayon. ~\newline
+Le coefficient est dependant de la norme du vecteur direction du rayon. \\
+\hline
+\mbox{\tt out}  & {\em Nombre} & d\textquotesingle{}itération durant le ray marching. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Le resultat du test. True = intersection, false = pas d\textquotesingle{}intersection. 
+\end{DoxyReturn}
+
+
+La documentation de cette classe a été générée à partir des fichiers suivants \+:\begin{DoxyCompactItemize}
+\item 
+terrain/terrain.\+h\item 
+terrain/terrain.\+cpp\end{DoxyCompactItemize}

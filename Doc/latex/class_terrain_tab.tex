@@ -1,0 +1,277 @@
+\hypertarget{class_terrain_tab}{}\section{Référence de la classe Terrain\+Tab}
+\label{class_terrain_tab}\index{Terrain\+Tab@{Terrain\+Tab}}
+
+
+Classe fille de \hyperlink{class_terrain}{Terrain}. Elle s\textquotesingle{}appuis sur l\textquotesingle{}utilisation d\textquotesingle{}un image High\+Map pour déterminer la forme du terrain.  
+
+
+
+
+{\ttfamily \#include $<$terraintab.\+h$>$}
+
+Graphe d\textquotesingle{}héritage de Terrain\+Tab\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_terrain_tab}
+\end{center}
+\end{figure}
+\subsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_terrain_tab_ac31e7a1fb2f33a2875de3353c3eba76a}{Terrain\+Tab} (const Q\+Image \&img, float \hyperlink{class_terrain_ae25fe0ac0800f0e1c57c9b33f38f5a37}{longueur}, float \hyperlink{class_terrain_a1153a4642fd691e7fe25f9af1faba132}{largeur}, float \hyperlink{class_terrain_tab_a46e3284a38c404d326323091628abf03}{amplitude}=1.\+0f)
+\item 
+\hyperlink{class_terrain_tab_a04adc95147a7eceeac2eda0a62aa971a}{Terrain\+Tab} (const Q\+Image \&img, int \+\_\+nb\+Height, int \+\_\+nb\+Width, float \hyperlink{class_terrain_ae25fe0ac0800f0e1c57c9b33f38f5a37}{longueur}, float \hyperlink{class_terrain_a1153a4642fd691e7fe25f9af1faba132}{largeur}, float \+\_\+amplitude=1.\+0f)
+\item 
+\hyperlink{class_terrain_tab_afb333a647c91855ed76c41cba60903f7}{Terrain\+Tab} (const \hyperlink{class_terrain_tab}{Terrain\+Tab} \&copy)
+\begin{DoxyCompactList}\small\item\em Constructeur par copie. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Fonctions membres privées}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{class_terrain_tab_a076546e6958b6b2edd94366976e21c78}{get\+Hauteur\+X\+Y} (float x, float y) const 
+\begin{DoxyCompactList}\small\item\em Récupere la hauteur du terrain à un point donné. ~\newline
+Redéfinition de la methode. (cf. \hyperlink{class_terrain}{Terrain}) \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3f \hyperlink{class_terrain_tab_aaf94ed8b78c53bb798f7879c9249f3b3}{get\+Normal\+X\+Y} (float x, float y) const 
+\begin{DoxyCompactList}\small\item\em Calcul la normale d\textquotesingle{}un point sur le terrain. \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_tab_a6d4a9f721bcea94798b66d24a6ce065f}{}void \hyperlink{class_terrain_tab_a6d4a9f721bcea94798b66d24a6ce065f}{init\+Grille} ()\label{class_terrain_tab_a6d4a9f721bcea94798b66d24a6ce065f}
+
+\begin{DoxyCompactList}\small\item\em Initialise et remplis la grille topographique avec l\textquotesingle{}image donnée dans le constructeur. Deplus les indications complémentaire \+: \+\_\+nb\+Height et \+\_\+nb\+Width sont utilisées dans le processus. \end{DoxyCompactList}\item 
+void \hyperlink{class_terrain_tab_a1e83068235cd90e879667fc3c1b6c8d0}{simple\+Init\+Image} (const Q\+Image \&img)
+\begin{DoxyCompactList}\small\item\em Initialise et remplis la grille topographique suivant l\textquotesingle{}image données en paramètre. La grille aura le même precision que l\textquotesingle{}image donnée. \end{DoxyCompactList}\item 
+float \hyperlink{class_terrain_tab_ac004fb257c99905c71303d819c9b8df7}{get} (int x, int y) const 
+\begin{DoxyCompactList}\small\item\em Récupere la hauteur du terrain à un point donné. Le point doit correspondre à un point existant sur la carte. Aucun approximation ne sera faite. \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_tab_a1e534af1daceb931f558245d8b584084}{}void \hyperlink{class_terrain_tab_a1e534af1daceb931f558245d8b584084}{update\+Min\+Elevation} ()\label{class_terrain_tab_a1e534af1daceb931f558245d8b584084}
+
+\begin{DoxyCompactList}\small\item\em Détermine l\textquotesingle{}élévation minimum du terrain et ajuste \hyperlink{class_terrain_tab_ad8e9ca00da63f66915658151516d10fc}{hauteur\+Min}. \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_tab_a65271db7916caf5f8ebddf5aa1ad7021}{}void \hyperlink{class_terrain_tab_a65271db7916caf5f8ebddf5aa1ad7021}{update\+Max\+Elevation} ()\label{class_terrain_tab_a65271db7916caf5f8ebddf5aa1ad7021}
+
+\begin{DoxyCompactList}\small\item\em Détermine l\textquotesingle{}élévation maximum du terrain et ajuste \hyperlink{class_terrain_tab_a6b8b4f7bd611b40d59e8b60e105ce1a8}{hauteur\+Max}. \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_tab_a09fcdcde6adeb9c3b51c1368380dbb6b}{}void \hyperlink{class_terrain_tab_a09fcdcde6adeb9c3b51c1368380dbb6b}{update\+Elevation} ()\label{class_terrain_tab_a09fcdcde6adeb9c3b51c1368380dbb6b}
+
+\begin{DoxyCompactList}\small\item\em Détermine l\textquotesingle{}élévation minimum et maximum du terrain et ajuste \hyperlink{class_terrain_tab_ad8e9ca00da63f66915658151516d10fc}{hauteur\+Min}, \hyperlink{class_terrain_tab_a6b8b4f7bd611b40d59e8b60e105ce1a8}{hauteur\+Max}. \end{DoxyCompactList}\item 
+float \hyperlink{class_terrain_tab_aa7bc7042c28393faf0813820ab1c1d6f}{min\+Elevation} () const 
+\item 
+float \hyperlink{class_terrain_tab_abbfa195b063129a3b96e6485cf37ad27}{max\+Elevation} () const 
+\end{DoxyCompactItemize}
+\subsection*{Attributs privés}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_terrain_tab_a8213ff78ba0bae26a3ca0391166a5128}{}int \hyperlink{class_terrain_tab_a8213ff78ba0bae26a3ca0391166a5128}{height}\label{class_terrain_tab_a8213ff78ba0bae26a3ca0391166a5128}
+
+\begin{DoxyCompactList}\small\item\em height Hauteur de l\textquotesingle{}image High\+Map. \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_tab_a4cfde4817009ea768a1c071c00c2f1fd}{}int \hyperlink{class_terrain_tab_a4cfde4817009ea768a1c071c00c2f1fd}{width}\label{class_terrain_tab_a4cfde4817009ea768a1c071c00c2f1fd}
+
+\begin{DoxyCompactList}\small\item\em width Largeur de l\textquotesingle{}image High\+Map. \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_tab_a46e3284a38c404d326323091628abf03}{}float \hyperlink{class_terrain_tab_a46e3284a38c404d326323091628abf03}{amplitude}\label{class_terrain_tab_a46e3284a38c404d326323091628abf03}
+
+\begin{DoxyCompactList}\small\item\em amplitude Amplitude max attegnable par le terrain. \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_tab_a0b095b4aeb69aa00a75d543cd726e608}{}float $\ast$ \hyperlink{class_terrain_tab_a0b095b4aeb69aa00a75d543cd726e608}{grille} = nullptr\label{class_terrain_tab_a0b095b4aeb69aa00a75d543cd726e608}
+
+\begin{DoxyCompactList}\small\item\em grille \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_tab_ace8f6807c917c7c186cf688e2c286f10}{}float $\ast$$\ast$ \hyperlink{class_terrain_tab_ace8f6807c917c7c186cf688e2c286f10}{grille2d} = nullptr\label{class_terrain_tab_ace8f6807c917c7c186cf688e2c286f10}
+
+\begin{DoxyCompactList}\small\item\em grille2d \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_tab_a6b8b4f7bd611b40d59e8b60e105ce1a8}{}float \hyperlink{class_terrain_tab_a6b8b4f7bd611b40d59e8b60e105ce1a8}{hauteur\+Max}\label{class_terrain_tab_a6b8b4f7bd611b40d59e8b60e105ce1a8}
+
+\begin{DoxyCompactList}\small\item\em hauteur\+Max Altitude max du terrain. \end{DoxyCompactList}\item 
+\hypertarget{class_terrain_tab_ad8e9ca00da63f66915658151516d10fc}{}float \hyperlink{class_terrain_tab_ad8e9ca00da63f66915658151516d10fc}{hauteur\+Min}\label{class_terrain_tab_ad8e9ca00da63f66915658151516d10fc}
+
+\begin{DoxyCompactList}\small\item\em hauteur\+Min Altitude min du terrain. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Membres hérités additionnels}
+
+
+\subsection{Description détaillée}
+Classe fille de \hyperlink{class_terrain}{Terrain}. Elle s\textquotesingle{}appuis sur l\textquotesingle{}utilisation d\textquotesingle{}un image High\+Map pour déterminer la forme du terrain. 
+
+\subsection{Documentation des constructeurs et destructeur}
+\hypertarget{class_terrain_tab_ac31e7a1fb2f33a2875de3353c3eba76a}{}\index{Terrain\+Tab@{Terrain\+Tab}!Terrain\+Tab@{Terrain\+Tab}}
+\index{Terrain\+Tab@{Terrain\+Tab}!Terrain\+Tab@{Terrain\+Tab}}
+\subsubsection[{Terrain\+Tab(const Q\+Image \&img, float longueur, float largeur, float amplitude=1.\+0f)}]{\setlength{\rightskip}{0pt plus 5cm}Terrain\+Tab\+::\+Terrain\+Tab (
+\begin{DoxyParamCaption}
+\item[{const Q\+Image \&}]{img, }
+\item[{float}]{longueur, }
+\item[{float}]{largeur, }
+\item[{float}]{amplitude = {\ttfamily 1.0f}}
+\end{DoxyParamCaption}
+)}\label{class_terrain_tab_ac31e7a1fb2f33a2875de3353c3eba76a}
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em img} & Image High\+Map contenant le relief du terrain. \\
+\hline
+\mbox{\tt in}  & {\em longueur} & Distance du terrain en metre sur l\textquotesingle{}axe y. \\
+\hline
+\mbox{\tt in}  & {\em largeur} & Distance du terrain en metre sur l\textquotesingle{}axe x. \\
+\hline
+\mbox{\tt in}  & {\em amplitude} & Amplitude Max que pourra atteindre la terrain. 255 sur un pixel correspondra à cette valeur. Par défaut, la valeur est de 1. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_terrain_tab_a04adc95147a7eceeac2eda0a62aa971a}{}\index{Terrain\+Tab@{Terrain\+Tab}!Terrain\+Tab@{Terrain\+Tab}}
+\index{Terrain\+Tab@{Terrain\+Tab}!Terrain\+Tab@{Terrain\+Tab}}
+\subsubsection[{Terrain\+Tab(const Q\+Image \&img, int \+\_\+nb\+Height, int \+\_\+nb\+Width, float longueur, float largeur, float \+\_\+amplitude=1.\+0f)}]{\setlength{\rightskip}{0pt plus 5cm}Terrain\+Tab\+::\+Terrain\+Tab (
+\begin{DoxyParamCaption}
+\item[{const Q\+Image \&}]{img, }
+\item[{int}]{\+\_\+nb\+Height, }
+\item[{int}]{\+\_\+nb\+Width, }
+\item[{float}]{longueur, }
+\item[{float}]{largeur, }
+\item[{float}]{\+\_\+amplitude = {\ttfamily 1.0f}}
+\end{DoxyParamCaption}
+)}\label{class_terrain_tab_a04adc95147a7eceeac2eda0a62aa971a}
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em img} & Image High\+Map contenant le relief du terrain. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+nb\+Height} & Nombre de points composant l\textquotesingle{}axe y du terrain. Ce nombre détermine la précision de la topographie du terrain sur cette axe. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+nb\+Width} & Nombre de points composant l\textquotesingle{}axe x du terrain. Ce nombre détermine la précision de la topographie du terrain sur cette axe. \\
+\hline
+\mbox{\tt in}  & {\em longueur} & Distance du terrain en metre sur l\textquotesingle{}axe y. \\
+\hline
+\mbox{\tt in}  & {\em largeur} & Distance du terrain en metre sur l\textquotesingle{}axe x. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+amplitude} & Amplitude Max que pourra atteindre la terrain. 255 sur un pixel correspondra à cette valeur. Par défaut, la valeur est de 1. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_terrain_tab_afb333a647c91855ed76c41cba60903f7}{}\index{Terrain\+Tab@{Terrain\+Tab}!Terrain\+Tab@{Terrain\+Tab}}
+\index{Terrain\+Tab@{Terrain\+Tab}!Terrain\+Tab@{Terrain\+Tab}}
+\subsubsection[{Terrain\+Tab(const Terrain\+Tab \&copy)}]{\setlength{\rightskip}{0pt plus 5cm}Terrain\+Tab\+::\+Terrain\+Tab (
+\begin{DoxyParamCaption}
+\item[{const {\bf Terrain\+Tab} \&}]{copy}
+\end{DoxyParamCaption}
+)}\label{class_terrain_tab_afb333a647c91855ed76c41cba60903f7}
+
+
+Constructeur par copie. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em Le} & terrain à copier. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Documentation des fonctions membres}
+\hypertarget{class_terrain_tab_ac004fb257c99905c71303d819c9b8df7}{}\index{Terrain\+Tab@{Terrain\+Tab}!get@{get}}
+\index{get@{get}!Terrain\+Tab@{Terrain\+Tab}}
+\subsubsection[{get(int x, int y) const }]{\setlength{\rightskip}{0pt plus 5cm}float Terrain\+Tab\+::get (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}\label{class_terrain_tab_ac004fb257c99905c71303d819c9b8df7}
+
+
+Récupere la hauteur du terrain à un point donné. Le point doit correspondre à un point existant sur la carte. Aucun approximation ne sera faite. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em x} & la position en x du point. \\
+\hline
+\mbox{\tt in}  & {\em y} & la position en y du point. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la hauteur du terrain au point donné. 
+\end{DoxyReturn}
+\hypertarget{class_terrain_tab_a076546e6958b6b2edd94366976e21c78}{}\index{Terrain\+Tab@{Terrain\+Tab}!get\+Hauteur\+X\+Y@{get\+Hauteur\+X\+Y}}
+\index{get\+Hauteur\+X\+Y@{get\+Hauteur\+X\+Y}!Terrain\+Tab@{Terrain\+Tab}}
+\subsubsection[{get\+Hauteur\+X\+Y(float x, float y) const }]{\setlength{\rightskip}{0pt plus 5cm}float Terrain\+Tab\+::get\+Hauteur\+X\+Y (
+\begin{DoxyParamCaption}
+\item[{float}]{x, }
+\item[{float}]{y}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [virtual]}}\label{class_terrain_tab_a076546e6958b6b2edd94366976e21c78}
+
+
+Récupere la hauteur du terrain à un point donné. ~\newline
+Redéfinition de la methode. (cf. \hyperlink{class_terrain}{Terrain}) 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em x} & abscisse du terrain (entre 0 et 1). \\
+\hline
+\mbox{\tt in}  & {\em y} & ordonnée du terrain (entre 0 et 1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la hauteur du terrain au point donné. 
+\end{DoxyReturn}
+
+
+Implémente \hyperlink{class_terrain_a63c855275f8270ccc0203bde0776a08f}{Terrain}.
+
+\hypertarget{class_terrain_tab_aaf94ed8b78c53bb798f7879c9249f3b3}{}\index{Terrain\+Tab@{Terrain\+Tab}!get\+Normal\+X\+Y@{get\+Normal\+X\+Y}}
+\index{get\+Normal\+X\+Y@{get\+Normal\+X\+Y}!Terrain\+Tab@{Terrain\+Tab}}
+\subsubsection[{get\+Normal\+X\+Y(float x, float y) const }]{\setlength{\rightskip}{0pt plus 5cm}Eigen\+::\+Vector3f Terrain\+Tab\+::get\+Normal\+X\+Y (
+\begin{DoxyParamCaption}
+\item[{float}]{x, }
+\item[{float}]{y}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [virtual]}}\label{class_terrain_tab_aaf94ed8b78c53bb798f7879c9249f3b3}
+
+
+Calcul la normale d\textquotesingle{}un point sur le terrain. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em x} & abscisse du terrain (entre 0 et 1). \\
+\hline
+\mbox{\tt in}  & {\em y} & ordonnée du terrain (entre 0 et 1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la hauteur du terrain à ses coordonnées x, y. 
+\end{DoxyReturn}
+
+
+Implémente \hyperlink{class_terrain_a8b666ed9d5f948734b0d1c49adb6b535}{Terrain}.
+
+\hypertarget{class_terrain_tab_abbfa195b063129a3b96e6485cf37ad27}{}\index{Terrain\+Tab@{Terrain\+Tab}!max\+Elevation@{max\+Elevation}}
+\index{max\+Elevation@{max\+Elevation}!Terrain\+Tab@{Terrain\+Tab}}
+\subsubsection[{max\+Elevation() const }]{\setlength{\rightskip}{0pt plus 5cm}float Terrain\+Tab\+::max\+Elevation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [virtual]}}\label{class_terrain_tab_abbfa195b063129a3b96e6485cf37ad27}
+\begin{DoxyReturn}{Renvoie}
+L\textquotesingle{}élévation maximum du terrain. 
+\end{DoxyReturn}
+
+
+Implémente \hyperlink{class_terrain}{Terrain}.
+
+\hypertarget{class_terrain_tab_aa7bc7042c28393faf0813820ab1c1d6f}{}\index{Terrain\+Tab@{Terrain\+Tab}!min\+Elevation@{min\+Elevation}}
+\index{min\+Elevation@{min\+Elevation}!Terrain\+Tab@{Terrain\+Tab}}
+\subsubsection[{min\+Elevation() const }]{\setlength{\rightskip}{0pt plus 5cm}float Terrain\+Tab\+::min\+Elevation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [virtual]}}\label{class_terrain_tab_aa7bc7042c28393faf0813820ab1c1d6f}
+\begin{DoxyReturn}{Renvoie}
+L\textquotesingle{}élévation minimim du terrain. 
+\end{DoxyReturn}
+
+
+Implémente \hyperlink{class_terrain}{Terrain}.
+
+\hypertarget{class_terrain_tab_a1e83068235cd90e879667fc3c1b6c8d0}{}\index{Terrain\+Tab@{Terrain\+Tab}!simple\+Init\+Image@{simple\+Init\+Image}}
+\index{simple\+Init\+Image@{simple\+Init\+Image}!Terrain\+Tab@{Terrain\+Tab}}
+\subsubsection[{simple\+Init\+Image(const Q\+Image \&img)}]{\setlength{\rightskip}{0pt plus 5cm}void Terrain\+Tab\+::simple\+Init\+Image (
+\begin{DoxyParamCaption}
+\item[{const Q\+Image \&}]{img}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_terrain_tab_a1e83068235cd90e879667fc3c1b6c8d0}
+
+
+Initialise et remplis la grille topographique suivant l\textquotesingle{}image données en paramètre. La grille aura le même precision que l\textquotesingle{}image donnée. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em L\textquotesingle{}image} & High\+Map contenant le relief du terrain.\\
+\hline
+\end{DoxyParams}
+construit un terrain avec le même nombre de point que le nombre de pixel de l\textquotesingle{}image 
+
+La documentation de cette classe a été générée à partir des fichiers suivants \+:\begin{DoxyCompactItemize}
+\item 
+terrain/terraintab.\+h\item 
+terrain/terraintab.\+cpp\end{DoxyCompactItemize}

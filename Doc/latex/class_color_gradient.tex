@@ -1,0 +1,97 @@
+\hypertarget{class_color_gradient}{}\section{Référence de la classe Color\+Gradient}
+\label{class_color_gradient}\index{Color\+Gradient@{Color\+Gradient}}
+
+
+Class containing multiple color and perform a gradient on this color.  
+
+
+
+
+{\ttfamily \#include $<$colorgradient.\+h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_color_gradient_1_1_color_point}{Color\+Point}
+\begin{DoxyCompactList}\small\item\em Internal class used to store colors at different points in the gradient. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_color_gradient_a611f25f238e0781f27d2821971f4ac27}{add\+Color\+Point} (float red, float green, float blue, float value)
+\begin{DoxyCompactList}\small\item\em Inserts a new color point into its correct position. \end{DoxyCompactList}\item 
+\hypertarget{class_color_gradient_aeaa1447003e70159ab0bcd4197f80aa4}{}void \hyperlink{class_color_gradient_aeaa1447003e70159ab0bcd4197f80aa4}{clear\+Gradient} ()\label{class_color_gradient_aeaa1447003e70159ab0bcd4197f80aa4}
+
+\begin{DoxyCompactList}\small\item\em Inserts a new color point into its correct position. \end{DoxyCompactList}\item 
+\hypertarget{class_color_gradient_ae8e90e868e0904445061b9522d3764c4}{}void \hyperlink{class_color_gradient_ae8e90e868e0904445061b9522d3764c4}{create\+Default\+Heat\+Map\+Gradient} ()\label{class_color_gradient_ae8e90e868e0904445061b9522d3764c4}
+
+\begin{DoxyCompactList}\small\item\em Places a 5 color heapmap gradient into the \char`\"{}color\char`\"{} vector. \end{DoxyCompactList}\item 
+void \hyperlink{class_color_gradient_a2dfdd3a89831c4fa6cadd77dbf83cb04}{get\+Color\+At\+Value} (const float value, float \&red, float \&green, float \&blue) const 
+\begin{DoxyCompactList}\small\item\em values representing that position in the gradient. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Attributs privés}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_color_gradient_a40b6c2f12b13e0855745b420ef2847de}{}std\+::vector$<$ \hyperlink{struct_color_gradient_1_1_color_point}{Color\+Point} $>$ \hyperlink{class_color_gradient_a40b6c2f12b13e0855745b420ef2847de}{color}\label{class_color_gradient_a40b6c2f12b13e0855745b420ef2847de}
+
+\begin{DoxyCompactList}\small\item\em An array of color points in ascending value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Class containing multiple color and perform a gradient on this color. 
+
+\subsection{Documentation des fonctions membres}
+\hypertarget{class_color_gradient_a611f25f238e0781f27d2821971f4ac27}{}\index{Color\+Gradient@{Color\+Gradient}!add\+Color\+Point@{add\+Color\+Point}}
+\index{add\+Color\+Point@{add\+Color\+Point}!Color\+Gradient@{Color\+Gradient}}
+\subsubsection[{add\+Color\+Point(float red, float green, float blue, float value)}]{\setlength{\rightskip}{0pt plus 5cm}void Color\+Gradient\+::add\+Color\+Point (
+\begin{DoxyParamCaption}
+\item[{float}]{red, }
+\item[{float}]{green, }
+\item[{float}]{blue, }
+\item[{float}]{value}
+\end{DoxyParamCaption}
+)}\label{class_color_gradient_a611f25f238e0781f27d2821971f4ac27}
+
+
+Inserts a new color point into its correct position. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em red} & red value of the color. \\
+\hline
+\mbox{\tt in}  & {\em green} & green value of the color. \\
+\hline
+\mbox{\tt in}  & {\em blue} & blue value of the color. \\
+\hline
+\mbox{\tt in}  & {\em value} & position along the gradient. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_color_gradient_a2dfdd3a89831c4fa6cadd77dbf83cb04}{}\index{Color\+Gradient@{Color\+Gradient}!get\+Color\+At\+Value@{get\+Color\+At\+Value}}
+\index{get\+Color\+At\+Value@{get\+Color\+At\+Value}!Color\+Gradient@{Color\+Gradient}}
+\subsubsection[{get\+Color\+At\+Value(const float value, float \&red, float \&green, float \&blue) const }]{\setlength{\rightskip}{0pt plus 5cm}void Color\+Gradient\+::get\+Color\+At\+Value (
+\begin{DoxyParamCaption}
+\item[{const float}]{value, }
+\item[{float \&}]{red, }
+\item[{float \&}]{green, }
+\item[{float \&}]{blue}
+\end{DoxyParamCaption}
+) const}\label{class_color_gradient_a2dfdd3a89831c4fa6cadd77dbf83cb04}
+
+
+values representing that position in the gradient. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em value} & a value between 0 and 1. \\
+\hline
+\mbox{\tt out}  & {\em red} & red value of the color. \\
+\hline
+\mbox{\tt out}  & {\em green} & green value of the color. \\
+\hline
+\mbox{\tt out}  & {\em blue} & blue value of the color. \\
+\hline
+\end{DoxyParams}
+
+
+La documentation de cette classe a été générée à partir des fichiers suivants \+:\begin{DoxyCompactItemize}
+\item 
+rendu/colorgradient.\+h\item 
+rendu/colorgradient.\+cpp\end{DoxyCompactItemize}

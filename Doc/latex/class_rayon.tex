@@ -1,0 +1,89 @@
+\hypertarget{class_rayon}{}\section{Référence de la classe Rayon}
+\label{class_rayon}\index{Rayon@{Rayon}}
+
+
+Classe représentant un rayon lumineux.  
+
+
+
+
+{\ttfamily \#include $<$rayon.\+h$>$}
+
+\subsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_rayon_a7bd3d77cf9257f49f071fdb77e906f2a}{Rayon} (const Eigen\+::\+Vector3f \&origine, const Eigen\+::\+Vector3f \&direction)
+\begin{DoxyCompactList}\small\item\em Constructeur paramètré. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3f \hyperlink{class_rayon_a022a008c4afc2fa050e60a3d3d04c938}{Reflect} (const Eigen\+::\+Vector3f \&normal)
+\begin{DoxyCompactList}\small\item\em Calcul la direction du rayon réfléchie par rapport à une surface. \end{DoxyCompactList}\item 
+\hypertarget{class_rayon_a8f71b0c28e99a0f150bae1a654030adb}{}Eigen\+::\+Vector3f {\bfseries get\+Origine} () const \label{class_rayon_a8f71b0c28e99a0f150bae1a654030adb}
+
+\item 
+\hypertarget{class_rayon_aedfd1733249c365f086cf77e556db8e4}{}Eigen\+::\+Vector3f {\bfseries get\+Direction} () const \label{class_rayon_aedfd1733249c365f086cf77e556db8e4}
+
+\item 
+\hypertarget{class_rayon_aa2e433a4499bd29ae49fd6816eebb599}{}void {\bfseries set\+Direction} (const Eigen\+::\+Vector3f \&dir)\label{class_rayon_aa2e433a4499bd29ae49fd6816eebb599}
+
+\end{DoxyCompactItemize}
+\subsection*{Attributs protégés}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_rayon_a2a57e8cdc815851eda6a6ac1bd2c0791}{}Eigen\+::\+Vector3f \hyperlink{class_rayon_a2a57e8cdc815851eda6a6ac1bd2c0791}{\+\_\+origine}\label{class_rayon_a2a57e8cdc815851eda6a6ac1bd2c0791}
+
+\begin{DoxyCompactList}\small\item\em position d\textquotesingle{}origine du rayon. \end{DoxyCompactList}\item 
+\hypertarget{class_rayon_a61a4c9a33329d9c59871a88b972a3b97}{}Eigen\+::\+Vector3f \hyperlink{class_rayon_a61a4c9a33329d9c59871a88b972a3b97}{\+\_\+direction}\label{class_rayon_a61a4c9a33329d9c59871a88b972a3b97}
+
+\begin{DoxyCompactList}\small\item\em direction du rayon. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Classe représentant un rayon lumineux. 
+
+\subsection{Documentation des constructeurs et destructeur}
+\hypertarget{class_rayon_a7bd3d77cf9257f49f071fdb77e906f2a}{}\index{Rayon@{Rayon}!Rayon@{Rayon}}
+\index{Rayon@{Rayon}!Rayon@{Rayon}}
+\subsubsection[{Rayon(const Eigen\+::\+Vector3f \&origine, const Eigen\+::\+Vector3f \&direction)}]{\setlength{\rightskip}{0pt plus 5cm}Rayon\+::\+Rayon (
+\begin{DoxyParamCaption}
+\item[{const Eigen\+::\+Vector3f \&}]{origine, }
+\item[{const Eigen\+::\+Vector3f \&}]{direction}
+\end{DoxyParamCaption}
+)}\label{class_rayon_a7bd3d77cf9257f49f071fdb77e906f2a}
+
+
+Constructeur paramètré. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em Position} & d\textquotesingle{}origine du rayon. \\
+\hline
+\mbox{\tt in}  & {\em Vecteur} & direction du rayon. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Documentation des fonctions membres}
+\hypertarget{class_rayon_a022a008c4afc2fa050e60a3d3d04c938}{}\index{Rayon@{Rayon}!Reflect@{Reflect}}
+\index{Reflect@{Reflect}!Rayon@{Rayon}}
+\subsubsection[{Reflect(const Eigen\+::\+Vector3f \&normal)}]{\setlength{\rightskip}{0pt plus 5cm}Eigen\+::\+Vector3f Rayon\+::\+Reflect (
+\begin{DoxyParamCaption}
+\item[{const Eigen\+::\+Vector3f \&}]{normal}
+\end{DoxyParamCaption}
+)}\label{class_rayon_a022a008c4afc2fa050e60a3d3d04c938}
+
+
+Calcul la direction du rayon réfléchie par rapport à une surface. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em normal} & La normale à de la surface. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Le vecteur direction du rayon après réflection. 
+\end{DoxyReturn}
+
+
+La documentation de cette classe a été générée à partir des fichiers suivants \+:\begin{DoxyCompactItemize}
+\item 
+rendu/rayon.\+h\item 
+rendu/rayon.\+cpp\end{DoxyCompactItemize}

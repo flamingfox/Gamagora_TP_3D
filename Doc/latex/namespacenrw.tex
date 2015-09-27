@@ -1,0 +1,93 @@
+\hypertarget{namespacenrw}{}\section{Référence de l\textquotesingle{}espace de nommage nrw}
+\label{namespacenrw}\index{nrw@{nrw}}
+\subsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{namespacenrw_a1e69bf74e7416ba334580e4b12bc7a57}{noise} (int amplitude, float periode, float x, float y)
+\begin{DoxyCompactList}\small\item\em Récupération d\textquotesingle{}une valeur de noise suivant les paramétres donnés. \end{DoxyCompactList}\item 
+float \hyperlink{namespacenrw_a50a0ba8cc607beb2bed090e356e888ba}{ridge} (float hauteur, float seuil)
+\item 
+float \hyperlink{namespacenrw_a83e556a2082b0e965aaddcc2ab74f576}{attenuation} (float h, float min, float max)
+\begin{DoxyCompactList}\small\item\em Terrain\+::attenuation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+
+\begin{DoxyParams}{Paramètres}
+{\em fonction} & pour noise, ridge, warp et toutes fonction sur le terrain qui n\textquotesingle{}ont pas besoin de connaitre les caractéristiques du terrain \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Documentation des fonctions}
+\hypertarget{namespacenrw_a83e556a2082b0e965aaddcc2ab74f576}{}\index{nrw@{nrw}!attenuation@{attenuation}}
+\index{attenuation@{attenuation}!nrw@{nrw}}
+\subsubsection[{attenuation(float h, float min, float max)}]{\setlength{\rightskip}{0pt plus 5cm}float nrw\+::attenuation (
+\begin{DoxyParamCaption}
+\item[{float}]{h, }
+\item[{float}]{min, }
+\item[{float}]{max}
+\end{DoxyParamCaption}
+)}\label{namespacenrw_a83e556a2082b0e965aaddcc2ab74f576}
+
+
+Terrain\+::attenuation. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em h} & valeur que l\textquotesingle{}on souhaite atténuer \\
+\hline
+\mbox{\tt in}  & {\em min} & seuil minimum à partir duquel la fonctin renvoie un résulttat $>$ à 0 \\
+\hline
+\mbox{\tt in}  & {\em max} & seuil à partir duquel la fonction renvoie toujours 1 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Un coefficient entre 0 et 1 dépendant de l\textquotesingle{}élévation 
+\end{DoxyReturn}
+\hypertarget{namespacenrw_a1e69bf74e7416ba334580e4b12bc7a57}{}\index{nrw@{nrw}!noise@{noise}}
+\index{noise@{noise}!nrw@{nrw}}
+\subsubsection[{noise(int amplitude, float periode, float x, float y)}]{\setlength{\rightskip}{0pt plus 5cm}float nrw\+::noise (
+\begin{DoxyParamCaption}
+\item[{int}]{amplitude, }
+\item[{float}]{periode, }
+\item[{float}]{x, }
+\item[{float}]{y}
+\end{DoxyParamCaption}
+)}\label{namespacenrw_a1e69bf74e7416ba334580e4b12bc7a57}
+
+
+Récupération d\textquotesingle{}une valeur de noise suivant les paramétres donnés. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em amplitude} & Amplitude max que pourra atteindre le noise. \\
+\hline
+\mbox{\tt in}  & {\em periode} & Distance en metre pour que le noise atteigne un cycle. \\
+\hline
+\mbox{\tt in}  & {\em x} & abscisse du terrain (entre 0 et 1). \\
+\hline
+\mbox{\tt in}  & {\em y} & ordonnée du terrain (entre 0 et 1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+La valeur générée par le noise. 
+\end{DoxyReturn}
+\hypertarget{namespacenrw_a50a0ba8cc607beb2bed090e356e888ba}{}\index{nrw@{nrw}!ridge@{ridge}}
+\index{ridge@{ridge}!nrw@{nrw}}
+\subsubsection[{ridge(float hauteur, float seuil)}]{\setlength{\rightskip}{0pt plus 5cm}float nrw\+::ridge (
+\begin{DoxyParamCaption}
+\item[{float}]{hauteur, }
+\item[{float}]{seuil}
+\end{DoxyParamCaption}
+)}\label{namespacenrw_a50a0ba8cc607beb2bed090e356e888ba}
+
+\begin{DoxyParams}{Paramètres}
+{\em hauteur} & hauteur que l\textquotesingle{}on veut modifier par un ridge \\
+\hline
+{\em seuil} & hauteur max et de découpe du terrain \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la nouvelle hauteur $<$ seuil 
+\end{DoxyReturn}

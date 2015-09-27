@@ -1,0 +1,302 @@
+\hypertarget{class_box}{}\section{Référence de la classe Box}
+\label{class_box}\index{Box@{Box}}
+
+
+Classe d\textquotesingle{}un objet géométrique de type boite. ~\newline
+ Il sert de boite englobante pour les objets.  
+
+
+
+
+{\ttfamily \#include $<$box.\+h$>$}
+
+\subsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_box_aa232abb63b2b72d93791c74a96ac7de9}{}{\bfseries Box} (const Vector3f \&\+\_\+min, const Vector3f \&\+\_\+max)\label{class_box_aa232abb63b2b72d93791c74a96ac7de9}
+
+\item 
+\hyperlink{class_box_a2353559b5ce40e7edcc85daddd86f292}{Box} (const std\+::vector$<$ Vector3f $>$ \&points)
+\begin{DoxyCompactList}\small\item\em Constructeur qui utilisera un ensemble de points pour calculer la boite englobante correspondante. ~\newline
+Le constructeur passe le relai à la fonction \hyperlink{class_box_a8ffb517da2017677041941e1b2f60f1f}{parcourt\+Points()}. \end{DoxyCompactList}\item 
+void \hyperlink{class_box_ad4ee0fca654414f2f9f5092f70ab92e7}{update\+Point} (const Vector3f \&p)
+\begin{DoxyCompactList}\small\item\em Détermine si la boite englobante doit être modifiée pour comprendre le point {\itshape p}. ~\newline
+Si c\textquotesingle{}est le cas la boite s\textquotesingle{}adapte pour contenir le point. ~\newline
+Passe le relai à la méthode \hyperlink{class_box_a13162f123f21923c3b22ba02a2211143}{update()}. \end{DoxyCompactList}\item 
+bool \hyperlink{class_box_a2d6c41818d3d77ba71866528f5e6ccac}{is\+In} (const Vector3f \&p) const 
+\begin{DoxyCompactList}\small\item\em Test si le point {\itshape p} est dans l\textquotesingle{}espace compris de la boite. \end{DoxyCompactList}\item 
+bool \hyperlink{class_box_a6ce97deba91479b4fa66c260c1a37c8a}{intersect} (const \hyperlink{class_rayon}{Rayon} \&r, float \&distance\+Min, float \&distance\+Max) const 
+\begin{DoxyCompactList}\small\item\em Test si un rayon traverse la boite. ~\newline
+Si c\textquotesingle{}est le cas, la methode retournera les distance d\textquotesingle{}intersection sur la boite. (cf. \hyperlink{class_rayon}{Rayon}) ~\newline
+Utilise la méthode \hyperlink{class_box_a54e436e7e487b4a9c75eaf342d430b64}{intersect\+In()}. \end{DoxyCompactList}\item 
+float \hyperlink{class_box_a173e401890b2cb5af0ba69d78c9df413}{diff\+Z} () const 
+\begin{DoxyCompactList}\small\item\em Calcul la hauteur en {\itshape z} de la boite. \end{DoxyCompactList}\item 
+void \hyperlink{class_box_a5aebe0463a5c45d1cf966fbccabef94f}{merge} (const \hyperlink{class_box}{Box} \&box2)
+\begin{DoxyCompactList}\small\item\em Fait l\textquotesingle{}union entre deux boites, et redéfini min et max pour englober les deux boites. \end{DoxyCompactList}\item 
+void \hyperlink{class_box_a8b1ad9cb82546788f3ad6001429b5c5f}{operator+=} (const Vector3f \&t)
+\begin{DoxyCompactList}\small\item\em Opère un translation rectiligne de la boite. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Attributs publics}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_box_a4b5893565a3e2b26361338b19af0671a}{}Vector3f \hyperlink{class_box_a4b5893565a3e2b26361338b19af0671a}{min}\label{class_box_a4b5893565a3e2b26361338b19af0671a}
+
+\begin{DoxyCompactList}\small\item\em min Position d\textquotesingle{}un des points de la boite. \end{DoxyCompactList}\item 
+\hypertarget{class_box_ac7d2365a0645043a21a055942019cd74}{}Vector3f \hyperlink{class_box_ac7d2365a0645043a21a055942019cd74}{max}\label{class_box_ac7d2365a0645043a21a055942019cd74}
+
+\begin{DoxyCompactList}\small\item\em max Position du point opposé au point {\itshape min} sur la boite. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Fonctions membres privées}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_box_a411b56ce2f6a9c29e83ce8c16d99adae}{}void \hyperlink{class_box_a411b56ce2f6a9c29e83ce8c16d99adae}{set\+Default\+Box} ()\label{class_box_a411b56ce2f6a9c29e83ce8c16d99adae}
+
+\begin{DoxyCompactList}\small\item\em Initialise la boite avec des valeurs par defaut. \end{DoxyCompactList}\item 
+void \hyperlink{class_box_a13162f123f21923c3b22ba02a2211143}{update} (const Vector3f \&p)
+\begin{DoxyCompactList}\small\item\em Détermine si la boite englobante doit être modifiée pour comprendre le point {\itshape p}. ~\newline
+Si c\textquotesingle{}est le cas la boite s\textquotesingle{}adapte pour contenir le point. ~\newline
+Passe le relai à la méthode \hyperlink{class_box_a3aafcee14e1e0ea4a6fe1b61d463fbd5}{update\+Min()} et \hyperlink{class_box_ab637f4c06fd3359557445917f18d4f1f}{update\+Max()}. \end{DoxyCompactList}\item 
+void \hyperlink{class_box_a3aafcee14e1e0ea4a6fe1b61d463fbd5}{update\+Min} (const Vector3f \&p)
+\begin{DoxyCompactList}\small\item\em Détermine si le point min doit être modifiée pour comprendre le point {\itshape p}. ~\newline
+Si c\textquotesingle{}est le cas le point min s\textquotesingle{}adapte pour contenir le point. ~\newline
+. \end{DoxyCompactList}\item 
+void \hyperlink{class_box_ab637f4c06fd3359557445917f18d4f1f}{update\+Max} (const Vector3f \&p)
+\begin{DoxyCompactList}\small\item\em Détermine si le point max doit être modifiée pour comprendre le point {\itshape p}. ~\newline
+Si c\textquotesingle{}est le cas le point max s\textquotesingle{}adapte pour contenir le point. ~\newline
+. \end{DoxyCompactList}\item 
+void \hyperlink{class_box_a8ffb517da2017677041941e1b2f60f1f}{parcourt\+Points} (const std\+::vector$<$ Vector3f $>$ \&points)
+\begin{DoxyCompactList}\small\item\em Détermine la positions de min et max pour englober tous les points de {\itshape points}. \end{DoxyCompactList}\item 
+float \hyperlink{class_box_a54e436e7e487b4a9c75eaf342d430b64}{intersect\+In} (const \hyperlink{class_rayon}{Rayon} \&r) const 
+\begin{DoxyCompactList}\small\item\em Test si le rayon r traverse la boite. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Classe d\textquotesingle{}un objet géométrique de type boite. ~\newline
+ Il sert de boite englobante pour les objets. 
+
+\subsection{Documentation des constructeurs et destructeur}
+\hypertarget{class_box_a2353559b5ce40e7edcc85daddd86f292}{}\index{Box@{Box}!Box@{Box}}
+\index{Box@{Box}!Box@{Box}}
+\subsubsection[{Box(const std\+::vector$<$ Vector3f $>$ \&points)}]{\setlength{\rightskip}{0pt plus 5cm}Box\+::\+Box (
+\begin{DoxyParamCaption}
+\item[{const std\+::vector$<$ Vector3f $>$ \&}]{points}
+\end{DoxyParamCaption}
+)}\label{class_box_a2353559b5ce40e7edcc85daddd86f292}
+
+
+Constructeur qui utilisera un ensemble de points pour calculer la boite englobante correspondante. ~\newline
+Le constructeur passe le relai à la fonction \hyperlink{class_box_a8ffb517da2017677041941e1b2f60f1f}{parcourt\+Points()}. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em points} & Tableau de position de points d\textquotesingle{}un objet. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Documentation des fonctions membres}
+\hypertarget{class_box_a173e401890b2cb5af0ba69d78c9df413}{}\index{Box@{Box}!diff\+Z@{diff\+Z}}
+\index{diff\+Z@{diff\+Z}!Box@{Box}}
+\subsubsection[{diff\+Z() const }]{\setlength{\rightskip}{0pt plus 5cm}float Box\+::diff\+Z (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\label{class_box_a173e401890b2cb5af0ba69d78c9df413}
+
+
+Calcul la hauteur en {\itshape z} de la boite. 
+
+\begin{DoxyReturn}{Renvoie}
+la hauteur en {\itshape z}. 
+\end{DoxyReturn}
+\hypertarget{class_box_a6ce97deba91479b4fa66c260c1a37c8a}{}\index{Box@{Box}!intersect@{intersect}}
+\index{intersect@{intersect}!Box@{Box}}
+\subsubsection[{intersect(const Rayon \&r, float \&distance\+Min, float \&distance\+Max) const }]{\setlength{\rightskip}{0pt plus 5cm}bool Box\+::intersect (
+\begin{DoxyParamCaption}
+\item[{const {\bf Rayon} \&}]{r, }
+\item[{float \&}]{distance\+Min, }
+\item[{float \&}]{distance\+Max}
+\end{DoxyParamCaption}
+) const}\label{class_box_a6ce97deba91479b4fa66c260c1a37c8a}
+
+
+Test si un rayon traverse la boite. ~\newline
+Si c\textquotesingle{}est le cas, la methode retournera les distance d\textquotesingle{}intersection sur la boite. (cf. \hyperlink{class_rayon}{Rayon}) ~\newline
+Utilise la méthode \hyperlink{class_box_a54e436e7e487b4a9c75eaf342d430b64}{intersect\+In()}. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em r} & Un rayon quelconque. (cf. \hyperlink{class_rayon}{Rayon}) \\
+\hline
+\mbox{\tt out}  & {\em distance\+Min} & coefficient de distance du premier impacte sur la boite par rapport à l\textquotesingle{}origine du rayon. ~\newline
+Le coefficient est dependant de la norme du vecteur direction du rayon. \\
+\hline
+\mbox{\tt out}  & {\em distance\+Max} & coefficient de distance du second impacte sur la boite par rapport à l\textquotesingle{}origine du rayon. ~\newline
+Le coefficient est dependant de la norme du vecteur direction du rayon. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Le resultat du test. True = intersection, false = pas d\textquotesingle{}intersection. 
+\end{DoxyReturn}
+\hypertarget{class_box_a54e436e7e487b4a9c75eaf342d430b64}{}\index{Box@{Box}!intersect\+In@{intersect\+In}}
+\index{intersect\+In@{intersect\+In}!Box@{Box}}
+\subsubsection[{intersect\+In(const Rayon \&r) const }]{\setlength{\rightskip}{0pt plus 5cm}float Box\+::intersect\+In (
+\begin{DoxyParamCaption}
+\item[{const {\bf Rayon} \&}]{r}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}\label{class_box_a54e436e7e487b4a9c75eaf342d430b64}
+
+
+Test si le rayon r traverse la boite. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em r} & Un rayon quelconque. (cf. \hyperlink{class_rayon}{Rayon}) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Le test d\textquotesingle{}intersection entre la boite et {\itshape r}. 
+\end{DoxyReturn}
+\hypertarget{class_box_a2d6c41818d3d77ba71866528f5e6ccac}{}\index{Box@{Box}!is\+In@{is\+In}}
+\index{is\+In@{is\+In}!Box@{Box}}
+\subsubsection[{is\+In(const Vector3f \&p) const }]{\setlength{\rightskip}{0pt plus 5cm}bool Box\+::is\+In (
+\begin{DoxyParamCaption}
+\item[{const Vector3f \&}]{p}
+\end{DoxyParamCaption}
+) const}\label{class_box_a2d6c41818d3d77ba71866528f5e6ccac}
+
+
+Test si le point {\itshape p} est dans l\textquotesingle{}espace compris de la boite. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em p} & un point dans l\textquotesingle{}espace x, y, z. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Le resultat du test. True = dedans, false = dehors. 
+\end{DoxyReturn}
+\hypertarget{class_box_a5aebe0463a5c45d1cf966fbccabef94f}{}\index{Box@{Box}!merge@{merge}}
+\index{merge@{merge}!Box@{Box}}
+\subsubsection[{merge(const Box \&box2)}]{\setlength{\rightskip}{0pt plus 5cm}void Box\+::merge (
+\begin{DoxyParamCaption}
+\item[{const {\bf Box} \&}]{box2}
+\end{DoxyParamCaption}
+)}\label{class_box_a5aebe0463a5c45d1cf966fbccabef94f}
+
+
+Fait l\textquotesingle{}union entre deux boites, et redéfini min et max pour englober les deux boites. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em box2} & Une seconde boite. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_box_a8b1ad9cb82546788f3ad6001429b5c5f}{}\index{Box@{Box}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!Box@{Box}}
+\subsubsection[{operator+=(const Vector3f \&t)}]{\setlength{\rightskip}{0pt plus 5cm}void Box\+::operator+= (
+\begin{DoxyParamCaption}
+\item[{const Vector3f \&}]{t}
+\end{DoxyParamCaption}
+)}\label{class_box_a8b1ad9cb82546788f3ad6001429b5c5f}
+
+
+Opère un translation rectiligne de la boite. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em t} & Vecteur de translation de la boite. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_box_a8ffb517da2017677041941e1b2f60f1f}{}\index{Box@{Box}!parcourt\+Points@{parcourt\+Points}}
+\index{parcourt\+Points@{parcourt\+Points}!Box@{Box}}
+\subsubsection[{parcourt\+Points(const std\+::vector$<$ Vector3f $>$ \&points)}]{\setlength{\rightskip}{0pt plus 5cm}void Box\+::parcourt\+Points (
+\begin{DoxyParamCaption}
+\item[{const std\+::vector$<$ Vector3f $>$ \&}]{points}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}\label{class_box_a8ffb517da2017677041941e1b2f60f1f}
+
+
+Détermine la positions de min et max pour englober tous les points de {\itshape points}. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em Un} & ensemble de points. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_box_a13162f123f21923c3b22ba02a2211143}{}\index{Box@{Box}!update@{update}}
+\index{update@{update}!Box@{Box}}
+\subsubsection[{update(const Vector3f \&p)}]{\setlength{\rightskip}{0pt plus 5cm}void Box\+::update (
+\begin{DoxyParamCaption}
+\item[{const Vector3f \&}]{p}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}\label{class_box_a13162f123f21923c3b22ba02a2211143}
+
+
+Détermine si la boite englobante doit être modifiée pour comprendre le point {\itshape p}. ~\newline
+Si c\textquotesingle{}est le cas la boite s\textquotesingle{}adapte pour contenir le point. ~\newline
+Passe le relai à la méthode \hyperlink{class_box_a3aafcee14e1e0ea4a6fe1b61d463fbd5}{update\+Min()} et \hyperlink{class_box_ab637f4c06fd3359557445917f18d4f1f}{update\+Max()}. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em p} & un point dans l\textquotesingle{}espace x, y, z. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_box_ab637f4c06fd3359557445917f18d4f1f}{}\index{Box@{Box}!update\+Max@{update\+Max}}
+\index{update\+Max@{update\+Max}!Box@{Box}}
+\subsubsection[{update\+Max(const Vector3f \&p)}]{\setlength{\rightskip}{0pt plus 5cm}void Box\+::update\+Max (
+\begin{DoxyParamCaption}
+\item[{const Vector3f \&}]{p}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}\label{class_box_ab637f4c06fd3359557445917f18d4f1f}
+
+
+Détermine si le point max doit être modifiée pour comprendre le point {\itshape p}. ~\newline
+Si c\textquotesingle{}est le cas le point max s\textquotesingle{}adapte pour contenir le point. ~\newline
+. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em p} & un point dans l\textquotesingle{}espace x, y, z. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_box_a3aafcee14e1e0ea4a6fe1b61d463fbd5}{}\index{Box@{Box}!update\+Min@{update\+Min}}
+\index{update\+Min@{update\+Min}!Box@{Box}}
+\subsubsection[{update\+Min(const Vector3f \&p)}]{\setlength{\rightskip}{0pt plus 5cm}void Box\+::update\+Min (
+\begin{DoxyParamCaption}
+\item[{const Vector3f \&}]{p}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}\label{class_box_a3aafcee14e1e0ea4a6fe1b61d463fbd5}
+
+
+Détermine si le point min doit être modifiée pour comprendre le point {\itshape p}. ~\newline
+Si c\textquotesingle{}est le cas le point min s\textquotesingle{}adapte pour contenir le point. ~\newline
+. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em p} & un point dans l\textquotesingle{}espace x, y, z. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_box_ad4ee0fca654414f2f9f5092f70ab92e7}{}\index{Box@{Box}!update\+Point@{update\+Point}}
+\index{update\+Point@{update\+Point}!Box@{Box}}
+\subsubsection[{update\+Point(const Vector3f \&p)}]{\setlength{\rightskip}{0pt plus 5cm}void Box\+::update\+Point (
+\begin{DoxyParamCaption}
+\item[{const Vector3f \&}]{p}
+\end{DoxyParamCaption}
+)}\label{class_box_ad4ee0fca654414f2f9f5092f70ab92e7}
+
+
+Détermine si la boite englobante doit être modifiée pour comprendre le point {\itshape p}. ~\newline
+Si c\textquotesingle{}est le cas la boite s\textquotesingle{}adapte pour contenir le point. ~\newline
+Passe le relai à la méthode \hyperlink{class_box_a13162f123f21923c3b22ba02a2211143}{update()}. 
+
+
+\begin{DoxyParams}[1]{Paramètres}
+\mbox{\tt in}  & {\em p} & un point dans l\textquotesingle{}espace x, y, z. \\
+\hline
+\end{DoxyParams}
+
+
+La documentation de cette classe a été générée à partir des fichiers suivants \+:\begin{DoxyCompactItemize}
+\item 
+box.\+h\item 
+box.\+cpp\end{DoxyCompactItemize}

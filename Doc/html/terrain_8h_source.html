@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>Terrain tracing:  Fichier source de terrain/terrain.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Terrain tracing
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.10 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="namespaces.html"><span>Espaces&#160;de&#160;nommage</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_6f8d5bad4f21777447ce756f026709af.html">terrain</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">terrain.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef TERRAIN2_H</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define TERRAIN2_H</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;./rendu/colorgradient.h&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;./parametres.h&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;./noisegenerator.h&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;box.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="class_terrain.html">   12</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_terrain.html">Terrain</a></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <a class="code" href="class_terrain.html">Terrain</a>();</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <a class="code" href="class_terrain.html">Terrain</a>(<span class="keywordtype">float</span> <a class="code" href="class_terrain.html#ae25fe0ac0800f0e1c57c9b33f38f5a37">longueur</a>, <span class="keywordtype">float</span> <a class="code" href="class_terrain.html#a1153a4642fd691e7fe25f9af1faba132">largeur</a>);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="class_terrain.html">Terrain</a>(<span class="keywordtype">float</span> longueur, <span class="keywordtype">float</span> largeur, <span class="keywordtype">float</span> amplitude);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_terrain.html#ab31cb1bf848ab141c994897ee15858f5">   34</a></span>&#160;    <a class="code" href="class_box.html">Box</a> <a class="code" href="class_terrain.html#ab31cb1bf848ab141c994897ee15858f5">box</a>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="class_terrain.html#ae25fe0ac0800f0e1c57c9b33f38f5a37">   39</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_terrain.html#ae25fe0ac0800f0e1c57c9b33f38f5a37">longueur</a>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="class_terrain.html#a1153a4642fd691e7fe25f9af1faba132">   43</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_terrain.html#a1153a4642fd691e7fe25f9af1faba132">largeur</a>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="class_terrain.html#ab03b1edc97dc5d468eae0779bfcb805a">   48</a></span>&#160;    <a class="code" href="class_color_gradient.html">ColorGradient</a> <a class="code" href="class_terrain.html#ab03b1edc97dc5d468eae0779bfcb805a">heatMapGradient</a>;    <span class="comment">// Used to create a nice array of different colors.</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="class_terrain.html#aad0e8c34a758f963efb3e4a89ba10cbc">   54</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_terrain.html#aad0e8c34a758f963efb3e4a89ba10cbc">hauteurMax</a>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="class_terrain.html#ac89016fab6410586b08877b5c9790f27">   59</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_terrain.html#ac89016fab6410586b08877b5c9790f27">hauteurMin</a>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_terrain.html#a8892842d80a9737a1aabd9505a0fb49f">getHauteur</a>(<span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_terrain.html#a8892842d80a9737a1aabd9505a0fb49f">getHauteur</a>(<span class="keyword">const</span> Vector2f&amp; pointXY) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_terrain.html#a8892842d80a9737a1aabd9505a0fb49f">getHauteur</a>(<span class="keyword">const</span> Vector3f&amp; pointXYZ) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_terrain.html#a0a1bdaf1c083c94f8abb0cf28c14ae94">getColor</a>(<span class="keywordtype">float</span>&amp; r, <span class="keywordtype">float</span>&amp; g, <span class="keywordtype">float</span>&amp; b, <span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;     <span class="keywordtype">bool</span> <a class="code" href="class_terrain.html#a732fa3071315926ba8f65f2fdf3acd23">intersect</a>(<span class="keyword">const</span> <a class="code" href="class_rayon.html">Rayon</a>&amp; rayon, <span class="keywordtype">float</span> &amp;coeffDistance, <span class="keywordtype">int</span> &amp;i) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">float</span> getMinElevation()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <a class="code" href="class_terrain.html#ac89016fab6410586b08877b5c9790f27">hauteurMin</a>;}</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">float</span> getMaxElevation()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <a class="code" href="class_terrain.html#aad0e8c34a758f963efb3e4a89ba10cbc">hauteurMax</a>;}</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    Eigen::Vector3f <a class="code" href="class_terrain.html#a60758bba8c5f1cfefe60498dab2b571d">getNormal</a>(<span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    Eigen::Vector3f <a class="code" href="class_terrain.html#a60758bba8c5f1cfefe60498dab2b571d">getNormal</a>(<span class="keyword">const</span> Vector2f&amp; pointXY) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    Eigen::Vector3f <a class="code" href="class_terrain.html#a60758bba8c5f1cfefe60498dab2b571d">getNormal</a>(<span class="keyword">const</span> Vector3f&amp; pointXYZ) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_terrain.html#a75b8699997d2aff3eb461cf8a9220bb4">inOut</a>(<span class="keyword">const</span> Eigen::Vector3f&amp; pointXYZ) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">float</span> <a class="code" href="class_terrain.html#a63c855275f8270ccc0203bde0776a08f">getHauteurXY</a>(<span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y) <span class="keyword">const</span> = 0; <span class="comment">//public car utilisé dans la classe Mesh</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <span class="keyword">virtual</span> Eigen::Vector3f <a class="code" href="class_terrain.html#a8b666ed9d5f948734b0d1c49adb6b535">getNormalXY</a>(<span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keywordtype">void</span> translate2(<span class="keyword">const</span> Vector3f&amp; t);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="comment">//void getColor2(float&amp; r, float&amp; g, float&amp; b, float hauteur = 0, const Eigen::Vector3f&amp; n = Eigen::Vector3f(0,0,1)) const;</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">float</span> minElevation() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">float</span> maxElevation() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;};</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="preprocessor">#endif // TERRAIN2_H</span></div>
+<div class="ttc" id="class_terrain_html_a63c855275f8270ccc0203bde0776a08f"><div class="ttname"><a href="class_terrain.html#a63c855275f8270ccc0203bde0776a08f">Terrain::getHauteurXY</a></div><div class="ttdeci">virtual float getHauteurXY(float x, float y) const  =0</div><div class="ttdoc">Methode virtuel pour déterminer la hauteur du terrain à un point.  A redéfinir dans les classes fille...</div></div>
+<div class="ttc" id="class_terrain_html_ab03b1edc97dc5d468eae0779bfcb805a"><div class="ttname"><a href="class_terrain.html#ab03b1edc97dc5d468eae0779bfcb805a">Terrain::heatMapGradient</a></div><div class="ttdeci">ColorGradient heatMapGradient</div><div class="ttdoc">Conteneur de tableau de couleur. (cf. ColorGradient) </div><div class="ttdef"><b>Definition:</b> terrain.h:48</div></div>
+<div class="ttc" id="class_terrain_html_a8b666ed9d5f948734b0d1c49adb6b535"><div class="ttname"><a href="class_terrain.html#a8b666ed9d5f948734b0d1c49adb6b535">Terrain::getNormalXY</a></div><div class="ttdeci">virtual Eigen::Vector3f getNormalXY(float x, float y) const  =0</div><div class="ttdoc">Methode virtuel pour déterminer la normal du terrain à un point.  . </div></div>
+<div class="ttc" id="class_terrain_html"><div class="ttname"><a href="class_terrain.html">Terrain</a></div><div class="ttdoc">Classe virtuelle de terrain. Sert de modèle pour les classes files TerrainNoise et TerrainTab...</div><div class="ttdef"><b>Definition:</b> terrain.h:12</div></div>
+<div class="ttc" id="class_terrain_html_a732fa3071315926ba8f65f2fdf3acd23"><div class="ttname"><a href="class_terrain.html#a732fa3071315926ba8f65f2fdf3acd23">Terrain::intersect</a></div><div class="ttdeci">bool intersect(const Rayon &amp;rayon, float &amp;coeffDistance, int &amp;i) const </div><div class="ttdoc">Test si un rayon traverse le terrain.  Si c&#39;est le cas, la methode retournera la distance d&#39;intersect...</div><div class="ttdef"><b>Definition:</b> terrain.cpp:82</div></div>
+<div class="ttc" id="class_terrain_html_ae25fe0ac0800f0e1c57c9b33f38f5a37"><div class="ttname"><a href="class_terrain.html#ae25fe0ac0800f0e1c57c9b33f38f5a37">Terrain::longueur</a></div><div class="ttdeci">float longueur</div><div class="ttdoc">Distance du terrain en metre sur l&#39;axe y. </div><div class="ttdef"><b>Definition:</b> terrain.h:39</div></div>
+<div class="ttc" id="class_terrain_html_a8892842d80a9737a1aabd9505a0fb49f"><div class="ttname"><a href="class_terrain.html#a8892842d80a9737a1aabd9505a0fb49f">Terrain::getHauteur</a></div><div class="ttdeci">float getHauteur(float x, float y) const </div><div class="ttdoc">Détermine la hauteur du terrain à la position x, y.  Regarde si la position est sur ou en dehors du t...</div><div class="ttdef"><b>Definition:</b> terrain.cpp:23</div></div>
+<div class="ttc" id="class_terrain_html_aad0e8c34a758f963efb3e4a89ba10cbc"><div class="ttname"><a href="class_terrain.html#aad0e8c34a758f963efb3e4a89ba10cbc">Terrain::hauteurMax</a></div><div class="ttdeci">float hauteurMax</div><div class="ttdoc">hauteurMax Altitude max du terrain. </div><div class="ttdef"><b>Definition:</b> terrain.h:54</div></div>
+<div class="ttc" id="class_terrain_html_a1153a4642fd691e7fe25f9af1faba132"><div class="ttname"><a href="class_terrain.html#a1153a4642fd691e7fe25f9af1faba132">Terrain::largeur</a></div><div class="ttdeci">float largeur</div><div class="ttdoc">Distance du terrain en metre sur l&#39;axe x. </div><div class="ttdef"><b>Definition:</b> terrain.h:43</div></div>
+<div class="ttc" id="class_rayon_html"><div class="ttname"><a href="class_rayon.html">Rayon</a></div><div class="ttdoc">Classe représentant un rayon lumineux. </div><div class="ttdef"><b>Definition:</b> rayon.h:12</div></div>
+<div class="ttc" id="class_terrain_html_ac89016fab6410586b08877b5c9790f27"><div class="ttname"><a href="class_terrain.html#ac89016fab6410586b08877b5c9790f27">Terrain::hauteurMin</a></div><div class="ttdeci">float hauteurMin</div><div class="ttdoc">hauteurMin Altitude min du terrain. </div><div class="ttdef"><b>Definition:</b> terrain.h:59</div></div>
+<div class="ttc" id="class_terrain_html_a0a1bdaf1c083c94f8abb0cf28c14ae94"><div class="ttname"><a href="class_terrain.html#a0a1bdaf1c083c94f8abb0cf28c14ae94">Terrain::getColor</a></div><div class="ttdeci">void getColor(float &amp;r, float &amp;g, float &amp;b, float x, float y) const </div><div class="ttdoc">Détermine la couleur de texture suivant une hauteur. </div><div class="ttdef"><b>Definition:</b> terrain.cpp:137</div></div>
+<div class="ttc" id="class_box_html"><div class="ttname"><a href="class_box.html">Box</a></div><div class="ttdoc">Classe d&#39;un objet géométrique de type boite.   Il sert de boite englobante pour les objets...</div><div class="ttdef"><b>Definition:</b> box.h:15</div></div>
+<div class="ttc" id="class_terrain_html_a75b8699997d2aff3eb461cf8a9220bb4"><div class="ttname"><a href="class_terrain.html#a75b8699997d2aff3eb461cf8a9220bb4">Terrain::inOut</a></div><div class="ttdeci">bool inOut(const Eigen::Vector3f &amp;pointXYZ) const </div><div class="ttdoc">Test si le point pointXYZ est sous le terrain. </div><div class="ttdef"><b>Definition:</b> terrain.cpp:77</div></div>
+<div class="ttc" id="class_terrain_html_ab31cb1bf848ab141c994897ee15858f5"><div class="ttname"><a href="class_terrain.html#ab31cb1bf848ab141c994897ee15858f5">Terrain::box</a></div><div class="ttdeci">Box box</div><div class="ttdoc">La boite englobante du terrain. (cf. Box) </div><div class="ttdef"><b>Definition:</b> terrain.h:34</div></div>
+<div class="ttc" id="class_terrain_html_a60758bba8c5f1cfefe60498dab2b571d"><div class="ttname"><a href="class_terrain.html#a60758bba8c5f1cfefe60498dab2b571d">Terrain::getNormal</a></div><div class="ttdeci">Eigen::Vector3f getNormal(float x, float y) const </div><div class="ttdoc">Détermine la normal du terrain à la position x, y.  Regarde si les positions sont sur ou en dehors du...</div><div class="ttdef"><b>Definition:</b> terrain.cpp:49</div></div>
+<div class="ttc" id="class_color_gradient_html"><div class="ttname"><a href="class_color_gradient.html">ColorGradient</a></div><div class="ttdoc">Class containing multiple color and perform a gradient on this color. </div><div class="ttdef"><b>Definition:</b> colorgradient.h:9</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>
