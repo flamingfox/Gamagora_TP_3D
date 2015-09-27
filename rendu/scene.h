@@ -3,6 +3,7 @@
 
 #include "camera.h"
 #include "./terrain/terrain.h"
+#include "QTime"
 
 /**
     @author Aurelien Argoud
