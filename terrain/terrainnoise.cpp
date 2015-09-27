@@ -93,9 +93,9 @@ Eigen::Vector3f TerrainNoise::getNormalXY(float x, float y) const
 float TerrainNoise::minElevation() const{
     float hMin = FLT_MAX;
     float hauteur;
-    //#pragma omp parallel for schedule(dynamic,1)
-    for(int i = 0 ; i<(int)largeur/10; i++){
-        for(int y = 0; y<longueur/10; y++){
+    #pragma omp parallel for schedule(dynamic,1)
+    for(int i = 0 ; i<(int)largeur; i++){
+        for(int y = 0; y<longueur; y++){
             hauteur = getHauteur(i,y);
             if(hauteur<hMin)hMin=hauteur;
         }
@@ -106,9 +106,9 @@ float TerrainNoise::minElevation() const{
 float TerrainNoise::maxElevation() const{
     float hMax = FLT_MIN;
     float hauteur;
-    //#pragma omp parallel for schedule(dynamic,1)
-    for(int i = 0 ; i<(int)largeur/10; i++){
-        for(int y = 0; y<longueur/10; y++){
+    #pragma omp parallel for schedule(dynamic,1)
+    for(int i = 0 ; i<(int)largeur; i++){
+        for(int y = 0; y<longueur; y++){
             hauteur = getHauteur(i,y);
             if(hauteur>hMax)hMax=hauteur;
         }

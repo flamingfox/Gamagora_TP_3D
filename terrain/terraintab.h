@@ -5,7 +5,7 @@
 #include "interpolation.h"
 #include "terrain.h"
 
-class TerrainTab: Terrain
+class TerrainTab: public Terrain
 {
 public:
     TerrainTab():   height(0),  width(0),   amplitude(0),   hauteurMin(0),  hauteurMax(0){}

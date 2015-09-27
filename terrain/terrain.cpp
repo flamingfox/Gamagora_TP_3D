@@ -13,6 +13,7 @@ Terrain::Terrain(float longueur, float largeur):
 Terrain::Terrain(float longueur, float largeur, float amplitude):
     longueur(longueur), largeur(largeur)
 {
+    box = Box(Vector3f(0,0,0),Vector3f(largeur,longueur,amplitude));
     heatMapGradient.createDefaultHeatMapGradient();
 }
 
@@ -111,7 +112,7 @@ bool Terrain::intersect(const Rayon& rayon, float &coeffDistance) const
         }else if(coeffDistance > dmax )
                 break;
 
-        coeffDistance += 0.375*h;    // des interfacts apparaissent à 0.5, le rayon dépasse le points qu'il devrait attendre
+        coeffDistance += 0.3*h;    // des interfacts apparaissent à 0.5, le rayon dépasse le points qu'il devrait attendre
     }
 
     return false;
