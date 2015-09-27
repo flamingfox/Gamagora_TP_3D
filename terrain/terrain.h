@@ -1,19 +1,21 @@
 #ifndef TERRAIN2_H
 #define TERRAIN2_H
 
-#include "./object.h"
 #include "./rendu/colorgradient.h"
 #include "./parametres.h"
 #include "./noisegenerator.h"
+#include "box.h"
 
-class Terrain2: public Object
+class Terrain
 {
 public:
-    Terrain2();
-    Terrain2(float longueur, float largeur);
-    Terrain2(float longueur, float largeur, float amplitude);
+    Terrain();
+    Terrain(float longueur, float largeur);
+    Terrain(float longueur, float largeur, float amplitude);
 
+    Box box;
     float longueur, largeur;
+    float hauteurMax, hauteurMin;
 
     float getVal(const Vector3f& p) const;
 
@@ -25,8 +27,11 @@ public:
     float getHauteur(float x, float y) const;
     float getHauteur(const Vector2f& pointXY) const;
     float getHauteur(const Vector3f& pointXYZ) const;
+    void getColor(float& r, float& g, float& b, float x, float y) const;
 
-
+    bool intersect(const Rayon& rayon, float &coeffDistance) const;
+    inline float getMinElevation() const {return hauteurMin;}
+    inline float getMaxElevation() const {return hauteurMax;}
 
     /// \brief Terrain::getNormal
     /// \param x abscisse entre 0 et largeur
@@ -58,13 +63,12 @@ protected:
     /// \param coeffDistance return the result of distance in this variable
     /// \param i return the number of iterations
     /// \return find the intersection distance of a ray (given in parameters) with the terrain
-    bool intersect2(const Rayon& rayon, float &coeffDistance) const;
+
     void translate2(const Vector3f& t);
     void getColor2(float& r, float& g, float& b, float hauteur = 0, const Eigen::Vector3f& n = Eigen::Vector3f(0,0,1)) const;
-    void getColor3(float& r, float& g, float& b, float x, float y) const;
 
-    virtual float getMinElevation2() const = 0;
-    virtual float getMaxElevation2() const = 0;
+    virtual float minElevation() const = 0;
+    virtual float maxElevation() const = 0;
 
 };
 

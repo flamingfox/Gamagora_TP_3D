@@ -6,7 +6,7 @@
 #include <Eigen/Core>
 #include <QList>
 #include <rayon.h>
-#include <terrain.h>
+#include <terrain/terrain.h>
 #include "float.h"  //FLT_MIN FLT_MAX
 #include <QColor>
 #include <QDebug>
@@ -15,7 +15,6 @@
 #include <QBrush>
 
 using namespace Eigen;
-
 
 class Camera
 {

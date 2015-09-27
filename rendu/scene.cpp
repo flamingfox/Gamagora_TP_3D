@@ -25,7 +25,6 @@ Scene::Scene()
 
 bool Scene::rendu(){
     //for(Camera* c : cameras)  //marche pas avec openMP
-    #pragma omp parallel for
     for(unsigned int ic = 0;  ic < cameras.size(); ic++)
     {
         Camera* c = cameras[ic];
@@ -33,25 +32,22 @@ bool Scene::rendu(){
         int pourcent2 = -1;
         QImage *img = new QImage(_lu, _lv, QImage::Format_RGB888);
 
-        #pragma omp parallel for
+        #pragma omp parallel for schedule(dynamic,1)
         for(int y = 0; y < _lv ; y++){      // pour chaque ligne de l'image
             int pourcent = 100 * y / (_lv - 1);
             if(pourcent != pourcent2)            {
                 pourcent2 = pourcent;
                 std::cout << "\r" << ic << " Rendering: " << pourcent << "% ";  // barre de progression
             }
-
-            //#pragma omp parallel for
             for(int x = 0; x < _lu ; x++){  // pour chaque pixel de la ligne
                 Rayon r(c->getOrigine(),c->vecScreen(x,y));   //rayon correspondant au pixel
 
-                //boucle for pour l'antialiasing ici
                 bool touche = false;
                 float coefdisttmp = FLT_MAX;        //variables pour déterminer la distance du rayon le plus court
                 float coefdistfinal = FLT_MAX;
                 Vector3f zonetouchee;
-                const Object* objleplusproche = nullptr;
-                for(const Object* obj: objects){    //parcours tous les objets de la scene
+                const Terrain* objleplusproche = nullptr;
+                for(const Terrain* obj: objects){    //parcours tous les objets de la scene
                     if(obj->intersect(r,coefdisttmp)){//si on touche
                         touche = true;
                         if(coefdisttmp < coefdistfinal){//on sélectionne l'objet touché le plus proche
@@ -66,8 +62,7 @@ bool Scene::rendu(){
                     img->setPixel(x, y, default_color.rgba());
                 else
                 {
-                    QColor color = render(zonetouchee, *objleplusproche, r);
-                    img->setPixel(x,y,color.rgba());
+                    img->setPixel(x,y,render(zonetouchee, *objleplusproche, r).rgba());
                 }
             }
         }
@@ -97,8 +92,41 @@ bool Scene::rendu(){
     return default_color;
 }*/
 
-QColor Scene::render(const Eigen::Vector3f& pointImpact, const Object& objleplusproche, const Rayon& ray)
-{
+QColor Scene::render(const Eigen::Vector3f& pointImpact, const Terrain& objleplusproche, const Rayon& ray)
+{/*
+    Eigen::Vector3f dRay = ray.getDirection();
+    dRay.normalize();
+
+    Eigen::Vector3f n = objleplusproche.getNormal(pointImpact(0),pointImpact(1));
+
+    Eigen::Vector3f diff = dRay - n;
+    double norm = diff.squaredNorm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
+    norm = 4-norm;
+    QColor color;
+
+    float hauteur = objleplusproche.getHauteur(pointImpact(0),pointImpact(1));
+    hauteur = (hauteur/objleplusproche.getMaxElevation());
+
+    float r,g,b;
+    objleplusproche.heatMapGradient.getColorAtValue(hauteur, r,g,b);
+    //objleplusproche.getColor(r,g,b, pointImpact(0), pointImpact(1));
+
+    color.setRed(r*255);
+    color.setGreen(g*255);
+    color.setBlue(b*255);
+
+    if(norm >= 2)
+        color = QColor(0,0,0); //Black
+    else if(norm == 0)
+            color = QColor(255,255,255); // White
+
+    else
+    {
+            int c = 255-round((255*norm)/2);
+            color = QColor(color.red()*c/255,color.green()*c/255, color.blue()*c/255); // Grey
+    }
+    return color;*/
+
     Eigen::Vector3f dRay = ray.getDirection();
     dRay.normalize();
 
@@ -128,7 +156,7 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Object& objleplus
 
 
 /**simule le parcours d'une camera sur le terrain de la scène*/
-void Scene::addParcoursCamera(Terrain2* noise)
+void Scene::addParcoursCamera(Terrain* noise)
 {
     int x = NoiseGenerator::perlinNoiseGradiant(rand()&255,rand()&255,1+(rand()&255))*noise->largeur;
     int y = NoiseGenerator::perlinNoiseGradiant(rand()&255,rand()&255,1+(rand()&255))*noise->longueur;

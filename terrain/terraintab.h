@@ -3,9 +3,9 @@
 
 #include <QImage>
 #include "interpolation.h"
-#include "terrain2.h"
+#include "terrain.h"
 
-class TerrainTab: Terrain2
+class TerrainTab: Terrain
 {
 public:
     TerrainTab():   height(0),  width(0),   amplitude(0),   hauteurMin(0),  hauteurMax(0){}
@@ -38,8 +38,8 @@ private:
     inline void updateElevation();
 
 
-    float getMinElevation2() const;
-    float getMaxElevation2() const;
+    float minElevation() const;
+    float maxElevation() const;
 };
 
 

@@ -3,7 +3,7 @@
 
 #include <Eigen/Geometry>
 
-#include "phong.h"
+
 
 /**
     @author Aurelien Argoud
@@ -18,7 +18,7 @@ public:
     Lumiere();
     Lumiere(const Eigen::Vector3f& _origine, float _rayon = 500.f, float _puissance = 1.f);
 
-    Phong phong = {0.2f, 0.9f, 0.8f, 100};
+protected :
 };
 
 #endif // LUMIERE_H

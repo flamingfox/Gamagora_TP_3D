@@ -1,7 +1,7 @@
 #include "box.h"
 
 
-Box::Box()  :   min(Vector3f(FLT_MAX,FLT_MAX,FLT_MAX)), max(Vector3f(FLT_MIN,FLT_MIN,FLT_MIN))
+Box::Box()  : min(Vector3f(FLT_MAX,FLT_MAX,FLT_MAX)), max(Vector3f(FLT_MIN,FLT_MIN,FLT_MIN))
 {
 }
 

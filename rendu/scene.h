@@ -2,9 +2,7 @@
 #define SCENE_H
 
 #include "camera.h"
-#include "./lumiere/lumiere.h"
-#include "./object.h"
-#include "./terrain/terrain2.h"
+#include "./terrain/terrain.h"
 
 /**
     @author Aurelien Argoud
@@ -16,26 +14,23 @@ public:
 
     Scene();
 
-    void addO(Object* obj){
+    void addO(Terrain* obj){
         objects.push_back(obj);
     }
-    void addL(Lumiere* l){
-        lights.push_back(l);
-    }
+
     void addC(Camera* c){
         cameras.push_back(c);
     }
 
     bool rendu();
-    QColor render(const Eigen::Vector3f& pointImpact, const Object& objleplusproche, const Rayon& ray);
+    QColor render(const Eigen::Vector3f& pointImpact, const Terrain& objleplusproche, const Rayon& ray);
 
-    void addParcoursCamera(Terrain2* noise);
+    void addParcoursCamera(Terrain* noise);
 
 
 
 private:
-    std::vector<Object*> objects;//liste des objets dans la scene
-    std::vector<Lumiere*> lights;
+    std::vector<Terrain*> objects;//liste des objets dans la scene
     std::vector<Camera*> cameras;
 
 

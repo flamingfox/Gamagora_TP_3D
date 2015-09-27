@@ -15,34 +15,30 @@ LIBS += -fopenmp
 SOURCES += main.cpp \
     mesh.cpp \
     noisegenerator.cpp \
-    zoneterrain.cpp \
     interpolation.cpp \
     box.cpp \
     terrain/terrainnoise.cpp \
     terrain/terraintab.cpp \
-    terrain/terrain2.cpp \
     rendu/scene.cpp \
     rendu/rayon.cpp \
     rendu/camera.cpp \
     lumiere/lumiere.cpp \
-    object.cpp \
     rendu/colorgradient.cpp \
-    nrw.cpp
+    nrw.cpp \
+    terrain/terrain.cpp
 
 HEADERS +=  mesh.h \
     noisegenerator.h \
-    zoneterrain.h \
     parametres.h \
     interpolation.h \
     box.h \
     terrain/terrainnoise.h \
     terrain/terraintab.h \
-    terrain/terrain2.h \
     foutoir.h \
     rendu/scene.h \
     rendu/rayon.h \
     rendu/camera.h \
     lumiere/lumiere.h \
-    object.h \
     rendu/colorgradient.h \
-    nrw.h
+    nrw.h \
+    terrain/terrain.h
