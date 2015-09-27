@@ -17,8 +17,8 @@ public:
     TerrainNoise();
     /**
      * @brief Constructeur de TerrainNoise.
-     * @param _longueur Distance du terrain en metre sur l'axe y
-     * @param _largeur Distance du terrain en metre sur l'axe x
+     * @param[in] _longueur Distance du terrain en metre sur l'axe y
+     * @param[in] _largeur Distance du terrain en metre sur l'axe x
      */
     TerrainNoise(int _longueur, int _largeur);
 
@@ -26,34 +26,34 @@ protected:
     /**
      * @brief Récupere la hauteur du terrain à un point donné. \n
      * Redéfinition de la methode. (cf. Terrain)
-     * @param x abscisse du terrain (entre 0 et 1).
-     * @param y ordonnée du terrain (entre 0 et 1).
+     * @param[in] x abscisse du terrain (entre 0 et 1).
+     * @param[in] y ordonnée du terrain (entre 0 et 1).
      * @return la hauteur du terrain au point donné.
      */
     float getHauteurXY(float x, float y) const;
 
     /**
      * @brief Récupération d'une valeur de noise suivant les paramétres donnés.
-     * @param amplitude Amplitude max que pourra atteindre le noise.
-     * @param periode Distance en metre pour que le noise atteigne un cycle.
-     * @param x abscisse du terrain (entre 0 et 1).
-     * @param y ordonnée du terrain (entre 0 et 1).
+     * @param[in] amplitude Amplitude max que pourra atteindre le noise.
+     * @param[in] periode Distance en metre pour que le noise atteigne un cycle.
+     * @param[in] x abscisse du terrain (entre 0 et 1).
+     * @param[in] y ordonnée du terrain (entre 0 et 1).
      * @return La valeur générée par le noise.
      */
     float noise(int amplitude, float periode, float x, float y)const;
 
     /**
      * @brief Application sur une valeur de hauteur d'un ridge (seuil avec rebond) suivant un seuil.
-     * @param hauteur La hauteur à soumettre au ridge.
-     * @param seuil Le seuil d'application du ridge. Si le seuil est au-dessus du maximum atteignable par la hauteur, aucun ridge ne pourra être appliqué dessus.
+     * @param[in] hauteur La hauteur à soumettre au ridge.
+     * @param[in] seuil Le seuil d'application du ridge. Si le seuil est au-dessus du maximum atteignable par la hauteur, aucun ridge ne pourra être appliqué dessus.
      * @return La hauteur après avoir passé le ridge.
      */
     float ridge(float hauteur, float seuil)const;
 
     /**
      * @brief Calcul la normale d'un point sur le terrain.
-     * @param x abscisse du terrain (entre 0 et 1).
-     * @param y ordonnée du terrain (entre 0 et 1).
+     * @param[in] x abscisse du terrain (entre 0 et 1).
+     * @param[in] y ordonnée du terrain (entre 0 et 1).
      * @return la hauteur du terrain à ses coordonnées x, y.
      */
     Eigen::Vector3f getNormalXY(float x, float y) const;

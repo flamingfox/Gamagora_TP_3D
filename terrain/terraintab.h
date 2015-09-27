@@ -14,26 +14,26 @@ public:
     TerrainTab():   height(0),  width(0),   amplitude(0),   Terrain(){}
 
     /**
-     * @param img Image HighMap contenant le relief du terrain.
-     * @param longueur Distance du terrain en metre sur l'axe y.
-     * @param largeur Distance du terrain en metre sur l'axe x.
-     * @param amplitude Amplitude Max que pourra atteindre la terrain. 255 sur un pixel correspondra à cette valeur. Par défaut, la valeur est de 1.
+     * @param[in] img Image HighMap contenant le relief du terrain.
+     * @param[in] longueur Distance du terrain en metre sur l'axe y.
+     * @param[in] largeur Distance du terrain en metre sur l'axe x.
+     * @param[in] amplitude Amplitude Max que pourra atteindre la terrain. 255 sur un pixel correspondra à cette valeur. Par défaut, la valeur est de 1.
      */
     TerrainTab(const QImage& img, float longueur, float largeur, float amplitude = 1.0f);
 
     /**
-     * @param img Image HighMap contenant le relief du terrain.
-     * @param _nbHeight Nombre de points composant l'axe y du terrain. Ce nombre détermine la précision de la topographie du terrain sur cette axe.
-     * @param _nbWidth Nombre de points composant l'axe x du terrain. Ce nombre détermine la précision de la topographie du terrain sur cette axe.
-     * @param longueur Distance du terrain en metre sur l'axe y.
-     * @param largeur Distance du terrain en metre sur l'axe x.
-     * @param _amplitude Amplitude Max que pourra atteindre la terrain. 255 sur un pixel correspondra à cette valeur. Par défaut, la valeur est de 1.
+     * @param[in] img Image HighMap contenant le relief du terrain.
+     * @param[in] _nbHeight Nombre de points composant l'axe y du terrain. Ce nombre détermine la précision de la topographie du terrain sur cette axe.
+     * @param[in] _nbWidth Nombre de points composant l'axe x du terrain. Ce nombre détermine la précision de la topographie du terrain sur cette axe.
+     * @param[in] longueur Distance du terrain en metre sur l'axe y.
+     * @param[in] largeur Distance du terrain en metre sur l'axe x.
+     * @param[in] _amplitude Amplitude Max que pourra atteindre la terrain. 255 sur un pixel correspondra à cette valeur. Par défaut, la valeur est de 1.
      */
     TerrainTab(const QImage& img, int _nbHeight, int _nbWidth, float longueur, float largeur, float _amplitude = 1.0f);
 
     /**
      * @brief Constructeur par copie.
-     * @param Le terrain à copier.
+     * @param[in] Le terrain à copier.
      */
     TerrainTab(const TerrainTab& copy);
 
@@ -77,16 +77,16 @@ private:
     /**
      * @brief Récupere la hauteur du terrain à un point donné. \n
      * Redéfinition de la methode. (cf. Terrain)
-     * @param x abscisse du terrain (entre 0 et 1).
-     * @param y ordonnée du terrain (entre 0 et 1).
+     * @param[in] x abscisse du terrain (entre 0 et 1).
+     * @param[in] y ordonnée du terrain (entre 0 et 1).
      * @return la hauteur du terrain au point donné.
      */
     float getHauteurXY(float x, float y) const;
 
     /**
      * @brief Calcul la normale d'un point sur le terrain.
-     * @param x abscisse du terrain (entre 0 et 1).
-     * @param y ordonnée du terrain (entre 0 et 1).
+     * @param[in] x abscisse du terrain (entre 0 et 1).
+     * @param[in] y ordonnée du terrain (entre 0 et 1).
      * @return la hauteur du terrain à ses coordonnées x, y.
      */
     Eigen::Vector3f getNormalXY(float x, float y) const;
@@ -98,14 +98,14 @@ private:
 
     /**
      * @brief Initialise et remplis la grille topographique suivant l'image données en paramètre. La grille aura le même precision que l'image donnée.
-     * @param L'image HighMap contenant le relief du terrain.
+     * @param[in] L'image HighMap contenant le relief du terrain.
      */
     void simpleInitImage(const QImage& img);
 
     /**
      * @brief Récupere la hauteur du terrain à un point donné. Le point doit correspondre à un point existant sur la carte. Aucun approximation ne sera faite.
-     * @param x la position en x du point.
-     * @param y la position en y du point.
+     * @param[in] x la position en x du point.
+     * @param[in] y la position en y du point.
      * @return la hauteur du terrain au point donné.
      */
     inline float get(int x, int y) const;
