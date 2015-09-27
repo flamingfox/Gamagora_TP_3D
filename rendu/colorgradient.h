@@ -3,6 +3,9 @@
 
 #include <vector>
 
+/**
+ * @brief Class containing multiple color and perform a gradient on this color.
+ */
 class ColorGradient
 {
 private:
