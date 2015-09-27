@@ -55,8 +55,10 @@ double findnoise(double x, double y, int seed)
 #define unit 1.0/sqrt(2)
 const double gradient[8][2] = {{unit,unit},{-unit,unit},{unit,-unit},{-unit,-unit},{1,0},{-1,0},{0,1},{0,-1}};
 
-/**tableau de tous les nombres de 0 à 256-1 placé aléatoirement mais en 1 seul exemplaire
-en double pour les besoins de l'algorithme*/
+/**
+ * @brief tableau de tous les nombres de 0 à 256-1 placé aléatoirement mais en 1 seul exemplaire
+en double pour les besoins de l'algorithme.
+*/
 const int perm[] = { 151,160,137,91,90,15,                 // Hash lookup table as defined by Ken Perlin.  This is a randomly
                      131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,    // arranged array of all numbers from 0-255 inclusive.
                      190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
@@ -85,16 +87,13 @@ const int perm[] = { 151,160,137,91,90,15,                 // Hash lookup table 
                      138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180
                    };
 
-/**
- * @return bruit de perlin par gradient entre 0 et 1*/
+
 double perlinNoiseGradiant(double x, double y, double res)
 {
     return (1+perlinNoiseGradiant2(x,y,res))*0.5;
 }
 
 
-/**
- * @return bruit de perlin par gradient entre -1 et 1*/
 double perlinNoiseGradiant2(double x, double y, double res)
 {
     double tempX,tempY;
