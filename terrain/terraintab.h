@@ -42,11 +42,11 @@ public:
 private:
 
     /**
-     * @brief height Distance du terrain en metre sur l'axe y.
+     * @brief height Hauteur de l'image HighMap.
      */
     int height;
     /**
-     * @brief width Distance du terrain en metre sur l'axe x.
+     * @brief width Largeur de l'image HighMap.
      */
     int width;
 

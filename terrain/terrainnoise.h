@@ -22,7 +22,8 @@ public:
 
 protected:
     /**
-     * @brief Récupere la hauteur du terrain à un point donné.
+     * @brief Récupere la hauteur du terrain à un point donné. \n
+     * Redéfinition de la methode. (cf. Terrain2)
      * @param x la position en x du point.
      * @param y la position en y du point.
      * @return la hauteur du terrain au point donné.
