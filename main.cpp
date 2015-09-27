@@ -45,30 +45,28 @@ void addParcoursCamera(Scene& scene, TerrainNoise* noise)
 
     int dirMax = 10;
     int dMax = 2;
-    Vector2f dir(NoiseGenerator::perlinNoiseGradiant(rand()%dirMax,rand()%dirMax,rand()%dirMax)*dirMax,
-                 NoiseGenerator::perlinNoiseGradiant(rand()%dirMax,rand()%dirMax,rand()%dirMax)*dirMax);
-    if(dir.norm() > dirMax){
-        dir.normalize();
+    Vector2f dir(NoiseGenerator::perlinNoiseGradiant(rand()&255,rand()&255,1+(rand()&255))*dirMax,
+                 NoiseGenerator::perlinNoiseGradiant(rand()&255,rand()&255,1+(rand()&255))*dirMax);
+    float d = dir.norm();
+    if(d > dirMax){
+        dir /= d;
         dir *= dirMax;
     }
-    Vector2f dir2(NoiseGenerator::perlinNoiseGradiant(rand()%dirMax,rand()%dirMax,1+rand()%(dirMax-1))*dirMax,
-                  NoiseGenerator::perlinNoiseGradiant(rand()%dirMax,rand()%dirMax,1+rand()%(dirMax-1))*dirMax);
-    if(dir2.norm() > dirMax){
-        dir2.normalize();
-        dir2 *= dirMax;
-    }
 
-    for(int i = 0;  i < 900;    i++)    {
-        Vector2f dev(NoiseGenerator::perlinNoiseGradiant2(rand()%16,rand()%16,1+rand()%(16))*dMax,
-                     NoiseGenerator::perlinNoiseGradiant2(rand()%16,rand()%16,1+rand()%(16))*dMax);
+    for(int i = 0;  i < 120;    i++)    {
+        Vector2f dev(NoiseGenerator::perlinNoiseGradiant2(rand()&255,rand()&255,1+(rand()&255))*dMax,
+                     NoiseGenerator::perlinNoiseGradiant2(rand()&255,rand()&255,1+(rand()&255))*dMax);
 
-        if(dev.norm() > dMax)   {
-            dev.normalize();
+        d = dev.norm();
+        if(d > dMax)   {
+            dev /= d;
             dev *= dMax;
         }
         dir += dev;
-        if(dir.norm() > dirMax) {
-            dir.normalize();
+
+        d = dev.norm();
+        if(d > dirMax) {
+            dir /= d;
             dir *= dirMax;
         }
         x += dir(0);
@@ -77,14 +75,17 @@ void addParcoursCamera(Scene& scene, TerrainNoise* noise)
         float x2 = x + dir(0),
               y2 = y + dir(1);
 
-        Camera* cam = new Camera(Vector3f(x,y,noise->getHauteur(x,y)+5), Vector3f(x2,y2,noise->getHauteur(x2,y2)+5), 500, 1280, 720);
-        scene.addC(cam);
+        //if(i == 21)
+        {
+            Camera* cam = new Camera(Vector3f(x,y,noise->getHauteur(x,y)+10), Vector3f(x2,y2,noise->getHauteur(x2,y2)+10), 300, 720, 400);
+            scene.addC(cam);
+        }
     }
 }
 
 void testScene()
 {
-    TerrainNoise* noise = new TerrainNoise(100000,100000);
+    TerrainNoise* noise = new TerrainNoise(10000,10000);
     //Mesh m(*noise, 200, 200);
     //m.save("terrainNoiseTest.obj");
     //Camera* cam = new Camera(Vector3f(350,350,500), Vector3f(750,750,0), 600, 1200, 800);
