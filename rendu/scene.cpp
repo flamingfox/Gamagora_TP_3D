@@ -1,4 +1,4 @@
-#include "scene.h"
+﻿#include "scene.h"
 
 
 Scene::Scene()
@@ -52,9 +52,7 @@ bool Scene::rendu(){
                 const Terrain* objleplusproche = nullptr;
 
                 for(const Terrain* obj: objects){    //parcours tous les objets de la scene
-
                     float tmp1, tmp2;
-
                     if(!obj->box.intersect(r,tmp1,tmp2))
                         toucheBox = false;
                     else if(obj->intersect(r,coefdisttmp, tmp)){//si on touche
@@ -68,6 +66,7 @@ bool Scene::rendu(){
                 }
 
                 if(!toucheBox){
+
                      img->setPixel(x, y, (QColor(255, 0, 0)).rgba());
                      nbpixrouge++;
                 }
