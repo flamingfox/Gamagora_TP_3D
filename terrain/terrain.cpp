@@ -78,7 +78,7 @@ bool Terrain::inOut(const Eigen::Vector3f& pointXYZ) const
     return (pointXYZ(2) <= getHauteur(pointXYZ(0), pointXYZ(1)));
 }
 
-bool Terrain::intersect(const Rayon& rayon, float &coeffDistance) const
+bool Terrain::intersect(const Rayon& rayon, float &coeffDistance, int &i) const
 {
     float dmin;
     float dmax;
@@ -92,7 +92,7 @@ bool Terrain::intersect(const Rayon& rayon, float &coeffDistance) const
 
     coeffDistance = dmin;
 
-    for(int i = 0;  i<256;  i++)
+    for(i = 0;  i<256;  i++)
     {
         Eigen::Vector3f pos = rayon.getOrigine() + coeffDistance*rayon.getDirection();
         float h = getHauteur( pos );
@@ -111,7 +111,7 @@ bool Terrain::intersect(const Rayon& rayon, float &coeffDistance) const
         }else if(coeffDistance > dmax )
                 break;
 
-        coeffDistance += 0.375*h;    // des interfacts apparaissent à 0.5, le rayon dépasse le points qu'il devrait attendre
+        coeffDistance += 0.3*h;
     }
 
     return false;

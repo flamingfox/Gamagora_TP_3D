@@ -30,10 +30,10 @@ int main(int, char **)
 
 void testScene()
 {
-    TerrainNoise* noise = new TerrainNoise(10000,10000);
+    TerrainNoise* noise = new TerrainNoise(6000,6000);
     //Mesh m(*noise, 200, 200);
     //m.save("terrainNoiseTest.obj");
-    Camera* cam = new Camera(Vector3f(350,350,500), Vector3f(750,750,0), 600, 1200, 800);
+    Camera* cam = new Camera(Vector3f(0,0,2000), Vector3f(2000,2000,0), 1200, 1200, 800);
                             //Vector3f(1000,1000,-100),Vector3f(900,900,-1000), 700, 1200, 800);
 
     Scene scene;

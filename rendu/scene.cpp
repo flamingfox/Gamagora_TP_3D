@@ -31,6 +31,7 @@ bool Scene::rendu(){
         int _lu = c->getLu(), _lv = c->getLv();
         int pourcent2 = -1;
         QImage *img = new QImage(_lu, _lv, QImage::Format_RGB888);
+        QImage eric(_lu, _lv, QImage::Format_RGB888);
 
         #pragma omp parallel for schedule(dynamic,1)
         for(int y = 0; y < _lv ; y++){      // pour chaque ligne de l'image
@@ -41,14 +42,14 @@ bool Scene::rendu(){
             }
             for(int x = 0; x < _lu ; x++){  // pour chaque pixel de la ligne
                 Rayon r(c->getOrigine(),c->vecScreen(x,y));   //rayon correspondant au pixel
-
+                int tmp = 0;
                 bool touche = false;
                 float coefdisttmp = FLT_MAX;        //variables pour déterminer la distance du rayon le plus court
                 float coefdistfinal = FLT_MAX;
                 Vector3f zonetouchee;
                 const Terrain* objleplusproche = nullptr;
                 for(const Terrain* obj: objects){    //parcours tous les objets de la scene
-                    if(obj->intersect(r,coefdisttmp)){//si on touche
+                    if(obj->intersect(r,coefdisttmp, tmp)){//si on touche
                         touche = true;
                         if(coefdisttmp < coefdistfinal){//on sélectionne l'objet touché le plus proche
                             coefdistfinal = coefdisttmp;
@@ -63,11 +64,13 @@ bool Scene::rendu(){
                 else
                 {
                     img->setPixel(x,y,render(zonetouchee, *objleplusproche, r).rgba());
+                    eric.setPixel(x,y,qRgb(tmp,tmp,tmp));
                 }
             }
         }
         if(ic<10)        {
             img->save(("test000" + std::to_string(ic) + ".png").c_str());
+            eric.save("eric.png");
             std::cout << ("test000" + std::to_string(ic) + ".png").c_str() << std::endl;
         }
         else if(ic<100)        {
@@ -90,40 +93,7 @@ bool Scene::rendu(){
 
 
 QColor Scene::render(const Eigen::Vector3f& pointImpact, const Terrain& objleplusproche, const Rayon& ray)
-{/*
-    Eigen::Vector3f dRay = ray.getDirection();
-    dRay.normalize();
-
-    Eigen::Vector3f n = objleplusproche.getNormal(pointImpact(0),pointImpact(1));
-
-    Eigen::Vector3f diff = dRay - n;
-    double norm = diff.squaredNorm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
-    norm = 4-norm;
-    QColor color;
-
-    float hauteur = objleplusproche.getHauteur(pointImpact(0),pointImpact(1));
-    hauteur = (hauteur/objleplusproche.getMaxElevation());
-
-    float r,g,b;
-    objleplusproche.heatMapGradient.getColorAtValue(hauteur, r,g,b);
-    //objleplusproche.getColor(r,g,b, pointImpact(0), pointImpact(1));
-
-    color.setRed(r*255);
-    color.setGreen(g*255);
-    color.setBlue(b*255);
-
-    if(norm >= 2)
-        color = QColor(0,0,0); //Black
-    else if(norm == 0)
-            color = QColor(255,255,255); // White
-
-    else
-    {
-            int c = 255-round((255*norm)/2);
-            color = QColor(color.red()*c/255,color.green()*c/255, color.blue()*c/255); // Grey
-    }
-    return color;*/
-
+{
     Eigen::Vector3f dRay = ray.getDirection();
     dRay.normalize();
 
@@ -150,9 +120,6 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Terrain& objleplu
         return QColor(roundf(r*c),roundf(g*c), roundf(b*c)); // Grey
     }
 }
-
-/*****************************************************************************************/
-
 
 /**simule le parcours d'une camera sur le terrain de la scène*/
 void Scene::addParcoursCamera(Terrain* noise)

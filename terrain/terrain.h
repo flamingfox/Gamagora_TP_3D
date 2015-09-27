@@ -29,7 +29,7 @@ public:
     float getHauteur(const Vector3f& pointXYZ) const;
     void getColor(float& r, float& g, float& b, float x, float y) const;
 
-    bool intersect(const Rayon& rayon, float &coeffDistance) const;
+    bool intersect(const Rayon& rayon, float &coeffDistance, int &i) const;
     inline float getMinElevation() const {return hauteurMin;}
     inline float getMaxElevation() const {return hauteurMax;}
 
