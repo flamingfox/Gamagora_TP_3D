@@ -24,22 +24,30 @@ Scene::Scene()
 }*/
 
 bool Scene::rendu(){
-    int ic = 1;     //indice pour sauvegarder sur des images de noms différents
-    for(Camera* c : cameras)
+    //for(Camera* c : cameras)  //marche pas avec openMP
+    for(unsigned int ic = 0;  ic < cameras.size(); ic++)
     {
+        Camera* c = cameras[ic];
         int _lu = c->getLu(), _lv = c->getLv();
+        int pourcent2 = -1;
         QImage *img = new QImage(_lu, _lv, QImage::Format_RGB888);
-        //img->fill(QColor(Qt::white).rgb());
-        for(int x = 0; x < _lu ; x++){
-            std::cerr << "\r" << ic << " Rendering: " << 100 * x / (_lu - 1) << "%";
-            for(int y = 0; y < _lv ; y++){
+
+        #pragma omp parallel for schedule(dynamic,1)
+        for(int y = 0; y < _lv ; y++){      // pour chaque ligne de l'image
+            int pourcent = 100 * y / (_lv - 1);
+            if(pourcent != pourcent2)            {
+                pourcent2 = pourcent;
+                std::cout << "\r" << ic << " Rendering: " << pourcent << "% ";  // barre de progression
+            }
+            for(int x = 0; x < _lu ; x++){  // pour chaque pixel de la ligne
+                Rayon r(c->getOrigine(),c->vecScreen(x,y));   //rayon correspondant au pixel
+
                 bool touche = false;
-                Rayon r(c->getOrigine(),c->vecScreen(x,y));
-                float coefdisttmp = FLT_MAX;
+                float coefdisttmp = FLT_MAX;        //variables pour déterminer la distance du rayon le plus court
                 float coefdistfinal = FLT_MAX;
                 Vector3f zonetouchee;
-                const Object* objleplusproche;
-                for(const Object* obj: objects){
+                const Terrain* objleplusproche = nullptr;
+                for(const Terrain* obj: objects){    //parcours tous les objets de la scene
                     if(obj->intersect(r,coefdisttmp)){//si on touche
                         touche = true;
                         if(coefdisttmp < coefdistfinal){//on sélectionne l'objet touché le plus proche
@@ -49,62 +57,142 @@ bool Scene::rendu(){
                         }
                     }
                 }
-                //for(const Mesh* mesh : meshs)
 
                 if(!touche)
                     img->setPixel(x, y, default_color.rgba());
                 else
                 {
-                    QColor color = render(zonetouchee, *objleplusproche, r);
-                    img->setPixel(x,y,color.rgba());
-                    //SetPixel(img, x, y, render(touche, zonetouchee, *objleplusproche, r));
+                    img->setPixel(x,y,render(zonetouchee, *objleplusproche, r).rgba());
                 }
             }
         }
-        //antialiasing(img)->save("testaliasing.png");
-        img->save(("test" + std::to_string(ic) + ".png").c_str());
-        std::cout << ("test" + std::to_string(ic) + ".png").c_str() << std::endl;
-        ic++;
+        if(ic<10)        {
+            img->save(("test000" + std::to_string(ic) + ".png").c_str());
+            std::cout << ("test000" + std::to_string(ic) + ".png").c_str() << std::endl;
+        }
+        else if(ic<100)        {
+            img->save(("test00" + std::to_string(ic) + ".png").c_str());
+            std::cout << ("test00" + std::to_string(ic) + ".png").c_str() << std::endl;
+        }
+        else if(ic<1000)        {
+            img->save(("test0" + std::to_string(ic) + ".png").c_str());
+            std::cout << ("test0" + std::to_string(ic) + ".png").c_str() << std::endl;
+        }
+        else    {
+            img->save(("test" + std::to_string(ic) + ".png").c_str());
+            std::cout << ("test" + std::to_string(ic) + ".png").c_str() << std::endl;
+        }
         delete img;
     }
     return true;
 }
 
-/*QColor Scene::renderHors()
-{
-    return default_color;
-}*/
 
-QColor Scene::render(const Eigen::Vector3f& pointImpact, const Object& objleplusproche, const Rayon& ray)
-{
+
+QColor Scene::render(const Eigen::Vector3f& pointImpact, const Terrain& objleplusproche, const Rayon& ray)
+{/*
+    Eigen::Vector3f dRay = ray.getDirection();
+    dRay.normalize();
+
+    Eigen::Vector3f n = objleplusproche.getNormal(pointImpact(0),pointImpact(1));
+
+    Eigen::Vector3f diff = dRay - n;
+    double norm = diff.squaredNorm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
+    norm = 4-norm;
+    QColor color;
+
+    float hauteur = objleplusproche.getHauteur(pointImpact(0),pointImpact(1));
+    hauteur = (hauteur/objleplusproche.getMaxElevation());
+
+    float r,g,b;
+    objleplusproche.heatMapGradient.getColorAtValue(hauteur, r,g,b);
+    //objleplusproche.getColor(r,g,b, pointImpact(0), pointImpact(1));
+
+    color.setRed(r*255);
+    color.setGreen(g*255);
+    color.setBlue(b*255);
+
+    if(norm >= 2)
+        color = QColor(0,0,0); //Black
+    else if(norm == 0)
+            color = QColor(255,255,255); // White
+
+    else
+    {
+            int c = 255-round((255*norm)/2);
+            color = QColor(color.red()*c/255,color.green()*c/255, color.blue()*c/255); // Grey
+    }
+    return color;*/
+
     Eigen::Vector3f dRay = ray.getDirection();
     dRay.normalize();
 
     Eigen::Vector3f n = objleplusproche.getNormal(pointImpact);
 
-    Eigen::Vector3f diff = dRay+ n;    //-n;   //mais dRay pointe vers le terrain et n vers le haut.
-    double norm = diff.squaredNorm();    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
-    //norm = 4-norm;
+    //Eigen::Vector3f diff = dRay+ n;    //-n;   //mais dRay pointe vers le terrain et n vers le haut.
+    double norm = dRay.dot(n);    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
 
-            //heatMapGradient.getColorAtValue(hauteur, r,g,b);
 
-    /*color.setRed(r*255);
-    color.setGreen(g*255);
-    color.setBlue(b*255);*/
-
-    if(norm >= 2)
+    if(norm >= 0)
         return QColor(0,0,0); //Black
-    else if(norm == 0)
-        return QColor(255,255,255); // White
+    //else if(norm == -1)
+        //return QColor(0,0,0); //Black
+    //    return QColor(255,255,255); // White
     else
     {
-        float hauteur = objleplusproche.getVal(pointImpact);
-        hauteur /= objleplusproche.box.diffZ();
+        float hauteur = objleplusproche.getHauteur(pointImpact);
+        hauteur /= objleplusproche.getMaxElevation();
 
         float r,g,b;
-        objleplusproche.getColor(r,g,b, hauteur);
+        objleplusproche.getColor(r,g,b, pointImpact(0), pointImpact(1));
 
-        float c = 255-(255*norm)/2;
+        float c = (-255)*norm;
         return QColor(roundf(r*c),roundf(g*c), roundf(b*c)); // Grey
+    }
+}
+
+/*****************************************************************************************/
+
+
+/**simule le parcours d'une camera sur le terrain de la scène*/
+void Scene::addParcoursCamera(Terrain* noise)
+{
+    int x = rand()%(int)noise->largeur;
+    int y = rand()%(int)noise->longueur;
+
+    int dirMax = 10;
+    int dMax = 2;
+    Vector2f dir(rand()%(dirMax*2)-dirMax,
+                 rand()%(dirMax*2)-dirMax);
+    float d = dir.norm();
+    if(d > dirMax){
+        dir /= d;
+        dir *= dirMax;
+    }
+
+    for(int i = 0;  i < 120;    i++)    {
+        Vector2f dev(((float)rand()/INT_MAX)*dMax*2-dMax,
+                     ((float)rand()/INT_MAX)*dMax*2-dMax);
+
+        d = dev.norm();
+        if(d > dMax)   {
+            dev /= d;
+            dev *= dMax;
+        }
+        dir += dev;
+
+        d = dev.norm();
+        if(d > dirMax) {
+            dir /= d;
+            dir *= dirMax;
+        }
+        x += dir(0);
+        y += dir(1);
+
+        float x2 = x + dir(0),
+              y2 = y + dir(1);
+
+        Camera* cam = new Camera(Vector3f(x,y,noise->getHauteur(x,y)+10), Vector3f(x2,y2,noise->getHauteur(x2,y2)+10), 300, 720, 400);
+        addC(cam);
     }
 }

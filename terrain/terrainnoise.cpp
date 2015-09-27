@@ -2,13 +2,17 @@
 
 #define HAUTEUR_MAX_NOISE 300
 
-TerrainNoise::TerrainNoise() : Terrain2()
+TerrainNoise::TerrainNoise() : Terrain()
 {}
 
 TerrainNoise::TerrainNoise(int _longueur, int _largeur) :
-    Terrain2(_longueur, _largeur)
+    Terrain(_longueur, _largeur)
 {
-    box = Box(Vector3f(0,0,0), Vector3f(_largeur,_longueur, HAUTEUR_MAX_NOISE));
+    box = Box(Vector3f(0,0,0), Vector3f(_largeur,_longueur, 0));
+    hauteurMin = minElevation();
+    hauteurMax = maxElevation();
+    box.max(2) = hauteurMax;
+
 }
 
 
@@ -20,58 +24,82 @@ TerrainNoise::TerrainNoise(int _longueur, int _largeur) :
 
 
 
-float TerrainNoise::noise(int amplitude, float periode, float x, float y)const{
-    float h = NoiseGenerator::perlinNoise( x/periode, y/periode);
-    h = (h+1)/2;
-    return amplitude * h;
-}
-
-float TerrainNoise::ridge(float hauteur, float seuil)const{
-    if(hauteur > seuil)return (2*seuil - hauteur);
-    else return hauteur;
-}
 
 
 /***************************************************************/
 
 float TerrainNoise::getHauteurXY(float x, float y) const
 {
-    if(x < 0    || y < 0 || x > 1 || y > 1)
-        return HAUTEUR_HORS_MAP;
-    float h = noise(400,300,x*largeur,y*longueur);
-    h = ridge(h, 250);
+    if(x < 0 || y < 0 || x > largeur || y > longueur)
+            return HAUTEUR_HORS_MAP;
 
-    float h2 = noise(100, 100, x*largeur, y*longueur);
-    h -= h2*(h/250);
+    float h = nrw::noise(400,300,x*largeur,y*longueur);
+    h = nrw::ridge(h, 250);
 
-    float h3 = noise(50,30,x*largeur,y*longueur);
-    float div = h/250;
-    if(div> 1)
-        std::cout << "bizarre?" << std::endl;
-    h += h3*div*div;
-    //float h4 = ridge(h3, 160);
+    float h2 = nrw::noise(100, 100, x*largeur, y*longueur);
+    h -= h2*nrw::attenuation(h,50,200);
+
+    float h3 = nrw::noise(50,30,x*largeur,y*longueur);
+    h += h3*nrw::attenuation(h,50,200);
 
     return h;
 }
 
-
-
-/*
-float Terrain::warp()
-*/
-
-/*void TerrainNoise::applicationWarp(int amplitude, int periode)
+Eigen::Vector3f TerrainNoise::getNormalXY(float x, float y) const
 {
-    //for(size_t i = 0; i < geom.size(); i++)
-    for(Eigen::Vector3f& p: geom)
-    {
-        float warp = amplitude * NoiseGenerator::perlinNoise( p(0)*(1.0/periode)+2.78, p(1)*(1.0/periode)+8.72);
-
-        p(0) += warp;
-        p(1) += warp;
-    }
+    float   ha = getHauteurXY(x,y);
+    float   rx = 1/largeur,
+            ry = 1/longueur;
+    float   g = getHauteurXY(x-rx,y),
+            d = getHauteurXY(x+rx,y),
+            b = getHauteurXY(x,y+ry),
+            h = getHauteurXY(x,y-ry);
+    Eigen::Vector3f vg(-1, 0, g-ha),
+                    vd(1, 0, d-ha),
+                    vb(0, 1, b-ha),
+                    vh(0, -1, h-ha);
+    float   distg = vg.norm(),
+            distd = vd.norm(),
+            distb = vb.norm(),
+            disth = vh.norm();
+    Eigen::Vector3f v1 = vg.cross(vh),
+                    v2 = vh.cross(vd),
+                    v3 = vd.cross(vb),
+                    v4 = vb.cross(vg);
+    v1.normalize();
+    v2.normalize();
+    v3.normalize();
+    v4.normalize();
+    Eigen::Vector3f normale = v1*distg*disth + v2*disth*distd + v3*distd*distb + v4*distb*distg;
+    return normale.normalized();
 }
-*/
 
 
+
+
+float TerrainNoise::minElevation() const{
+    float hMin = FLT_MAX;
+    float hauteur;
+    //#pragma omp parallel for schedule(dynamic,1)
+    for(int i = 0 ; i<(int)largeur/10; i++){
+        for(int y = 0; y<longueur/10; y++){
+            hauteur = getHauteur(i,y);
+            if(hauteur<hMin)hMin=hauteur;
+        }
+    }
+    return hMin;
+}
+
+float TerrainNoise::maxElevation() const{
+    float hMax = FLT_MIN;
+    float hauteur;
+    //#pragma omp parallel for schedule(dynamic,1)
+    for(int i = 0 ; i<(int)largeur/10; i++){
+        for(int y = 0; y<longueur/10; y++){
+            hauteur = getHauteur(i,y);
+            if(hauteur>hMax)hMax=hauteur;
+        }
+    }
+    return hMax;
+}
 

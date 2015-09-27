@@ -1,8 +1,12 @@
 #include "mesh.h"
 
-Mesh::Mesh(const Terrain2 &terrain, int nbHeight, int nbWidth)
+
+
+Mesh::Mesh(const Terrain &terrain, int nbHeight, int nbWidth)
 {
     geom.reserve(nbHeight*nbWidth);
+    //faire un resize pour OpenMP et bien indiquer l'indice au lieu du push_back()
+
     for(int j = 0;  j < nbHeight;   j++)
     {
         float y = j/(float)(nbHeight-1);
@@ -103,33 +107,6 @@ Mesh Mesh::cylindre(const Eigen::Vector3f& centreCercleA, const Eigen::Vector3f&
     m.geom.push_back(centreCercleB); // 2 resolution+1
 
 
-    /*************************************/
-    /* Génération faces */
-    /*************************************/
-
-    /***** Poles ****/
-    /*for(int i=0; i<= resolution-1; i++){
-        t.push_back(i); t.push_back(i+1); t.push_back(2*resolution);
-    }
-    t.push_back(resolution-1); t.push_back(0); t.push_back(2*resolution);
-
-    for(int i=resolution ; i<= 2*resolution-1; i++){
-        t.push_back(i); t.push_back(i+1); t.push_back(2*resolution+1);
-    }
-    t.push_back(2*resolution-1); t.push_back(resolution); t.push_back(2*resolution+1);*/
-
-    /***** faces cylindre *****/
-    /*for(int i=0; i< resolution-1; i++){
-
-        t.push_back(i); t.push_back(i+1); t.push_back(resolution+i);
-        t.push_back(resolution+i+1); t.push_back(resolution+i); t.push_back(i+1);
-    }
-    t.push_back(resolution-1); t.push_back(0); t.push_back(resolution);
-    t.push_back(resolution); t.push_back(2*resolution-1); t.push_back(resolution-1);
-
-
-    Mesh retour(v,t);*/
-
     m.normalsTriangles();
     return m;
 }
@@ -171,26 +148,6 @@ Mesh Mesh::cone(const Eigen::Vector3f &centreCercle, const Eigen::Vector3f &poin
     m.geom.push_back(centreCercle); // resolution
     m.geom.push_back(pointe); // resolution+1
 
-
-    /*************************************/
-    /* Génération faces */
-    /*************************************/
-
-    /***** Poles ****/
-    /*for(int i=0; i< resolution-1; i++){
-        t.push_back(i); t.push_back(i+1); t.push_back(resolution);
-    }
-    t.push_back(resolution-1); t.push_back(0); t.push_back(resolution);*/
-
-    /***** faces cylindre *****/
-    /*for(int i=0; i< resolution-1; i++){
-
-        t.push_back(i); t.push_back(i+1); t.push_back(resolution+1);
-    }
-    t.push_back(resolution-1); t.push_back(0); t.push_back(resolution+1);
-
-
-    Mesh retour(v,t);*/
 
     m.normalsTriangles();
     return m;
@@ -336,12 +293,7 @@ size_t Mesh::nbTopo() const
     return this->topo.size();
 }
 
-inline void Mesh::addTopo(int i0, int i1, int i2)
-{
-    this->topo.push_back(i0);
-    this->topo.push_back(i1);
-    this->topo.push_back(i2);
-}
+
 
 Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, const int resolution)
 {
@@ -503,33 +455,17 @@ Mesh Mesh::generationSphere(const Eigen::Vector3f &centre, const float rayon, co
     return m;
 }
 
-/*******************InOut********************/
-
-
-//std::pair<Eigen::Vector3f,Eigen::Vector3f> Mesh::calculBoite()
-//{
-    /*if(this->nbGeom() == 0)
-        return 0;*/
-    /*Eigen::Vector3f min(geom[0]), max(geom[0]);
-
-    std::vector<Eigen::Vector3f>::const_iterator it = geom.begin();
-    ++it;
-    for(    ;  it != geom.end();  ++it)
-    {
-        //pas fini.
-    }*/
-//}
 
 /*******************Normal******************/
 
 void Mesh::normalsTriangles()
 {
-    if(!normals.empty())
-        normals.clear();
+    if(!normalsPoints.empty())
+        normalsPoints.clear();
 
-    normals.reserve(nbTopo()/3);
+    normalsPoints.reserve(nbTopo()/3);
     for(size_t i = 0;  i < nbTopo()/3; i++)
-        normals.push_back(this->normalTriangle(i));
+        normalsPoints.push_back(this->normalTriangle(i));
 }
 
 Eigen::Vector3f Mesh::normalTriangle(int i) const
@@ -543,6 +479,62 @@ Eigen::Vector3f Mesh::normalTriangle(int i) const
     c.normalize();
     return c;
 }
+
+/**********************************************************************************************/
+
+void Mesh::applicationNoise(int amplitude, int periode)
+{
+    /*************************************/
+    /* Modification points */
+    /*************************************/
+
+    for(Eigen::Vector3f& p: geom)
+    {
+        float h = NoiseGenerator::perlinNoise( p(0)/periode, p(1)/periode );
+        h = (h+1)/2;
+        h *= amplitude;
+        p(2) += h;
+    }
+}
+
+
+void Mesh::applicationRidge(float seuil, float amplitude, int periode)
+{
+    for(Eigen::Vector3f& p: geom)
+    {
+        float hRidge = amplitude * NoiseGenerator::perlinNoise( p(0)*(1.0/periode), p(2)*(1.0/periode) );
+        hRidge += seuil;
+
+        if(p(2) > hRidge)
+            p(2) = 2*hRidge - p(2);
+    }
+}
+
+
+void Mesh::applicationWarp(int amplitude, int periode)
+{
+    for(Eigen::Vector3f& p: geom)
+    {
+        float warp = amplitude * NoiseGenerator::perlinNoise( p(0)*(1.0/periode)+2.78, p(1)*(1.0/periode)+8.72);
+
+        p(0) += warp;
+        p(1) += warp;
+    }
+}
+
+void Mesh::applicationSin(int amplitude, int periode)
+{
+    //for(size_t i = 0; i < geom.size(); i++)
+    for(Eigen::Vector3f& p: geom)
+    {
+        float warp = amplitude * sin(p(0)*periode) + amplitude * sin(p(1)*periode);
+        p(0) += 50;
+        p(1) += 50;
+        p(2) += warp +50;
+    }
+}
+
+
 
 /**************************************************************/
 

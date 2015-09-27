@@ -5,16 +5,14 @@
 
 #include <Eigen/Core>
 #include <QList>
-#include <rayon.h>
+#include <terrain/terrain.h>
 #include "float.h"  //FLT_MIN FLT_MAX
 #include <QColor>
 #include <QDebug>
-#include "rendu.h"
 #include <QLinearGradient>
 #include <QBrush>
 
 using namespace Eigen;
-
 /**
  * @brief Une caméra utilisé pour visualiser la scène.
  */
