@@ -2,7 +2,7 @@
 
 
 
-Mesh::Mesh(const Terrain2 &terrain, int nbHeight, int nbWidth)
+Mesh::Mesh(const Terrain &terrain, int nbHeight, int nbWidth)
 {
     geom.reserve(nbHeight*nbWidth);
     //faire un resize pour OpenMP et bien indiquer l'indice au lieu du push_back()

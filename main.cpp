@@ -4,12 +4,8 @@
 #include "mesh.h"
 //#include "arbre.h"
 
-#include "terrain.h"
+
 #include "terrain/terrainnoise.h"
-//#include "camera.h"
-//#include "generationvegetation.h" //inclue la librairie pour "srand" et "time"
-//#include "box.h"
-//#include "rayon.h"
 #include "rendu/scene.h"
 
 #include <string>

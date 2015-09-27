@@ -1,27 +1,25 @@
-#include "terrain2.h"
+#include "terrain.h"
 
-Terrain2::Terrain2():
-    Terrain2(0,0)
+Terrain::Terrain():
+    Terrain(0,0)
 {
 }
 
-Terrain2::Terrain2(float longueur, float largeur):
-    Terrain2(longueur, largeur, 0)
+Terrain::Terrain(float longueur, float largeur):
+    Terrain(longueur, largeur, 0)
 {   
 }
 
-
-Terrain2::Terrain2(float longueur, float largeur, float amplitude):
-    Object(longueur, largeur, amplitude),   longueur(longueur), largeur(largeur)
+Terrain::Terrain(float longueur, float largeur, float amplitude):
+    longueur(longueur), largeur(largeur)
 {
     heatMapGradient.createDefaultHeatMapGradient();
 }
 
-
 /**********************************************************/
 
 /***/
-float Terrain2::getHauteur(float x, float y) const
+float Terrain::getHauteur(float x, float y) const
 {
     x -= box.min(0);
     x /= largeur;
@@ -34,12 +32,12 @@ float Terrain2::getHauteur(float x, float y) const
     return getHauteurXY(x,y);
 }
 
-float Terrain2::getHauteur(const Vector2f& pointXY) const
+float Terrain::getHauteur(const Vector2f& pointXY) const
 {
     return getHauteur(pointXY(0), pointXY(1));
 }
 
-float Terrain2::getHauteur(const Vector3f& pointXYZ) const
+float Terrain::getHauteur(const Vector3f& pointXYZ) const
 {
     return getHauteur(pointXYZ(0), pointXYZ(1));
 }
@@ -47,7 +45,7 @@ float Terrain2::getHauteur(const Vector3f& pointXYZ) const
 
 /**********************************************************/
 
-Vector3f Terrain2::getNormal(float x, float y) const
+Vector3f Terrain::getNormal(float x, float y) const
 {
     x -= box.min(0);
     x /= largeur;
@@ -60,13 +58,13 @@ Vector3f Terrain2::getNormal(float x, float y) const
     return getNormalXY(x,y);
 }
 
-Vector3f Terrain2::getNormal(const Vector2f& pointXY) const
+Vector3f Terrain::getNormal(const Vector2f& pointXY) const
 {
     return getNormal(pointXY(0), pointXY(1));
 }
 
 
-Vector3f Terrain2::getNormal(const Vector3f& pointXYZ) const
+Vector3f Terrain::getNormal(const Vector3f& pointXYZ) const
 {
     return getNormal(pointXYZ(0), pointXYZ(1));
 }
@@ -75,12 +73,12 @@ Vector3f Terrain2::getNormal(const Vector3f& pointXYZ) const
 /**********************************************************/
 
 
-bool Terrain2::inOut(const Eigen::Vector3f& pointXYZ) const
+bool Terrain::inOut(const Eigen::Vector3f& pointXYZ) const
 {
     return (pointXYZ(2) <= getHauteur(pointXYZ(0), pointXYZ(1)));
 }
 
-bool Terrain2::intersect2(const Rayon& rayon, float &coeffDistance) const
+bool Terrain::intersect(const Rayon& rayon, float &coeffDistance) const
 {
     float dmin;
     float dmax;
@@ -121,18 +119,18 @@ bool Terrain2::intersect2(const Rayon& rayon, float &coeffDistance) const
 
 /************************************************************************/
 
-void Terrain2::translate2(const Vector3f& t)
+void Terrain::translate2(const Vector3f& t)
 {
     (void) t;   //rien faire
 }
 
-void Terrain2::getColor2(float& r, float& g, float& b, float hauteur, const Eigen::Vector3f& n) const
+void Terrain::getColor2(float& r, float& g, float& b, float hauteur, const Eigen::Vector3f& n) const
 {
     (void) n;
     heatMapGradient.getColorAtValue(hauteur, r,g,b);
 }
 
-void Terrain2::getColor3(float& r, float& g, float& b, float x, float y) const
+void Terrain::getColor(float& r, float& g, float& b, float x, float y) const
 {
     float hauteur = getHauteur(x,y);
     hauteur /= box.diffZ();
@@ -187,7 +185,7 @@ void Terrain2::getColor3(float& r, float& g, float& b, float x, float y) const
 }
 
 
-float Terrain2::getVal(const Vector3f& p) const
+float Terrain::getVal(const Vector3f& p) const
 {
     return getHauteur(p(0), p(1));
 }

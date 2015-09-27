@@ -17,10 +17,8 @@
 
 #include "noisegenerator.h"
 
-#include "zoneterrain.h"
 #include "interpolation.h"
-#include "rayon.h"
-#include "terrain/terrain2.h"
+#include "terrain/terrain.h"
 
 using namespace Eigen;
 class Mesh{
@@ -41,7 +39,7 @@ public :
     Mesh(const QImage &img, float _longueur, float _largeur, float amplitude);
     Mesh(const QImage& img, float _longueur, float _largeur, float _amplitude, int _nbHeight, int _nbWidth);
 
-    Mesh(const Terrain2& terrain, int nbHeight, int nbWidth);
+    Mesh(const Terrain& terrain, int nbHeight, int nbWidth);
 
     ~Mesh(){}
 

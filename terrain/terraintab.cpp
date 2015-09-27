@@ -108,7 +108,7 @@ Eigen::Vector3f TerrainTab::getNormalXY(float x, float y) const
 
 
 TerrainTab::TerrainTab(const QImage &img, float longueur, float largeur, float amplitude):
-    Terrain2(longueur,largeur,amplitude),    height(img.height()), width(img.width()), amplitude(amplitude)
+    Terrain(longueur,largeur,amplitude),    height(img.height()), width(img.width()), amplitude(amplitude)
 {
     initGrille();
     simpleInitImage(img);
@@ -117,7 +117,7 @@ TerrainTab::TerrainTab(const QImage &img, float longueur, float largeur, float a
 
 
 TerrainTab::TerrainTab(const QImage& img, int _nbHeight, int _nbWidth, float longueur, float largeur, float amplitude):
-    Terrain2(longueur,largeur,amplitude), height(_nbHeight), width(_nbWidth), amplitude(amplitude)
+    Terrain(longueur,largeur,amplitude), height(_nbHeight), width(_nbWidth), amplitude(amplitude)
 {
     initGrille();
     if(_nbHeight == img.height() && _nbWidth == img.width())
@@ -167,9 +167,9 @@ void TerrainTab::initGrille()
 
 
 
-float TerrainTab::getMinElevation2() const{
-    return hauteurMin;
+float TerrainTab::minElevation() const{
+    return hauteurMin; //pas bon
 }
-float TerrainTab::getMaxElevation2() const{
-    return hauteurMax;
+float TerrainTab::maxElevation() const{
+    return hauteurMax; //pas bon
 }

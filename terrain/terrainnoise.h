@@ -2,11 +2,11 @@
 #define TERRAINNOISE_H
 
 #include "parametres.h"
-#include "terrain2.h"
+#include "terrain.h"
 #include "noisegenerator.h"
 #include "nrw.h"
 
-class TerrainNoise: public Terrain2
+class TerrainNoise: public Terrain
 {
 public:
     TerrainNoise();
@@ -30,8 +30,8 @@ protected:
     /// \param y
     /// \return return a random controlled value from a perlin noise
 
-    float getMinElevation2() const;
-    float getMaxElevation2() const;
+    float minElevation() const;
+    float maxElevation() const;
 };
 
 #endif // TERRAINNOISE_H

@@ -4,8 +4,8 @@
 #include <Eigen/Geometry>
 //#include "mesh.h"
 #include "float.h"  //FLT_MIN FLT_MAX
-#include "rayon.h"
 #include <iostream>
+#include "rendu/rayon.h"
 
 using namespace Eigen;
 
