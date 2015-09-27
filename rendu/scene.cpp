@@ -155,7 +155,7 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Terrain& objleplu
 
 
 /**simule le parcours d'une camera sur le terrain de la scène*/
-void Scene::addParcoursCamera(Terrain* noise)
+/*void Scene::addParcoursCamera(Terrain* noise)
 {
     int x = rand()%(int)noise->largeur;
     int y = rand()%(int)noise->longueur;
@@ -195,4 +195,4 @@ void Scene::addParcoursCamera(Terrain* noise)
         Camera* cam = new Camera(Vector3f(x,y,noise->getHauteur(x,y)+10), Vector3f(x2,y2,noise->getHauteur(x2,y2)+10), 300, 720, 400);
         addC(cam);
     }
-}
+}*/

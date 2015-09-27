@@ -29,7 +29,7 @@ public:
      */
     bool rendu();
 
-    void addParcoursCamera(Terrain* noise);
+    //void addParcoursCamera(Terrain* noise);
 
 private:
 
