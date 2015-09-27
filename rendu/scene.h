@@ -7,35 +7,62 @@
 
 /**
     @author Aurelien Argoud
+    @brief Correspond à un scène dans sa globalité.
 */
 class Scene
 {
 public:
 
-
     Scene();
+
 
     void addO(Object* obj){
         objects.push_back(obj);
     }
+
     void addL(Lumiere* l){
         lights.push_back(l);
     }
+
     void addC(Camera* c){
         cameras.push_back(c);
     }
 
+    /**
+     * @brief Créer la visualisation de la scène dans une image. Utilise le procédé de lancé de rayons. \n
+     * Utilise render().
+     * @return Si le rendu c'est bien déroulé.
+     */
     bool rendu();
-    QColor render(const Eigen::Vector3f& pointImpact, const Object& objleplusproche, const Rayon& ray);
-
-
 
 private:
-    std::vector<Object*> objects;//liste des objets dans la scene
+
+    /**
+     * @brief Détermine la couleur d'un pixel.
+     * @param pointImpact Position d'un point d'impact entre un rayon (ray) et un objet (objleplusproche).
+     * @param objleplusproche Premier objet touché par le rayon ray. (cf. Object)
+     * @param ray un rayon. (cf. Rayon)
+     * @return
+     */
+    QColor render(const Eigen::Vector3f& pointImpact, const Object& objleplusproche, const Rayon& ray);
+
+    /**
+     * @brief Liste des objets dans la scène.
+     */
+    std::vector<Object*> objects;
+    /**
+     * @brief Liste des lumières dans la scène.
+     */
     std::vector<Lumiere*> lights;
+    /**
+     * @brief Liste des caméras dans la scène.
+     */
     std::vector<Camera*> cameras;
 
 
+    /**
+     * @brief Couleur de fond
+     */
     const QColor default_color = QColor(116, 208, 241); //couleur si aucun objet touché
 };
 
