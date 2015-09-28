@@ -62,13 +62,15 @@ bool Scene::rendu(){
                         }
                     }
                 }
-                if(!toucheBox)
+                /*if(!toucheBox)
                      img->setPixel(x, y, (QColor(255, 0, 0)).rgba());
-                else if(!touche)
+                else*/ if(!touche)
                     img->setPixel(x, y, default_color.rgba());
                 else
                 {
-                    img->setPixel(x,y,(render(zonetouchee, *objleplusproche, r).rgba()) + qRgb(tmp*2,tmp*2,tmp*2));
+                    QColor val = render(zonetouchee, *objleplusproche, r).rgba();
+                    int tmp2 = tmp*2;
+                    img->setPixel(x,y,(QColor(std::min(val.red()+tmp2,255),std::min(val.green()+tmp2,255),std::min(val.blue()+tmp2,255)).rgba()));
                     eric.setPixel(x,y,qRgb(tmp,tmp,tmp));
                 }
             }
