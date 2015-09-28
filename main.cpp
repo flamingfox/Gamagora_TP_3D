@@ -38,8 +38,9 @@ void testScene()
 
     Scene scene;
     scene.addO(noise);
-    //scene.addC(cam);
-    Camera* cam2 = new Camera(Vector3f(-450,-450,1400), Vector3f(3000,3000,-1800), 650, 1200, 800);
+
+    scene.addC(cam);
+    Camera* cam2 = new Camera(Vector3f(0,0,2000), Vector3f(2000,2000,0), 600, 1200, 800);
     scene.addC(cam2);
     /*Camera* cam3 = new Camera(Vector3f(4350,4350,500), Vector3f(4750,4750,0), 600, 1200, 800);
     scene.addC(cam3);
