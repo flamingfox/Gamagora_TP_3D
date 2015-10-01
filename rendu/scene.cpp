@@ -66,7 +66,6 @@ bool Scene::rendu(){
                 }
 
                 if(!toucheBox){
-
                      img->setPixel(x, y, (QColor(255, 0, 0)).rgba());
                      nbpixrouge++;
                 }
