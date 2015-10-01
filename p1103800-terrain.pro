@@ -5,7 +5,7 @@ CONFIG += c++11
 
 INCLUDEPATH += C:/librairie
 INCLUDEPATH += C:\lib
-INCLUDEPATH += C:\Users\Rudi\Desktop\eigen3
+INCLUDEPATH += C:\Developpement\eigen3
 
 QMAKE_CXXFLAGS += -fopenmp
 LIBS += -fopenmp

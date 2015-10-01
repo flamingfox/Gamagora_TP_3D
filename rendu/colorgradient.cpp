@@ -22,10 +22,13 @@ void ColorGradient::clearGradient() { color.clear(); }
 void ColorGradient::createDefaultHeatMapGradient()
 {
     color.clear();
-    color.push_back(ColorPoint(154.0/255.0, 205.0/255.0, 50.0/255.0,   0.0f));      // Herbe.
-    color.push_back(ColorPoint(139.0/255.0, 69.0/255.0, 19.0/255.0,   0.5f));     // Terre.
+    color.push_back(ColorPoint(0.0/255.0, 173.0/255.0, 255.0/255.0,   0.0f));      // bleu.
+    //color.push_back(ColorPoint(154.0/255.0, 205.0/255.0, 50.0/255.0,   0.0f));      // Herbe.
+    //color.push_back(ColorPoint(139.0/255.0, 69.0/255.0, 19.0/255.0,   0.5f));     // Terre.
     //color.push_back(ColorPoint(139.0/255.0, 119.0/255.0, 101.0/255.0,   0.66f));      // Roche.
-    color.push_back(ColorPoint(255.0/255.0, 250.0/255.0, 250.0/255.0,   1.0f));      // Neige.
+    //color.push_back(ColorPoint(255.0/255.0, 250.0/255.0, 250.0/255.0,   1.0f));      // Neige.
+    color.push_back(ColorPoint(255.0/255.0, 0/255.0, 0.0/255.0,   1.0f));      // rouge.
+
 }
 
   //-- Inputs a (value) between 0 and 1 and outputs the (red), (green) and (blue)

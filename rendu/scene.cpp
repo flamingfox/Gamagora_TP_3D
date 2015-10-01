@@ -75,7 +75,11 @@ bool Scene::rendu(){
                 else
                 {
                     img->setPixel(x,y,(render(zonetouchee, *objleplusproche, r).rgba()) + qRgb(tmp*2,tmp*2,tmp*2));
-                    eric.setPixel(x,y,qRgb(tmp,tmp,tmp));
+                    float r,v,b;
+                    ColorGradient grad;
+                    grad.createDefaultHeatMapGradient();
+                    grad.getColorAtValue((float)tmp/50.0f,r,v,b);
+                    eric.setPixel(x,y,qRgb(r*255,v*255,b*255));
                 }
             }
         }
