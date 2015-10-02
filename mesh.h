@@ -21,6 +21,13 @@
 #include "terrain/terrain.h"
 
 using namespace Eigen;
+
+
+//info professeur: Documentation à compléter quand la classe sera plus utilisé.
+/**
+ * Classe d'objet géométrique. Contient les points et la topologie de l'objet. \n
+ * peut être enregistrer dans un fichier ".obj" et importer dans un logiciel d'image de synthèse (Blender, MeshLab, 3DSMax, ...)
+*/
 class Mesh{
 
 protected:

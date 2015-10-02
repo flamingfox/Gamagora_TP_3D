@@ -4,7 +4,7 @@
 #include "noisegenerator.h"
 
 /**
- * @param fonction pour noise, ridge, warp et toutes fonction sur le terrain qui n'ont pas besoin de connaitre les caractéristiques du terrain
+ * fonction pour noise, ridge, warp et toutes fonction sur le terrain qui n'ont pas besoin de connaitre les caractéristiques du terrain
  */
 namespace nrw
 {

@@ -114,7 +114,7 @@ private:
 
     /**
      * @brief Détermine la positions de min et max pour englober tous les points de \e points.
-     * @param[in] Un ensemble de points.
+     * @param[in] points Un ensemble de points.
      */
     inline void parcourtPoints(const std::vector<Vector3f>& points);
 

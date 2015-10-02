@@ -57,10 +57,15 @@ private:
 
     /**
      * @brief grille
+     * Tableau de hauteur sur une dimension (height*width cases) représentant les valeurs à interpoler pour trouver une position en x,y.
+     * Plus facile à utiliser pour le seuillage ou toute autre fonction n'ayant pas besoin de connaitre les coordonnées ligne et colonne
+     * Optimisation: les tableaux en une dimensions ont un accès plus rapide en mémoire par rapport aux tableaux 2D dû à la proximité des données dans la RAM.
      */
     float *grille = nullptr;
     /**
      * @brief grille2d
+     * Tableau de pointeur pointant sur l'ADRESSE dans "grille" de chaque première valeur d'une ligne du terrain.
+     * Plus facile à utiliser sur les fonctions d'interpolations
      */
     float **grille2d = nullptr;
 

@@ -41,6 +41,10 @@ public:
 
     inline Eigen::Vector3f getOrigine()const{return _origine;}
     inline Eigen::Vector3f getDirection()const{return _direction;}
+
+    /**
+    * @param[in] dir direction du rayon (normalisé par la fonction si ce n'est pas le cas)
+    */
     inline void setDirection(const Eigen::Vector3f& dir){ _direction = dir.normalized();}
 
 };

@@ -4,6 +4,9 @@
 #include "math.h"
 #include "parametres.h"
 
+/**
+ * fonction de bruit
+ */
 namespace NoiseGenerator
 {
     double perlinNoise(double x, double y);

@@ -111,22 +111,21 @@ bool Scene::rendu(){
 }
 
 
-
+//possibilité d'amélioration:
+//placer dans terrain pour plus tard, et faire un render pour les classes Boite, Sphere, Cylindre, Cone, ...
+//demande aussi de passer la scène en argument (lumières, objets pouvant s'interposer avec les lumières)
 QColor Scene::render(const Eigen::Vector3f& pointImpact, const Terrain& objleplusproche, const Rayon& ray)
 {
     Eigen::Vector3f dRay = ray.getDirection();
     dRay.normalize();
 
-    Eigen::Vector3f n = objleplusproche.getNormal(pointImpact(0),pointImpact(1));
+    Eigen::Vector3f n = objleplusproche.getNormal(pointImpact(0),pointImpact(1));   //la normal pointe vers le haut
 
     //Eigen::Vector3f diff = dRay+ n;    //-n;   //mais dRay pointe vers le terrain et n vers le haut.
-    double norm = dRay.dot(n);    //si le rayon va dans le sens inverse de la normal du triangle qu'il touche,
+    double norm = dRay.dot(n);    //le rayon va normalement dans le sens inverse de la normal du triangle qu'il touche,
 
     if(norm >= 0)
         return QColor(0,0,0); //Black
-    //else if(norm == -1)
-        //return QColor(0,0,0); //Black
-    //    return QColor(255,255,255); // White
     else
     {
         float hauteur = objleplusproche.getHauteur(pointImpact);
@@ -141,7 +140,8 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Terrain& objleplu
 }
 
 
-/**simule le parcours d'une camera sur le terrain de la scène*/
+/**simule le parcours d'une camera sur le terrain de la scène
+*  experimental*/
 void Scene::addParcoursCamera(Terrain* noise)
 {
     int x = rand()%(int)noise->largeur;
@@ -179,6 +179,7 @@ void Scene::addParcoursCamera(Terrain* noise)
         float x2 = x + dir(0),
               y2 = y + dir(1);
 
+        //la camera regarde dans la direction du prochain déplacement
         Camera* cam = new Camera(Vector3f(x,y,noise->getHauteur(x,y)+10), Vector3f(x2,y2,noise->getHauteur(x2,y2)+10), 300, 720, 400);
         addC(cam);
     }
