@@ -39,20 +39,33 @@ public:
 
     ~TerrainTab();
 
+protected:
+
+    /**
+     * @brief Détermine la hauteur du terrain à la position \e x, \e y. \n
+     * Regarde si la position est sur ou en dehors du terrain.
+     * @param[in] x position en \e x de la hauteur à déterminer.
+     * @param[in] y position en \e y de la hauteur à déterminer.
+     * @return la hauteur du terrain à la position \e x, \e y. Si la position est hors map, la valeur sera HAUTEUR_HORS_MAP.
+     */
+    float getHauteur(float x, float y) const;
+
+
+    /**
+     * @brief Calcul la normale d'un point sur le terrain.
+     * @param[in] x abscisse du terrain (entre 0 et largeur).
+     * @param[in] y ordonnée du terrain (entre 0 et longueur).
+     * @return la hauteur du terrain à ses coordonnées x, y.
+     */
+    Eigen::Vector3f getNormal(float x, float y) const;
+
 private:
 
-    /**
-     * @brief height Hauteur de l'image HighMap.
-     */
+    /**  @brief height Hauteur de l'image HighMap.     */
     int height;
-    /**
-     * @brief width Largeur de l'image HighMap.
-     */
+    /** @brief width Largeur de l'image HighMap.     */
     int width;
-
-    /**
-     * @brief amplitude Amplitude max attegnable par le terrain.
-     */
+    /** @brief amplitude Amplitude max attegnable par le terrain.     */
     float amplitude;
 
     /**
@@ -69,32 +82,12 @@ private:
      */
     float **grille2d = nullptr;
 
-    /**
-     * @brief hauteurMax Altitude max du terrain.
-     */
+
+    /** @brief hauteurMin Altitude min du terrain.     */
+    float hauteurMin;
+    /** @brief hauteurMax Altitude max du terrain.     */
     float hauteurMax;
 
-    /**
-     * @brief hauteurMin Altitude min du terrain.
-     */
-    float hauteurMin;
-
-    /**
-     * @brief Récupere la hauteur du terrain à un point donné. \n
-     * Redéfinition de la methode. (cf. Terrain)
-     * @param[in] x abscisse du terrain (entre 0 et 1).
-     * @param[in] y ordonnée du terrain (entre 0 et 1).
-     * @return la hauteur du terrain au point donné.
-     */
-    float getHauteurXY(float x, float y) const;
-
-    /**
-     * @brief Calcul la normale d'un point sur le terrain.
-     * @param[in] x abscisse du terrain (entre 0 et 1).
-     * @param[in] y ordonnée du terrain (entre 0 et 1).
-     * @return la hauteur du terrain à ses coordonnées x, y.
-     */
-    Eigen::Vector3f getNormalXY(float x, float y) const;
 
     /**
      * @brief Initialise et remplis la grille topographique avec l'image donnée dans le constructeur. Deplus les indications complémentaire : _nbHeight et _nbWidth sont utilisées dans le processus.

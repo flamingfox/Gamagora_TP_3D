@@ -9,16 +9,12 @@ Mesh::Mesh(const Terrain &terrain, int nbHeight, int nbWidth)
 
     for(int j = 0;  j < nbHeight;   j++)
     {
-        float y = j/(float)(nbHeight-1);
-        float y2 = y*terrain.longueur + terrain.box.min(1);
+        float y = (j*terrain.longueur)/(float)(nbHeight-1);
         for(int i = 0;  i < nbWidth;   i++)
         {
-            float x = i/(float)(nbWidth-1);
-            float x2 = x*terrain.largeur + terrain.box.min(0);
-            float h = terrain.getHauteurXY(x, y);
-            float h2 = h+terrain.box.min(2);
-
-            geom.push_back(Vector3f(x2, y2, h2));
+            float x = (i*terrain.largeur)/(float)(nbWidth-1);
+            float h = terrain.getHauteur(x, y);
+            geom.push_back(Vector3f(x, y, h));
         }
     }
     this->simpleInitTopoTerrain(nbHeight, nbWidth);

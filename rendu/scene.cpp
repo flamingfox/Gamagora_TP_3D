@@ -23,6 +23,17 @@ Scene::Scene()
     return img2;
 }*/
 
+QColor sommeQColor(const QColor& c1, int tmp)
+{
+    float r = c1.red()+tmp,
+          v = c1.green()+tmp,
+          b = c1.blue()+tmp;
+    if(r > 255) r = 255;
+    if(v > 255) v = 255;
+    if(b > 255) b = 255;
+    return QColor(r,v,b);
+}
+
 bool Scene::rendu(){
     QTime timer;
     int nbpixrouge =0;
@@ -73,7 +84,7 @@ bool Scene::rendu(){
                     img->setPixel(x, y, default_color.rgba());
                 else
                 {
-                    img->setPixel(x,y,(render(zonetouchee, *objleplusproche, r).rgba()) + qRgb(tmp*2,tmp*2,tmp*2));
+                    img->setPixel(x, y, sommeQColor(render(zonetouchee, *objleplusproche, r),tmp*2).rgba());
                     float r,v,b;
                     ColorGradient grad;
                     grad.createDefaultHeatMapGradient();
@@ -85,8 +96,8 @@ bool Scene::rendu(){
         if(ic<10)        {
             std::cout << std::endl;
             int time = timer.elapsed();
-            qDebug()<<time/1000<<"."<<time%1000<< "secondes";
-            qDebug()<< (100*nbpixrouge) / (_lu*_lv) << "%";
+            std::cout << time/1000 << "." << time%1000<< " secondes" << std::endl;
+            std::cout << (100.f*nbpixrouge) / (_lu*_lv) << "%" << std::endl;
             img->save(("test000" + std::to_string(ic) + ".png").c_str());
             eric.save(("eric" + std::to_string(ic) + ".png").c_str());
 
@@ -144,13 +155,13 @@ QColor Scene::render(const Eigen::Vector3f& pointImpact, const Terrain& objleplu
 *  experimental*/
 void Scene::addParcoursCamera(Terrain* noise)
 {
-    int x = rand()%(int)noise->largeur;
-    int y = rand()%(int)noise->longueur;
+    double x = NoiseGenerator::random(noise->largeur);
+    double y = NoiseGenerator::random(noise->longueur);
 
-    int dirMax = 10;
-    int dMax = 2;
-    Vector2f dir(rand()%(dirMax*2)-dirMax,
-                 rand()%(dirMax*2)-dirMax);
+    double dirMax = 5;
+    double dMax = 2;
+    Vector2f dir(NoiseGenerator::random2(dirMax),
+                 NoiseGenerator::random2(dirMax));
     float d = dir.norm();
     if(d > dirMax){
         dir /= d;
@@ -158,8 +169,8 @@ void Scene::addParcoursCamera(Terrain* noise)
     }
 
     for(int i = 0;  i < 120;    i++)    {
-        Vector2f dev(((float)rand()/INT_MAX)*dMax*2-dMax,
-                     ((float)rand()/INT_MAX)*dMax*2-dMax);
+        Vector2f dev(NoiseGenerator::random2(dMax),
+                     NoiseGenerator::random2(dMax));
 
         d = dev.norm();
         if(d > dMax)   {

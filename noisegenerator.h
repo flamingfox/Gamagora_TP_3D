@@ -3,6 +3,7 @@
 
 #include "math.h"
 #include "parametres.h"
+#include "stdlib.h"
 
 /**
  * fonction de bruit
@@ -29,6 +30,18 @@ namespace NoiseGenerator
      * @return bruit de perlin par gradient entre -1 et 1
      */
     double perlinNoiseGradiant2(double x, double y, double res);
+
+    /**
+    * @param max valeur maximale que la fonction peut retourner
+    * @return une valeur entre 0 et max
+    */
+    double random(double max);
+
+    /**
+    * @param max valeur maximale que la fonction peut retourner
+    * @return une valeur entre -max et max
+    */
+    double random2(double max);
 
 }
 

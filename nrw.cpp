@@ -15,9 +15,21 @@ namespace nrw
         else return hauteur;
     }
 
-    /*
-    float Terrain::warp()
-    */
+
+    void warp(float& x, float& y, float amplitude, float periode)
+    {
+        //float w = amplitude * NoiseGenerator::perlinNoise( x*(1.0/periode)+2.78, y*(1.0/periode)+8.72);
+        float w = amplitude * NoiseGenerator::perlinNoise( x*(1.0/periode), y*(1.0/periode));
+        x += w;
+        y += w;
+    }
+
+    void warp(float x, float y, float& x2, float& y2, float amplitude, float periode)
+    {
+        float w = amplitude * NoiseGenerator::perlinNoise( x*(1.0/periode), y*(1.0/periode));
+        x2 = x+w;
+        y2 = y+w;
+    }
 
     /*void TerrainNoise::applicationWarp(int amplitude, int periode)
     {

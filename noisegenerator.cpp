@@ -154,4 +154,16 @@ double perlinNoiseGradiant2(double x, double y, double res)
     return Li1 + Cy*(Li2-Li1);
 }
 
+
+double random(double max)
+{
+    double val = (rand()%10000)/10000.0;
+    return (val*max);
+}
+
+double random2(double max)
+{
+    return random(max*2)-max;
+}
+
 }   //end NoiseGenerator

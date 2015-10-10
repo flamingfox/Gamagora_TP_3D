@@ -1,5 +1,6 @@
 ﻿#include "terrain.h"
 
+
 Terrain::Terrain():
     Terrain(0,0)
 {
@@ -19,19 +20,6 @@ Terrain::Terrain(float longueur, float largeur, float amplitude):
 
 /**********************************************************/
 
-/***/
-float Terrain::getHauteur(float x, float y) const
-{
-    x -= box.min(0);
-    x /= largeur;
-    y -= box.min(1);
-    y /= longueur;
-    //met les coordonnées entre 0 et 1.
-    if(x < 0 || y < 0 || x > 1 || y > 1)
-        return HAUTEUR_HORS_MAP;
-
-    return getHauteurXY(x,y);
-}
 
 float Terrain::getHauteur(const Vector2f& pointXY) const
 {
@@ -46,18 +34,6 @@ float Terrain::getHauteur(const Vector3f& pointXYZ) const
 
 /**********************************************************/
 
-Vector3f Terrain::getNormal(float x, float y) const
-{
-    x -= box.min(0);
-    x /= largeur;
-    y -= box.min(1);
-    y /= longueur;
-    //met les coordonnées entre 0 et 1.
-    if(x < 0 || y < 0 || x > 1 || y > 1)
-        return Vector3f(0,0,0);
-
-    return getNormalXY(x,y);
-}
 
 Vector3f Terrain::getNormal(const Vector2f& pointXY) const
 {
@@ -121,10 +97,6 @@ bool Terrain::intersect(const Rayon& rayon, float &coeffDistance, int &i) const
 
 /************************************************************************/
 
-void Terrain::translate2(const Vector3f& t)
-{
-    (void) t;   //rien faire
-}
 
 
 /*void Terrain::getColor2(float& r, float& g, float& b, float hauteur, const Eigen::Vector3f& n) const

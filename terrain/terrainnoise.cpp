@@ -6,51 +6,62 @@ TerrainNoise::TerrainNoise() : Terrain()
 TerrainNoise::TerrainNoise(int _longueur, int _largeur) :
     Terrain(_longueur, _largeur)
 {
-    box = Box(Vector3f(0,0,0), Vector3f(_largeur,_longueur, 0));
     hauteurMin = minElevation();
     hauteurMax = maxElevation();
     box.max(2) = hauteurMax;
-
 }
 
 
 /**
- * @param x abscisse du terrain (entre 0 et 1)
- * @param y ordonnée du terrain (entre 0 et 1)
+ * @param x abscisse du terrain (entre 0 et largeur)
+ * @param y ordonnée du terrain (entre 0 et longueur)
  * @return la hauteur du terrain à ses coordonnées x, y
 */
-float TerrainNoise::getHauteurXY(float x, float y) const
+float TerrainNoise::getHauteur(float x, float y) const
 {
-    if(x < 0 || y < 0 || x > 1 || y > 1)
+    if(x < 0 || y < 0 || x > largeur || y > longueur)
             return HAUTEUR_HORS_MAP;
 
-    float h = nrw::noise(400,300,x*largeur,y*longueur);
+    return getHauteur2(x,y);    //inline
+}
+
+/**
+ * @brief Retourne la hauteur du terrain aux coordonnées (x,y). \n
+ * Ne vérifie pas que l'on est en dehors du terrain. \n
+ * Utile pour avoir une bonne normal sur les bords du terrain.
+ * @param x abscisse du terrain (entre 0 et largeur)
+ * @param y ordonnée du terrain (entre 0 et longueur)
+ * @return la hauteur du terrain à ses coordonnées x, y
+ */
+inline float TerrainNoise::getHauteur2(float x, float y) const
+{
+    nrw::warp(x,y, 50 ,350);
+    float h = nrw::noise(400,300,x,y);
 
     h = nrw::ridge(h, 250);
 
-    float h2 = nrw::noise(100, 100, x*largeur, y*longueur);
+    float h2 = nrw::noise(100, 100, x, y);
 
     h -= h2*nrw::attenuation(h,50,200);
 
-    float h3 = nrw::noise(50,30,x*largeur,y*longueur);
+    float h3 = nrw::noise(50,30,x,y);
     h += h3*nrw::attenuation(h,50,200);
 
     return h;
 }
 
-Eigen::Vector3f TerrainNoise::getNormalXY(float x, float y) const
+Eigen::Vector3f TerrainNoise::getNormal(float x, float y) const
 {
-    float   ha = getHauteurXY(x,y);
-    float   rx = 1/largeur,
-            ry = 1/longueur;
-    float   g = getHauteurXY(x-rx,y),
-            d = getHauteurXY(x+rx,y),
-            b = getHauteurXY(x,y+ry),
-            h = getHauteurXY(x,y-ry);
-    Eigen::Vector3f vg(-1, 0, g-ha),
-                    vd(1, 0, d-ha),
-                    vb(0, 1, b-ha),
-                    vh(0, -1, h-ha);
+
+    float   ha = getHauteur2(x,y);
+    float   g = getHauteur2(x-RAYON_NORMAL,y),
+            d = getHauteur2(x+RAYON_NORMAL,y),
+            b = getHauteur2(x,y+RAYON_NORMAL),
+            h = getHauteur2(x,y-RAYON_NORMAL);
+    Eigen::Vector3f vg(-RAYON_NORMAL, 0, g-ha),
+                    vd(RAYON_NORMAL, 0, d-ha),
+                    vb(0, RAYON_NORMAL, b-ha),
+                    vh(0, -RAYON_NORMAL, h-ha);
     float   distg = vg.norm(),
             distd = vd.norm(),
             distb = vb.norm(),

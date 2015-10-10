@@ -31,8 +31,10 @@ inline float TerrainTab::get(int x, int y) const
     return grille2d[y][x];
 }
 
-float TerrainTab::getHauteurXY(float x, float y) const
+float TerrainTab::getHauteur(float x, float y) const
 {
+    x /= largeur;
+    y /= longueur;
     if(x < 0 || y < 0 || x > 1 || y > 1)
         return HAUTEUR_HORS_MAP;
 
@@ -63,23 +65,25 @@ float TerrainTab::getHauteurXY(float x, float y) const
 
 
 
-Eigen::Vector3f TerrainTab::getNormalXY(float x, float y) const
+Eigen::Vector3f TerrainTab::getNormal(float x, float y) const
 {
-    float ha = getHauteurXY(x,y);
-    float   rx = 1/largeur,
-            ry = 1/longueur;
-    float   xg = std::max(x-rx, 0.f),
-            xd = std::min(x+rx, 1.f),
-            yb = std::min(y+ry, 1.f),
-            yh = std::max(y-ry, 0.f);
-    float   g = getHauteurXY(xg,y),
-            d = getHauteurXY(xd,y),
-            b = getHauteurXY(x,yb),
-            h = getHauteurXY(x,yh);
-    Eigen::Vector3f vg(-1, 0, g-ha),
-                    vd(1, 0, d-ha),
-                    vb(0, 1, b-ha),
-                    vh(0, -1, h-ha);
+
+    if(x < 0 || y < 0 || x > largeur || y > longueur)
+        return Vector3f(0,0,1);
+
+    float ha = getHauteur(x,y);
+    float   xg = std::max(x-RAYON_NORMAL, 0.f),
+            xd = std::min(x+RAYON_NORMAL, largeur),
+            yb = std::min(y+RAYON_NORMAL, longueur),
+            yh = std::max(y-RAYON_NORMAL, 0.f);
+    float   g = getHauteur(xg,y),
+            d = getHauteur(xd,y),
+            b = getHauteur(x,yb),
+            h = getHauteur(x,yh);
+    Eigen::Vector3f vg(-RAYON_NORMAL, 0, g-ha),
+                    vd(RAYON_NORMAL, 0, d-ha),
+                    vb(0, RAYON_NORMAL, b-ha),
+                    vh(0, -RAYON_NORMAL, h-ha);
     float   distg = vg.norm(),
             distd = vd.norm(),
             distb = vb.norm(),

@@ -22,22 +22,23 @@ public:
     TerrainNoise(int _longueur, int _largeur);
 
 protected:
+
     /**
-     * @brief Récupere la hauteur du terrain à un point donné. \n
-     * Redéfinition de la methode. (cf. Terrain)
-     * @param[in] x abscisse du terrain (entre 0 et 1).
-     * @param[in] y ordonnée du terrain (entre 0 et 1).
-     * @return la hauteur du terrain au point donné.
+     * @brief Détermine la hauteur du terrain à la position \e x, \e y. \n
+     * Regarde si la position est sur ou en dehors du terrain.
+     * @param[in] x position en \e x de la hauteur à déterminer.
+     * @param[in] y position en \e y de la hauteur à déterminer.
+     * @return la hauteur du terrain à la position \e x, \e y. Si la position est hors map, la valeur sera HAUTEUR_HORS_MAP.
      */
-    float getHauteurXY(float x, float y) const;
+    float getHauteur(float x, float y) const;
 
     /**
      * @brief Calcul la normale d'un point sur le terrain.
-     * @param[in] x abscisse du terrain (entre 0 et 1).
-     * @param[in] y ordonnée du terrain (entre 0 et 1).
+     * @param[in] x abscisse du terrain (entre 0 et largeur).
+     * @param[in] y ordonnée du terrain (entre 0 et longueur).
      * @return la hauteur du terrain à ses coordonnées x, y.
      */
-    Eigen::Vector3f getNormalXY(float x, float y) const;
+    Eigen::Vector3f getNormal(float x, float y) const;
 
     /**
      * @brief Calcul l'élévation minimum du terrain.
@@ -51,6 +52,9 @@ protected:
      */
     float maxElevation() const;
 
+private:
+
+    inline float getHauteur2(float x, float y) const;
 };
 
 #endif // TERRAINNOISE_H

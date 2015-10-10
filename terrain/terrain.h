@@ -6,6 +6,11 @@
 #include "./noisegenerator.h"
 #include "box.h"
 
+/** @brief délimite la distance des hauteurs à calculer autour d'une coordonnée du terrain pour déterminer sa normale*/
+#define RAYON_NORMAL 0.1f
+
+
+
 /**
  * @brief Classe virtuelle de terrain. Sert de modèle pour les classes files TerrainNoise et TerrainTab.
  */
@@ -60,13 +65,12 @@ public:
 
     /**
      * @brief Détermine la hauteur du terrain à la position \e x, \e y. \n
-     * Regarde si la position est sur ou en dehors du terrain. \n
-     * Passe le relai à getHauteurXY().
+     * Regarde si la position est sur ou en dehors du terrain.
      * @param[in] x position en \e x de la hauteur à déterminer.
      * @param[in] y position en \e y de la hauteur à déterminer.
      * @return la hauteur du terrain à la position \e x, \e y. Si la position est hors map, la valeur sera HAUTEUR_HORS_MAP.
      */
-    float getHauteur(float x, float y) const;
+    virtual float getHauteur(float x, float y) const = 0;
     /**
      * @brief Surchage de la methode getHauteur(float x, float y).
      * @param[in] pointXY Un point comprenant uniquement les axes \e x, \e y.
@@ -108,13 +112,12 @@ public:
 
     /**
      * @brief Détermine la normal du terrain à la position \e x, \e y. \n
-     * Regarde si les positions sont sur ou en dehors du terrain. \n
-     * Passe le relai à getNormalXY().
+     * Regarde si les positions sont sur ou en dehors du terrain.
      * @param[in] x position en \e x de la normal à déterminer.
      * @param[in] y position en \e y de la normal à déterminer.
      * @return la hauteur du terrain à la position \e x, \e y. Si la position est hors map, la valeur sera un vecteur nul.
      */
-    Eigen::Vector3f getNormal(float x, float y) const;
+    virtual Eigen::Vector3f getNormal(float x, float y) const = 0;
     /**
      * @brief Surchage de la methode getNormal(float x, float y).
      * @param[in] pointXY Un point comprenant uniquement les axes \e x, \e y.
@@ -136,26 +139,8 @@ public:
     bool inOut(const Eigen::Vector3f& pointXYZ) const;
 
 
-    /**
-     * @brief Methode virtuel pour déterminer la hauteur du terrain à un point. \n
-     * A redéfinir dans les classes filles. (cf. TerrainNoise et TerrainTab)
-     * @param[in] x la position en x du point.
-     * @param[in] y la position en y du point.
-     * @return la hauteur du terrain au point donné.
-     */
-    virtual float getHauteurXY(float x, float y) const = 0; //public car utilisé dans la classe Mesh
-
 protected:
 
-    /**
-     * @brief Methode virtuel pour déterminer la normal du terrain à un point. \n
-     * @param[in] x la position en x du point.
-     * @param[in] y la position en y du point.
-     * @return La normale à la position \e x,\e y.
-     */
-    virtual Eigen::Vector3f getNormalXY(float x, float y) const = 0;
-
-    void translate2(const Vector3f& t);
 
     //void getColor2(float& r, float& g, float& b, float hauteur = 0, const Eigen::Vector3f& n = Eigen::Vector3f(0,0,1)) const;
 

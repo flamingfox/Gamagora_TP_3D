@@ -25,6 +25,10 @@ float noise(int amplitude, float periode, float x, float y);
 */
 float ridge(float hauteur, float seuil);
 
+void warp(float& x, float&y, float amplitude, float periode);
+void warp(float x, float y, float& x2, float&y2, float amplitude, float periode);
+
+
 /**
  * @brief Terrain::attenuation
  * @param[in] h valeur que l'on souhaite atténuer
